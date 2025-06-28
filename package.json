@@ -1,0 +1,43 @@
+{
+  "name": "presidente-2026",
+  "version": "1.0.0",
+  "description": "Sitio web oficial de Juan Pablo Melinao González - Candidato Presidencial 2026",
+  "private": true,
+  "keywords": [],
+  "author": "Juan Pablo Melinao González",
+  "license": "ISC",
+  "dependencies": {
+    "lucide-react": "^0.525.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-scripts": "^5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "serve": "serve -s build -l 3000"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
