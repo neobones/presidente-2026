@@ -460,6 +460,7 @@ const ParticipacionCiudadana = () => {
         showStats={false}
         isOpen={showConsultaModal}
         onClose={setShowConsultaModal}
+        usuario={usuario}
       />
     </SEOWrapper>
   );

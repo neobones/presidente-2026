@@ -8,7 +8,8 @@ const ConsultasCiudadanas = ({
   descripcion = "Tu opinión es importante para mejorar nuestras propuestas",
   showStats = true,
   isOpen: externalIsOpen = null,
-  onClose = null
+  onClose = null,
+  usuario = null
 }) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen = externalIsOpen !== null ? externalIsOpen : internalIsOpen;
@@ -26,12 +27,16 @@ const ConsultasCiudadanas = ({
       setInternalIsOpen(true);
     }
   };
+  
+  // Estado para consulta anónima
+  const [esAnonima, setEsAnonima] = useState(false);
+  
   const [formData, setFormData] = useState({
-    nombre: '',
-    email: '',
+    nombre: usuario?.nombre || '',
+    email: usuario?.email || '',
     region: '',
     edad: '',
-    tipoConsulta: 'sugerencia',
+    tipoConsulta: 'propuesta-nueva',
     mensaje: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,6 +46,23 @@ const ConsultasCiudadanas = ({
     implementadas: 0,
     enRevision: 0
   });
+
+  // Actualizar datos del formulario cuando cambie el usuario
+  React.useEffect(() => {
+    if (usuario && !esAnonima) {
+      setFormData(prev => ({
+        ...prev,
+        nombre: usuario.nombre || '',
+        email: usuario.email || ''
+      }));
+    } else if (esAnonima) {
+      setFormData(prev => ({
+        ...prev,
+        nombre: '',
+        email: ''
+      }));
+    }
+  }, [usuario, esAnonima]);
 
   // Cargar estadísticas reales al montar el componente
   React.useEffect(() => {
@@ -71,10 +93,16 @@ const ConsultasCiudadanas = ({
   ];
 
   const tiposConsulta = [
-    { id: 'sugerencia', name: 'Sugerencia de mejora', icon: <Lightbulb className="w-4 h-4" /> },
-    { id: 'critica', name: 'Crítica constructiva', icon: <MessageSquare className="w-4 h-4" /> },
-    { id: 'apoyo', name: 'Apoyo a la propuesta', icon: <CheckCircle className="w-4 h-4" /> },
-    { id: 'duda', name: 'Consulta específica', icon: <ArrowRight className="w-4 h-4" /> }
+    // Relacionadas con reformas existentes
+    { id: 'apoyo-reforma', name: 'Apoyo a reforma propuesta', icon: <CheckCircle className="w-4 h-4" />, categoria: 'reforma' },
+    { id: 'mejora-reforma', name: 'Mejora a reforma propuesta', icon: <Lightbulb className="w-4 h-4" />, categoria: 'reforma' },
+    { id: 'critica-reforma', name: 'Crítica constructiva a reforma', icon: <MessageSquare className="w-4 h-4" />, categoria: 'reforma' },
+    { id: 'duda-reforma', name: 'Consulta sobre reforma', icon: <ArrowRight className="w-4 h-4" />, categoria: 'reforma' },
+    
+    // Nuevas propuestas ciudadanas
+    { id: 'propuesta-nueva', name: 'Nueva propuesta ciudadana', icon: <Lightbulb className="w-4 h-4" />, categoria: 'propuesta' },
+    { id: 'problema-local', name: 'Problema local/regional', icon: <MessageSquare className="w-4 h-4" />, categoria: 'propuesta' },
+    { id: 'idea-innovacion', name: 'Idea de innovación', icon: <ArrowRight className="w-4 h-4" />, categoria: 'propuesta' }
   ];
 
   const handleSubmit = async (e) => {
@@ -89,9 +117,16 @@ const ConsultasCiudadanas = ({
         return;
       }
 
+      const tipoSeleccionado = tiposConsulta.find(t => t.id === formData.tipoConsulta);
+      
       const consultaData = {
         ...formData,
         tema,
+        esAnonima,
+        categoria: tipoSeleccionado?.categoria || 'general',
+        // Si es anónima, no enviar datos personales
+        nombre: esAnonima ? '' : formData.nombre,
+        email: esAnonima ? '' : formData.email,
         fechaEnvio: new Date().toISOString(),
         userAgent: navigator.userAgent,
         url: window.location.href
@@ -118,13 +153,14 @@ const ConsultasCiudadanas = ({
           handleClose();
           setIsSubmitted(false);
           setFormData({
-            nombre: '',
-            email: '',
+            nombre: usuario?.nombre || '',
+            email: usuario?.email || '',
             region: '',
             edad: '',
-            tipoConsulta: 'sugerencia',
+            tipoConsulta: 'propuesta-nueva',
             mensaje: ''
           });
+          setEsAnonima(false);
         }, 3000);
       } else if (response.status === 401) {
         localStorage.removeItem('authToken');
@@ -217,30 +253,58 @@ const ConsultasCiudadanas = ({
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                  {/* Checkbox para consulta anónima */}
+                  {usuario && (
+                    <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                      <label className="flex items-center space-x-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={esAnonima}
+                          onChange={(e) => setEsAnonima(e.target.checked)}
+                          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <div>
+                          <span className="text-sm font-medium text-gray-900">
+                            Enviar consulta de forma anónima
+                          </span>
+                          <p className="text-xs text-gray-600 mt-1">
+                            Al marcar esta opción, tu nombre y email no serán incluidos en la consulta
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                  )}
+
                   {/* Personal Info */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Nombre (opcional)
+                        Nombre {esAnonima ? '(oculto - consulta anónima)' : '(opcional)'}
                       </label>
                       <input
                         type="text"
                         value={formData.nombre}
                         onChange={(e) => handleInputChange('nombre', e.target.value)}
-                        placeholder="Tu nombre"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder={esAnonima ? "Consulta anónima" : "Tu nombre"}
+                        disabled={esAnonima}
+                        className={`w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                          esAnonima ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''
+                        }`}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email (opcional)
+                        Email {esAnonima ? '(oculto - consulta anónima)' : '(opcional)'}
                       </label>
                       <input
                         type="email"
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
-                        placeholder="tu@email.com"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder={esAnonima ? "Consulta anónima" : "tu@email.com"}
+                        disabled={esAnonima}
+                        className={`w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                          esAnonima ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''
+                        }`}
                       />
                     </div>
                   </div>
@@ -288,22 +352,55 @@ const ConsultasCiudadanas = ({
                     <label className="block text-sm font-medium text-gray-700 mb-3">
                       Tipo de consulta
                     </label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {tiposConsulta.map(tipo => (
-                        <button
-                          key={tipo.id}
-                          type="button"
-                          onClick={() => handleInputChange('tipoConsulta', tipo.id)}
-                          className={`p-3 rounded-xl border-2 transition-all duration-200 flex items-center space-x-2 ${
-                            formData.tipoConsulta === tipo.id
-                              ? 'border-blue-500 bg-blue-50 text-blue-700'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          {tipo.icon}
-                          <span className="text-sm font-medium">{tipo.name}</span>
-                        </button>
-                      ))}
+                    
+                    {/* Reformas existentes */}
+                    <div className="mb-4">
+                      <h4 className="text-sm font-semibold text-green-700 mb-2 flex items-center">
+                        <CheckCircle className="w-4 h-4 mr-1" />
+                        Sobre reformas propuestas
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {tiposConsulta.filter(tipo => tipo.categoria === 'reforma').map(tipo => (
+                          <button
+                            key={tipo.id}
+                            type="button"
+                            onClick={() => handleInputChange('tipoConsulta', tipo.id)}
+                            className={`p-3 rounded-xl border-2 transition-all duration-200 flex items-center space-x-2 text-left ${
+                              formData.tipoConsulta === tipo.id
+                                ? 'border-green-500 bg-green-50 text-green-700'
+                                : 'border-gray-200 hover:border-green-300'
+                            }`}
+                          >
+                            {tipo.icon}
+                            <span className="text-sm font-medium">{tipo.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Nuevas propuestas */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-blue-700 mb-2 flex items-center">
+                        <Lightbulb className="w-4 h-4 mr-1" />
+                        Nuevas propuestas ciudadanas
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {tiposConsulta.filter(tipo => tipo.categoria === 'propuesta').map(tipo => (
+                          <button
+                            key={tipo.id}
+                            type="button"
+                            onClick={() => handleInputChange('tipoConsulta', tipo.id)}
+                            className={`p-3 rounded-xl border-2 transition-all duration-200 flex items-center space-x-2 text-left ${
+                              formData.tipoConsulta === tipo.id
+                                ? 'border-blue-500 bg-blue-50 text-blue-700'
+                                : 'border-gray-200 hover:border-blue-300'
+                            }`}
+                          >
+                            {tipo.icon}
+                            <span className="text-sm font-medium">{tipo.name}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
