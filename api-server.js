@@ -138,11 +138,38 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware de autenticación
+// Middleware de verificación JWT
+const verifyJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Token de acceso requerido' });
+  }
+  
+  const token = authHeader.split(' ')[1];
+  
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: 'Token inválido o expirado' });
+  }
+};
+
+// Middleware de autenticación (soporte para JWT y sesiones)
 const requireAuth = (req, res, next) => {
+  // Primero intentamos verificar JWT
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return verifyJWT(req, res, next);
+  }
+  
+  // Fallback a session authentication
   if (req.isAuthenticated()) {
     return next();
   }
+  
   res.status(401).json({ error: 'Acceso denegado. Debes iniciar sesión.' });
 };
 
@@ -168,16 +195,45 @@ app.get('/api/auth/google/callback',
       : 'http://localhost:3000/login-error'
   }),
   (req, res) => {
-    // Redirigir a la página de participación con éxito
-    res.redirect(process.env.NODE_ENV === 'production' 
-      ? `${getProductionUrl()}/participacion-ciudadana?login=success`
-      : 'http://localhost:3000/participacion-ciudadana?login=success'
-    );
+    // Generar JWT token
+    const jwtPayload = {
+      id: req.user._id,
+      nombre: req.user.nombre,
+      email: req.user.email,
+      provider: req.user.provider
+    };
+    
+    const token = jwt.sign(jwtPayload, process.env.JWT_SECRET, { expiresIn: '7d' });
+    
+    // Redirigir a la página de participación con el token
+    const redirectUrl = process.env.NODE_ENV === 'production' 
+      ? `${getProductionUrl()}/participacion-ciudadana?login=success&token=${token}`
+      : `http://localhost:3000/participacion-ciudadana?login=success&token=${token}`;
+    
+    res.redirect(redirectUrl);
   }
 );
 
 // Obtener información del usuario actual
 app.get('/api/auth/user', (req, res) => {
+  // Verificar JWT primero
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const token = authHeader.split(' ')[1];
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      return res.json({
+        id: decoded.id,
+        nombre: decoded.nombre,
+        email: decoded.email,
+        provider: decoded.provider
+      });
+    } catch (error) {
+      return res.status(401).json({ error: 'Token inválido o expirado' });
+    }
+  }
+  
+  // Fallback a session authentication
   if (req.isAuthenticated()) {
     res.json({
       id: req.user._id,
@@ -260,14 +316,14 @@ app.post('/api/consultas/:id/like', requireAuth, async (req, res) => {
 app.post('/api/consultas/:id/report', requireAuth, async (req, res) => {
   try {
     const { id } = req.params;
-    const { razon } = req.body;
+    const { motivo } = req.body;
     
     const consulta = await Consulta.findById(id);
     if (!consulta) {
       return res.status(404).json({ error: 'Consulta no encontrada' });
     }
 
-    await consulta.reportar(req.user._id, razon);
+    await consulta.reportar(req.user._id, motivo);
     
     res.json({
       success: true,
@@ -280,8 +336,8 @@ app.post('/api/consultas/:id/report', requireAuth, async (req, res) => {
   }
 });
 
-// POST - Enviar nueva consulta (ahora con autenticación opcional)
-app.post('/api/consultas', consultasLimiter, async (req, res) => {
+// POST - Enviar nueva consulta (requiere autenticación)
+app.post('/api/consultas', consultasLimiter, requireAuth, async (req, res) => {
   try {
     const {
       nombre,
