@@ -52,8 +52,21 @@ const consultaSchema = new mongoose.Schema({
     trim: true
   },
   
-  // Metadata técnica
+  // Usuario y metadata técnica
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Usuario',
+    required: false // Para mantener compatibilidad con consultas anónimas existentes
+  },
+  esPublica: {
+    type: Boolean,
+    default: true
+  },
   fechaEnvio: {
+    type: Date,
+    default: Date.now
+  },
+  fechaPublicacion: {
     type: Date,
     default: Date.now
   },
@@ -102,7 +115,33 @@ const consultaSchema = new mongoose.Schema({
     default: false
   },
   fechaImplementacion: Date,
-  descripcionImplementacion: String
+  descripcionImplementacion: String,
+  
+  // Engagement y moderación
+  likes: {
+    type: Number,
+    default: 0
+  },
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Usuario'
+  }],
+  reportes: [{
+    usuario: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Usuario'
+    },
+    razon: String,
+    fecha: {
+      type: Date,
+      default: Date.now
+    }
+  }],
+  moderada: {
+    type: Boolean,
+    default: false
+  },
+  razonModeracion: String
 }, {
   timestamps: true,
   collection: 'consultas_ciudadanas'
@@ -112,7 +151,11 @@ const consultaSchema = new mongoose.Schema({
 consultaSchema.index({ tema: 1, estado: 1 });
 consultaSchema.index({ region: 1, edad: 1 });
 consultaSchema.index({ fechaEnvio: -1 });
+consultaSchema.index({ fechaPublicacion: -1 });
 consultaSchema.index({ tipoConsulta: 1, prioridad: 1 });
+consultaSchema.index({ userId: 1 });
+consultaSchema.index({ esPublica: 1, moderada: 1 });
+consultaSchema.index({ likes: -1 });
 
 // Método para obtener estadísticas
 consultaSchema.statics.getEstadisticas = async function() {
@@ -183,6 +226,83 @@ consultaSchema.methods.analizarSentimiento = function() {
   }
   
   return this.sentiment;
+};
+
+// Método para obtener consultas públicas con paginación
+consultaSchema.statics.getConsultasPublicas = async function(filtros = {}, opciones = {}) {
+  const { page = 1, limit = 12, sortBy = 'fechaPublicacion', sortOrder = -1 } = opciones;
+  
+  const consulta = {
+    esPublica: true,
+    moderada: false,
+    ...filtros
+  };
+
+  const consultas = await this.find(consulta)
+    .populate('userId', 'nombre avatar perfilPublico')
+    .sort({ [sortBy]: sortOrder })
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .lean();
+
+  const total = await this.countDocuments(consulta);
+
+  return {
+    consultas: consultas.map(c => ({
+      ...c,
+      // Anonimizar si el usuario no tiene perfil público
+      usuario: c.userId && c.userId.perfilPublico ? {
+        nombre: c.userId.nombre,
+        avatar: c.userId.avatar
+      } : {
+        nombre: 'Ciudadano Anónimo',
+        avatar: ''
+      }
+    })),
+    totalPages: Math.ceil(total / limit),
+    currentPage: page,
+    total
+  };
+};
+
+// Método para dar like a una consulta
+consultaSchema.methods.toggleLike = async function(userId) {
+  const yaLeMeGusta = this.likedBy.includes(userId);
+  
+  if (yaLeMeGusta) {
+    this.likedBy.pull(userId);
+    this.likes = Math.max(0, this.likes - 1);
+  } else {
+    this.likedBy.push(userId);
+    this.likes += 1;
+  }
+  
+  await this.save();
+  return !yaLeMeGusta; // Retorna true si se agregó like, false si se quitó
+};
+
+// Método para reportar una consulta
+consultaSchema.methods.reportar = async function(userId, razon) {
+  // Verificar que el usuario no haya reportado ya
+  const yaReportado = this.reportes.some(r => r.usuario.equals(userId));
+  
+  if (!yaReportado) {
+    this.reportes.push({
+      usuario: userId,
+      razon: razon,
+      fecha: new Date()
+    });
+    
+    // Auto-moderar si recibe muchos reportes
+    if (this.reportes.length >= 3) {
+      this.moderada = true;
+      this.razonModeracion = 'Múltiples reportes de usuarios';
+    }
+    
+    await this.save();
+  }
+  
+  return this;
 };
 
 module.exports = mongoose.model('Consulta', consultaSchema);

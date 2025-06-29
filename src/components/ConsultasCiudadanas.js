@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { MessageSquare, Send, Lightbulb, ArrowRight, CheckCircle, X } from 'lucide-react';
+import { MessageSquare, Send, Lightbulb, ArrowRight, CheckCircle, X, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const ConsultasCiudadanas = ({ 
   tema = "general", 
@@ -112,6 +113,13 @@ const ConsultasCiudadanas = ({
           <div className="text-xs text-gray-600 font-semibold">Participación Ciudadana</div>
           <div className="text-sm font-bold text-green-600">{stats.totalConsultas} consultas</div>
           <div className="text-xs text-blue-600">{stats.implementadas} implementadas</div>
+          <Link 
+            to="/participacion-ciudadana"
+            className="text-xs text-purple-600 hover:text-purple-700 flex items-center space-x-1 mt-1"
+          >
+            <Users className="w-3 h-3" />
+            <span>Ver todas</span>
+          </Link>
         </div>
       )}
 

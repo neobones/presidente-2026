@@ -3,10 +3,16 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const jwt = require('jsonwebtoken');
 const path = require('path');
 
-// Importar modelo
+// Importar modelos
 const Consulta = require('./src/models/Consulta');
+const Usuario = require('./src/models/Usuario');
 
 const app = express();
 
@@ -40,6 +46,56 @@ const consultasLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// Configuración de sesiones
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'melinao2026-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: 'mongodb://localhost:27017/melinao2026',
+    touchAfter: 24 * 3600 // lazy session update
+  }),
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 días
+  }
+}));
+
+// Inicializar Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configurar Google OAuth Strategy
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID || 'your-google-client-id',
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'your-google-client-secret',
+  callbackURL: process.env.NODE_ENV === 'production' 
+    ? 'https://chiledigno.cl/api/auth/google/callback'
+    : 'http://localhost:8000/api/auth/google/callback'
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    const usuario = await Usuario.buscarOCrearOAuth(profile, 'google');
+    return done(null, usuario);
+  } catch (error) {
+    return done(error, null);
+  }
+}));
+
+// Serialización de usuarios para sesiones
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await Usuario.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
+
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -62,9 +118,138 @@ app.use((req, res, next) => {
   next();
 });
 
-// Rutas API
+// Middleware de autenticación
+const requireAuth = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ error: 'Acceso denegado. Debes iniciar sesión.' });
+};
 
-// POST - Enviar nueva consulta
+// Rutas de Autenticación
+
+// Iniciar autenticación con Google
+app.get('/api/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Callback de Google OAuth
+app.get('/api/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login-error' }),
+  (req, res) => {
+    // Redirigir a la página de participación con éxito
+    res.redirect(process.env.NODE_ENV === 'production' 
+      ? 'https://chiledigno.cl/participacion-ciudadana?login=success'
+      : 'http://localhost:3000/participacion-ciudadana?login=success'
+    );
+  }
+);
+
+// Obtener información del usuario actual
+app.get('/api/auth/user', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({
+      id: req.user._id,
+      nombre: req.user.nombre,
+      email: req.user.email,
+      avatar: req.user.avatar,
+      provider: req.user.provider,
+      consultasEnviadas: req.user.consultasEnviadas,
+      reputacion: req.user.reputacion
+    });
+  } else {
+    res.status(401).json({ error: 'No autenticado' });
+  }
+});
+
+// Cerrar sesión
+app.post('/api/auth/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al cerrar sesión' });
+    }
+    res.json({ message: 'Sesión cerrada exitosamente' });
+  });
+});
+
+// Rutas API de Consultas
+
+// GET - Obtener consultas públicas con filtros y paginación
+app.get('/api/consultas/public', async (req, res) => {
+  try {
+    const { page = 1, limit = 12, tema, region, sortBy = 'fechaPublicacion' } = req.query;
+    
+    const filtros = {};
+    if (tema && tema !== 'todos') filtros.tema = tema;
+    if (region && region !== 'todas') filtros.region = region;
+
+    const opciones = {
+      page: parseInt(page),
+      limit: parseInt(limit),
+      sortBy,
+      sortOrder: -1
+    };
+
+    const resultado = await Consulta.getConsultasPublicas(filtros, opciones);
+    res.json(resultado);
+
+  } catch (error) {
+    console.error('Error obteniendo consultas públicas:', error);
+    res.status(500).json({
+      error: 'Error obteniendo consultas públicas'
+    });
+  }
+});
+
+// POST - Dar like a una consulta (requiere autenticación)
+app.post('/api/consultas/:id/like', requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const consulta = await Consulta.findById(id);
+    
+    if (!consulta) {
+      return res.status(404).json({ error: 'Consulta no encontrada' });
+    }
+
+    const liked = await consulta.toggleLike(req.user._id);
+    
+    res.json({
+      success: true,
+      liked,
+      totalLikes: consulta.likes
+    });
+
+  } catch (error) {
+    console.error('Error procesando like:', error);
+    res.status(500).json({ error: 'Error procesando like' });
+  }
+});
+
+// POST - Reportar una consulta (requiere autenticación)
+app.post('/api/consultas/:id/report', requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { razon } = req.body;
+    
+    const consulta = await Consulta.findById(id);
+    if (!consulta) {
+      return res.status(404).json({ error: 'Consulta no encontrada' });
+    }
+
+    await consulta.reportar(req.user._id, razon);
+    
+    res.json({
+      success: true,
+      message: 'Reporte enviado exitosamente'
+    });
+
+  } catch (error) {
+    console.error('Error procesando reporte:', error);
+    res.status(500).json({ error: 'Error procesando reporte' });
+  }
+});
+
+// POST - Enviar nueva consulta (ahora con autenticación opcional)
 app.post('/api/consultas', consultasLimiter, async (req, res) => {
   try {
     const {
@@ -93,9 +278,7 @@ app.post('/api/consultas', consultasLimiter, async (req, res) => {
     }
 
     // Crear nueva consulta
-    const consulta = new Consulta({
-      nombre: nombre || '',
-      email: email || '',
+    const consultaData = {
       region,
       edad,
       tema: tema || 'general',
@@ -105,7 +288,23 @@ app.post('/api/consultas', consultasLimiter, async (req, res) => {
       userAgent,
       url,
       fechaEnvio: new Date()
-    });
+    };
+
+    // Si el usuario está autenticado
+    if (req.isAuthenticated()) {
+      consultaData.userId = req.user._id;
+      consultaData.nombre = req.user.nombre;
+      consultaData.email = req.user.email;
+      
+      // Incrementar contador de consultas del usuario
+      await req.user.incrementarConsultas();
+    } else {
+      // Usuario anónimo (mantener compatibilidad)
+      consultaData.nombre = nombre || '';
+      consultaData.email = email || '';
+    }
+
+    const consulta = new Consulta(consultaData);
 
     // Análisis automático
     consulta.categorizarAutomaticamente();

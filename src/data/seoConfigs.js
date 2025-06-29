@@ -209,6 +209,53 @@ export const seoConfigs = {
       'transparencia gobierno'
     ]
   },
+
+  participacionCiudadana: {
+    title: "Participación Ciudadana - Melinao 2026 | Tu Voz Construye Chile",
+    description: "Participa activamente en la construcción del Chile que queremos. Lee consultas ciudadanas, comparte ideas y forma parte del cambio democrático con Juan Pablo Melinao González.",
+    keywords: [
+      'participación ciudadana Chile',
+      'consultas públicas Melinao',
+      'democracia participativa 2026',
+      'gobierno digital transparente',
+      'consulta ciudadana online',
+      'transparencia política Chile',
+      'Chile digno participación',
+      'ideas ciudadanas gobierno',
+      'plataforma participación',
+      'democracia digital Chile',
+      'Juan Pablo Melinao participación',
+      'consultas ciudadanas online',
+      'gobierno abierto Chile',
+      'participación democrática'
+    ],
+    canonicalUrl: "https://chiledigno.cl/participacion-ciudadana",
+    openGraph: {
+      image: '/images/participacion-ciudadana-melinao-2026.jpg',
+      imageAlt: 'Participación Ciudadana - Tu Voz Construye Chile'
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Participación Ciudadana - Melinao 2026",
+      "description": "Plataforma de participación ciudadana para la campaña presidencial de Juan Pablo Melinao González 2026",
+      "url": "https://chiledigno.cl/participacion-ciudadana",
+      "mainEntity": {
+        "@type": "GovernmentService",
+        "name": "Sistema de Consultas Ciudadanas",
+        "description": "Plataforma digital para recopilar consultas y propuestas ciudadanas",
+        "provider": {
+          "@type": "PoliticalParty",
+          "name": "Campaña Melinao 2026",
+          "candidate": {
+            "@type": "Person",
+            "name": "Juan Pablo Melinao González",
+            "jobTitle": "Candidato Presidencial"
+          }
+        }
+      }
+    }
+  },
   
   economia: {
     title: "Reforma Económica: Menos Impuestos, Más Sueldo - Melinao 2026 | Chile Próspero",
