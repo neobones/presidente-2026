@@ -9,14 +9,35 @@ const AuthStatus = ({ onAuthChange }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Verificar si hay token en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    if (token) {
+      // Guardar token y limpiar URL
+      localStorage.setItem('authToken', token);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
     checkAuthStatus();
   }, []);
 
   const checkAuthStatus = async () => {
     try {
       setLoading(true);
+      const token = localStorage.getItem('authToken');
+      
+      if (!token) {
+        setUser(null);
+        if (onAuthChange) onAuthChange(null);
+        return;
+      }
+
       const response = await fetch('/api/auth/user', {
-        credentials: 'include'
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
 
       if (response.ok) {
@@ -24,12 +45,14 @@ const AuthStatus = ({ onAuthChange }) => {
         setUser(userData);
         if (onAuthChange) onAuthChange(userData);
       } else if (response.status === 401) {
-        // Usuario no autenticado - normal
+        // Token inválido o expirado
+        localStorage.removeItem('authToken');
         setUser(null);
         if (onAuthChange) onAuthChange(null);
       }
     } catch (error) {
       console.log('Error verificando autenticación:', error);
+      localStorage.removeItem('authToken');
       setError('Error de conexión');
     } finally {
       setLoading(false);
@@ -61,18 +84,11 @@ const AuthStatus = ({ onAuthChange }) => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      setUser(null);
-      if (onAuthChange) onAuthChange(null);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error cerrando sesión:', error);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setUser(null);
+    if (onAuthChange) onAuthChange(null);
+    window.location.reload();
   };
 
   if (loading) {
