@@ -229,7 +229,7 @@ Buscamos personas comprometidas con la transformación de Chile:
 ## ⚖️ Información Legal
 
 ### 📋 Cumplimiento Electoral
-- **Servicio Electoral de Chile:** [Número de inscripción pending]
+- **Servicio Electoral de Chile:** https://patrocinantes.servel.cl/auth/login
 - **Transparencia:** Todos los aportes reportados según Ley 19.884
 - **Gastos Electorales:** Límites y reportes públicos
 - **Publicidad:** Identificación clara en toda comunicación
