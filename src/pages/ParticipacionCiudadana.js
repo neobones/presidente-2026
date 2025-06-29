@@ -4,6 +4,7 @@ import { MessageSquare, Users, TrendingUp, Filter, Search, Heart, Flag, Home, Us
 import SEOWrapper from '../components/SEOWrapper';
 import AuthStatus from '../components/AuthStatus';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
+import AlertService from '../utils/AlertService';
 import { seoConfigs } from '../data/seoConfigs';
 
 const ParticipacionCiudadana = () => {
@@ -104,14 +105,14 @@ const ParticipacionCiudadana = () => {
 
   const handleLike = async (consultaId) => {
     if (!usuario) {
-      alert('Debes iniciar sesión para dar like a las consultas');
+      await AlertService.info('Iniciar Sesión', 'Debes iniciar sesión para dar like a las consultas');
       return;
     }
 
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        await AlertService.sessionExpired();
         return;
       }
 
@@ -130,34 +131,44 @@ const ParticipacionCiudadana = () => {
             ? { ...c, likes: data.totalLikes }
             : c
         ));
+        
+        // Toast de éxito discreta
+        AlertService.toast('success', '¡Like agregado!');
       } else if (response.status === 401) {
         localStorage.removeItem('authToken');
         setUsuario(null);
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        await AlertService.sessionExpired();
       }
     } catch (error) {
       console.error('Error procesando like:', error);
+      await AlertService.networkError();
     }
   };
 
   const handleReport = async (consultaId) => {
     if (!usuario) {
-      alert('Debes iniciar sesión para reportar consultas');
-      return;
-    }
-
-    const motivo = prompt('¿Por qué deseas reportar esta consulta?\n\n1. Contenido inapropiado\n2. Spam\n3. Información falsa\n4. Otro\n\nEscribe tu motivo:');
-    
-    if (!motivo || motivo.trim() === '') {
+      await AlertService.info('Iniciar Sesión', 'Debes iniciar sesión para reportar consultas');
       return;
     }
 
     try {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+      // Usar el dialog personalizado de reporte
+      const result = await AlertService.confirmReport();
+      
+      if (!result.isConfirmed || !result.value) {
         return;
       }
+
+      const motivo = result.value.trim();
+      const token = localStorage.getItem('authToken');
+      
+      if (!token) {
+        await AlertService.sessionExpired();
+        return;
+      }
+
+      // Mostrar indicador de carga
+      AlertService.loading('Enviando reporte...');
 
       const response = await fetch(`/api/consultas/${consultaId}/report`, {
         method: 'POST',
@@ -165,21 +176,28 @@ const ParticipacionCiudadana = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ motivo: motivo.trim() })
+        body: JSON.stringify({ motivo })
       });
       
+      AlertService.close(); // Cerrar el loading
+      
       if (response.ok) {
-        alert('Reporte enviado correctamente. Gracias por ayudarnos a mantener una comunidad saludable.');
+        await AlertService.success(
+          'Reporte Enviado', 
+          'Gracias por ayudarnos a mantener una comunidad saludable.',
+          { autoClose: true }
+        );
       } else if (response.status === 401) {
         localStorage.removeItem('authToken');
         setUsuario(null);
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        await AlertService.sessionExpired();
       } else {
-        alert('Error enviando el reporte. Inténtalo nuevamente.');
+        await AlertService.error('Error', 'Error enviando el reporte. Inténtalo nuevamente.');
       }
     } catch (error) {
+      AlertService.close(); // Cerrar el loading si hay error
       console.error('Error reportando consulta:', error);
-      alert('Error enviando el reporte. Inténtalo nuevamente.');
+      await AlertService.networkError();
     }
   };
 

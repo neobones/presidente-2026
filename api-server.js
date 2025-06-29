@@ -379,18 +379,43 @@ app.post('/api/consultas', consultasLimiter, requireAuth, async (req, res) => {
       fechaEnvio: new Date()
     };
 
-    // Si el usuario está autenticado
-    if (req.isAuthenticated()) {
+    // Manejar datos del usuario (JWT o session authentication)
+    let userFromDB = null;
+    
+    // Si hay JWT authentication (req.user contiene el payload del JWT)
+    if (req.user && req.user.id && !req.user.incrementarConsultas) {
+      // Buscar el usuario completo en la base de datos
+      const Usuario = require('./src/models/Usuario');
+      userFromDB = await Usuario.findById(req.user.id);
+      
+      if (userFromDB) {
+        consultaData.userId = userFromDB._id;
+        consultaData.nombre = req.body.esAnonima ? '' : (req.body.nombre || userFromDB.nombre);
+        consultaData.email = req.body.esAnonima ? '' : (req.body.email || userFromDB.email);
+        consultaData.esAnonima = req.body.esAnonima || false;
+        consultaData.categoria = req.body.categoria || 'general';
+        
+        // Incrementar contador de consultas del usuario
+        await userFromDB.incrementarConsultas();
+      }
+    }
+    // Si hay session authentication (req.user es el modelo completo)
+    else if (req.isAuthenticated() && req.user.incrementarConsultas) {
       consultaData.userId = req.user._id;
-      consultaData.nombre = req.user.nombre;
-      consultaData.email = req.user.email;
+      consultaData.nombre = req.body.esAnonima ? '' : (req.body.nombre || req.user.nombre);
+      consultaData.email = req.body.esAnonima ? '' : (req.body.email || req.user.email);
+      consultaData.esAnonima = req.body.esAnonima || false;
+      consultaData.categoria = req.body.categoria || 'general';
       
       // Incrementar contador de consultas del usuario
       await req.user.incrementarConsultas();
-    } else {
-      // Usuario anónimo (mantener compatibilidad)
+    }
+    // Usuario no autenticado (no debería llegar aquí con requireAuth)
+    else {
       consultaData.nombre = nombre || '';
       consultaData.email = email || '';
+      consultaData.esAnonima = false;
+      consultaData.categoria = 'general';
     }
 
     const consulta = new Consulta(consultaData);

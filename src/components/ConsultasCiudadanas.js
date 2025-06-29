@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageSquare, Send, Lightbulb, ArrowRight, CheckCircle, X, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import AlertService from '../utils/AlertService';
 
 const ConsultasCiudadanas = ({ 
   tema = "general", 
@@ -112,7 +113,7 @@ const ConsultasCiudadanas = ({
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        await AlertService.sessionExpired();
         setIsSubmitting(false);
         return;
       }
@@ -142,36 +143,35 @@ const ConsultasCiudadanas = ({
       });
 
       if (response.ok) {
-        setIsSubmitted(true);
+        // Mostrar alerta de éxito
+        await AlertService.consultationSuccess();
+        
         setStats(prev => ({
           ...prev,
           totalConsultas: prev.totalConsultas + 1
         }));
         
-        // Reset form after success
-        setTimeout(() => {
-          handleClose();
-          setIsSubmitted(false);
-          setFormData({
-            nombre: usuario?.nombre || '',
-            email: usuario?.email || '',
-            region: '',
-            edad: '',
-            tipoConsulta: 'propuesta-nueva',
-            mensaje: ''
-          });
-          setEsAnonima(false);
-        }, 3000);
+        // Reset form and close modal
+        handleClose();
+        setFormData({
+          nombre: usuario?.nombre || '',
+          email: usuario?.email || '',
+          region: '',
+          edad: '',
+          tipoConsulta: 'propuesta-nueva',
+          mensaje: ''
+        });
+        setEsAnonima(false);
       } else if (response.status === 401) {
         localStorage.removeItem('authToken');
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        await AlertService.sessionExpired();
         window.location.reload();
       } else {
         throw new Error('Error al enviar consulta');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al enviar la consulta. Por favor, inténtalo nuevamente.');
+      await AlertService.networkError();
     } finally {
       setIsSubmitting(false);
     }
