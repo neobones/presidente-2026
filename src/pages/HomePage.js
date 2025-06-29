@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Cpu, DollarSign, Shield, Users, Heart, ArrowRight, Menu, X, Play, Star, Zap, Globe, TrendingUp } from 'lucide-react';
 import SEOWrapper from '../components/SEOWrapper';
+import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import { seoConfigs } from '../data/seoConfigs';
 
 const HomePage = () => {
@@ -811,6 +812,15 @@ const HomePage = () => {
           </div>
         </div>
       </footer>
+
+      {/* Consultas Ciudadanas */}
+      <ConsultasCiudadanas 
+        tema="general" 
+        titulo="Participa en la Construcción del Chile que Queremos"
+        descripcion="Tu voz es fundamental. Comparte tus ideas para mejorar nuestro país"
+        showStats={true}
+      />
+
       </div>
     </SEOWrapper>
   );

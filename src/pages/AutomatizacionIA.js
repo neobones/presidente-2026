@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle, Cpu, Clock, DollarSign, Users, Zap, TrendingUp, Shield, Globe, BarChart3, Monitor, Building2, MapPin, Star, Target, Calculator, BookOpen, Play, ChevronRight, Award, Briefcase, Heart, TreePine, Mountain, Building, X, Home, FileText, Timer, CheckSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
+import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import { seoConfigs } from '../data/seoConfigs';
 
 const AutomatizacionIA = () => {
@@ -1663,6 +1664,14 @@ const AutomatizacionIA = () => {
             </div>
           </div>
         )}
+
+        {/* Consultas Ciudadanas */}
+        <ConsultasCiudadanas 
+          tema="ia" 
+          titulo="Mejora la Reforma de Automatización con IA"
+          descripcion="¿Qué otros trámites te gustaría automatizar? Tu experiencia nos ayuda a priorizar"
+          showStats={true}
+        />
 
       </div>
     </SEOWrapper>
