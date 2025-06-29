@@ -88,16 +88,16 @@ const EconomiaDigital = () => {
       name: 'Sueldo Mínimo $900K',
       icon: <DollarSign className="w-12 h-12" />,
       costo: '$400B',
-      beneficio: '+58% ingresos',
+      beneficio: '+70% ingresos',
       poblacion: '40% trabajadores',
       descripcion: 'Aumento gradual con subsidios a PYMES',
       detalles: [
-        'Incremento de $380,000 a $900,000',
+        'Incremento de $529,000 (2025) a $900,000',
         'Subsidio estatal 50% para empresas <50 trabajadores',
         'Implementación gradual en 18 meses',
         'Beneficia 1.8 millones de trabajadores'
       ],
-      ejemplo: 'Un trabajador de retail pasará de ganar $380,000 a $900,000, mejorando su calidad de vida'
+      ejemplo: 'Un trabajador de retail pasará de ganar $529,000 a $900,000, mejorando significativamente su calidad de vida'
     },
     {
       id: 'formalizacion',
@@ -283,7 +283,7 @@ const EconomiaDigital = () => {
       
       // Cálculos reales basados en la reforma
       const ahorroIVA = gastos * 0.1; // 10% ahorro promedio en gastos
-      const nuevoSueldo = ingreso < 600000 ? 900000 : ingreso;
+      const nuevoSueldo = ingreso < 700000 ? 900000 : ingreso;
       const aumentoSueldo = nuevoSueldo - ingreso;
       const ahorroTotal = ahorroIVA + aumentoSueldo;
       const porcentajeMejora = ((ahorroTotal / ingreso) * 100).toFixed(1);

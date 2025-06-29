@@ -212,7 +212,7 @@ export const seoConfigs = {
   
   economia: {
     title: "Reforma Económica: Menos Impuestos, Más Sueldo - Melinao 2026 | Chile Próspero",
-    description: "Revolución económica: IVA 5% canasta básica, sueldo mínimo $900,000, formalización digital. Ahorro $50,000 mensual promedio por familia. Superávit fiscal $1.1T garantizado. Juan Pablo Melinao González transforma Chile hacia la prosperidad.",
+    description: "Revolución económica: IVA 5% canasta básica, sueldo mínimo $900,000 (+70% desde $529,000 actual), formalización digital. Ahorro $50,000 mensual promedio por familia. Superávit fiscal $1.1T garantizado. Juan Pablo Melinao González transforma Chile hacia la prosperidad.",
     keywords: [
       'reforma económica Chile 2026',
       'IVA 5% canasta básica',
@@ -280,7 +280,7 @@ export const seoConfigs = {
       ],
       "expectedBenefit": [
         "IVA 5% canasta básica (reducción desde 19%)",
-        "Sueldo mínimo $900,000 (aumento 58%)",
+        "Sueldo mínimo $900,000 (aumento 70% desde $529,000)",
         "Ahorro promedio $50,000 mensuales por familia",
         "Formalización 80% economía chilena",
         "Facturas electrónicas obligatorias arriendos",
