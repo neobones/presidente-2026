@@ -20,10 +20,32 @@ const ConsultasCiudadanas = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [stats, setStats] = useState({
-    totalConsultas: 847,
-    implementadas: 23,
-    enRevision: 156
+    totalConsultas: 0,
+    implementadas: 0,
+    enRevision: 0
   });
+
+  // Cargar estadísticas reales al montar el componente
+  React.useEffect(() => {
+    const loadRealStats = async () => {
+      try {
+        const response = await fetch('/api/consultas/stats');
+        if (response.ok) {
+          const data = await response.json();
+          setStats({
+            totalConsultas: data.total || 0,
+            implementadas: data.implementadas || 0,
+            enRevision: data.enRevision || 0
+          });
+        }
+      } catch (error) {
+        console.log('Error cargando estadísticas:', error);
+        // Mantener valores por defecto en caso de error
+      }
+    };
+
+    loadRealStats();
+  }, []);
 
   const regiones = [
     'Arica y Parinacota', 'Tarapacá', 'Antofagasta', 'Atacama', 'Coquimbo',

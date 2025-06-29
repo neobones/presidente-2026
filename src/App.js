@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import AutomatizacionIA from './pages/AutomatizacionIA';
 import EconomiaDigital from './pages/EconomiaDigital';
 import ParticipacionCiudadana from './pages/ParticipacionCiudadana';
+import AdminPage from './pages/AdminPage';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/participacion-ciudadana" element={<ParticipacionCiudadana />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/reformas/automatizacion-estado-inteligencia-artificial" element={<AutomatizacionIA />} />
         <Route path="/reformas/reduccion-costo-vida-impuestos" element={<EconomiaDigital />} />
         <Route path="/reformas/fronteras-seguras-migracion-controlada" element={<HomePage />} />
