@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowRight, CheckCircle, Calculator, DollarSign, Users, TrendingUp, Shield, Globe, PieChart, Home, FileText, Timer, CheckSquare, Target, Building, Percent, Receipt, X, Play, Briefcase, Store, Factory, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
+import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import { seoConfigs } from '../data/seoConfigs';
 
 const EconomiaDigital = () => {
@@ -1384,6 +1385,14 @@ const EconomiaDigital = () => {
             </div>
           </div>
         )}
+
+        {/* Consultas Ciudadanas */}
+        <ConsultasCiudadanas 
+          tema="economia" 
+          titulo="Mejora esta Reforma Económica"
+          descripcion="Tu experiencia importa. Ayúdanos a perfeccionar estas medidas económicas"
+          showStats={true}
+        />
 
       </div>
     </SEOWrapper>
