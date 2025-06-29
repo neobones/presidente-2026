@@ -211,13 +211,131 @@ export const seoConfigs = {
   },
   
   economia: {
-    title: "Reducción del Costo de Vida - Plan Económico Melinao 2026",
-    description: "IVA 5% canasta básica, sueldo mínimo $900.000, formalización digital. 10% menos costo de vida para las familias chilenas con Juan Pablo Melinao.",
-    keywords: ['reducción impuestos', 'sueldo mínimo', 'costo vida', 'formalización', 'iva canasta básica'],
-    canonicalUrl: "https://chiledigno.cl/programa-gobierno-2026/reduccion-costo-vida-impuestos",
+    title: "Reforma Económica: Menos Impuestos, Más Sueldo - Melinao 2026 | Chile Próspero",
+    description: "Revolución económica: IVA 5% canasta básica, sueldo mínimo $900,000, formalización digital. Ahorro $50,000 mensual promedio por familia. Superávit fiscal $1.1T garantizado. Juan Pablo Melinao González transforma Chile hacia la prosperidad.",
+    keywords: [
+      'reforma económica Chile 2026',
+      'IVA 5% canasta básica',
+      'sueldo mínimo 900 mil',
+      'reducción impuestos Chile',
+      'formalización digital',
+      'facturas electrónicas arriendos',
+      'impuesto sueldos altos',
+      'Juan Pablo Melinao economía',
+      'candidato presidencial economía',
+      'menos costo vida Chile',
+      'superávit fiscal Chile',
+      'reducción IVA alimentos',
+      'subsidio PYME sueldo mínimo',
+      'reforma tributaria progresiva',
+      'economía justa Chile',
+      'Melinao plan económico',
+      'prosperidad familiar Chile',
+      'desarrollo económico regional',
+      'justicia fiscal Chile',
+      'alivio económico familias'
+    ],
+    canonicalUrl: "https://chiledigno.cl/reformas/reduccion-costo-vida-impuestos",
     openGraph: {
-      image: '/images/economia-og.jpg'
-    }
+      image: '/images/economia-reforma-melinao-2026.jpg',
+      imageAlt: 'Juan Pablo Melinao - Reforma Económica Chile 2026: Menos Impuestos, Más Sueldo'
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": ["GovernmentService", "PublicPolicy", "EconomicPolicy"],
+      "name": "Reforma Económica: Reducción de Impuestos y Formalización",
+      "headline": "Chile Próspero 2026: Menos Impuestos, Más Sueldo para las Familias",
+      "description": "Plan integral de reforma económica chilena: IVA reducido, sueldo mínimo digno, formalización digital y justicia fiscal. Beneficios directos para 70% de las familias chilenas.",
+      "author": {
+        "@type": "Person",
+        "name": "Juan Pablo Melinao González",
+        "jobTitle": "Candidato Presidencial Chile 2026",
+        "ethnicity": "Mapuche",
+        "profession": "Ingeniero en Informática",
+        "politicalAffiliation": "Independiente"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Campaña Melinao 2026",
+        "url": "https://chiledigno.cl"
+      },
+      "serviceType": "Economic Reform Policy",
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        {
+          "@type": "Place",
+          "name": "Santiago"
+        },
+        {
+          "@type": "Place", 
+          "name": "Araucanía"
+        },
+        {
+          "@type": "Place",
+          "name": "Antofagasta"
+        }
+      ],
+      "expectedBenefit": [
+        "IVA 5% canasta básica (reducción desde 19%)",
+        "Sueldo mínimo $900,000 (aumento 58%)",
+        "Ahorro promedio $50,000 mensuales por familia",
+        "Formalización 80% economía chilena",
+        "Facturas electrónicas obligatorias arriendos",
+        "Impuesto 50% sueldos sobre $3 millones",
+        "Superávit fiscal $1.1 billones garantizado",
+        "Beneficia 70% familias chilenas directamente"
+      ],
+      "cost": {
+        "@type": "MonetaryAmount",
+        "currency": "CLP",
+        "value": "1700000000000000"
+      },
+      "funding": [
+        "Formalización economía digital (+$800B recaudación)",
+        "Impuesto progresivo sueldos altos (+$1.5-2T)",
+        "Optimización eficiencia tributaria",
+        "Eliminación privilegios fiscales"
+      ],
+      "timeline": {
+        "phase1": "Primeros 100 días: Ley IVA reducido y facturación arriendos",
+        "phase2": "Año 1-2: Sueldo mínimo $900K gradual con subsidios PYME",
+        "phase3": "Año 3-5: Formalización 80% y sistema tributario IA"
+      },
+      "targetAudience": [
+        "Trabajadores sueldo mínimo (1.8M personas)",
+        "Familias ingresos medios y bajos (60% hogares)",
+        "PYMES con dificultades salariales",
+        "Comerciantes informales (27% trabajadores)",
+        "Familias región Araucanía, Antofagasta, Santiago"
+      ],
+      "keyFeatures": {
+        "IVAReducido": "Canasta básica 5%, otros bienes 10%",
+        "SueldoMinimo": "$900,000 con subsidio estatal 50% PYMES",
+        "Formalizacion": "Facturas electrónicas arriendos/comercio/fundaciones",
+        "ImpuestoAlto": "50% progresivo sobre $3M, 30% entre $2-3M",
+        "Sostenibilidad": "Superávit $1.1T, retorno inversión 2-3 años"
+      },
+      "economicImpact": {
+        "families": "70% familias chilenas beneficiadas directamente",
+        "savings": "$50,000 ahorro mensual promedio por familia", 
+        "formalization": "80% economía formalizada en 5 años",
+        "revenue": "$800B adicionales por formalización",
+        "employment": "1.8M trabajadores sueldo mínimo $900K"
+      }
+    },
+    politicalKeywords: [
+      'elecciones Chile 2026',
+      'candidato presidencial mapuche',
+      'independiente economía',
+      'reforma tributaria Chile',
+      'justicia económica',
+      'Chile próspero familias',
+      'alivio costo vida',
+      'economía justa Chile'
+    ]
   },
   
   seguridad: {

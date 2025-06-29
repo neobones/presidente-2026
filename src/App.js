@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AutomatizacionIA from './pages/AutomatizacionIA';
+import EconomiaDigital from './pages/EconomiaDigital';
 
 const App = () => {
   return (
@@ -9,8 +10,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/reformas/automatizacion-estado-inteligencia-artificial" element={<AutomatizacionIA />} />
-        {/* Futuras rutas para otras reformas */}
-        <Route path="/reformas/reduccion-costo-vida-impuestos" element={<HomePage />} />
+        <Route path="/reformas/reduccion-costo-vida-impuestos" element={<EconomiaDigital />} />
         <Route path="/reformas/fronteras-seguras-migracion-controlada" element={<HomePage />} />
         <Route path="/reformas/justicia-social-profesores-privilegios" element={<HomePage />} />
         <Route path="/reformas/unidad-nacional-araucania-desarrollo" element={<HomePage />} />
