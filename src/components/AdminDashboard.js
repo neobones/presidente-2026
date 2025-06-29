@@ -12,6 +12,7 @@ const AdminDashboard = () => {
   });
   const [consultas, setConsultas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
   const [filtros, setFiltros] = useState({
     estado: '',
     categoria: '',
@@ -42,7 +43,35 @@ const AdminDashboard = () => {
         ...filtros
       });
 
-      const response = await fetch(`/api/consultas/admin?${params}`);
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.error('Token de autenticación requerido');
+        setConsultas([]);
+        return;
+      }
+
+      const response = await fetch(`/api/consultas/admin?${params}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 401) {
+        console.error('No autorizado - Token inválido o expirado');
+        localStorage.removeItem('authToken');
+        setAuthError('Sesión expirada. Por favor, inicia sesión nuevamente.');
+        setConsultas([]);
+        return;
+      }
+
+      if (response.status === 403) {
+        console.error('Acceso denegado - No tienes permisos de administrador');
+        setAuthError('Acceso denegado. Solo administradores autorizados pueden acceder a esta sección.');
+        setConsultas([]);
+        return;
+      }
+
       const data = await response.json();
       setConsultas(data.consultas || []);
     } catch (error) {
@@ -54,11 +83,31 @@ const AdminDashboard = () => {
 
   const updateEstado = async (id, nuevoEstado) => {
     try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.error('Token de autenticación requerido');
+        return;
+      }
+
       const response = await fetch(`/api/consultas/${id}/estado`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ estado: nuevoEstado })
       });
+
+      if (response.status === 401) {
+        console.error('No autorizado - Token inválido o expirado');
+        localStorage.removeItem('authToken');
+        return;
+      }
+
+      if (response.status === 403) {
+        console.error('Acceso denegado - No tienes permisos de administrador');
+        return;
+      }
 
       if (response.ok) {
         setConsultas(prev => prev.map(c => 
@@ -101,6 +150,27 @@ const AdminDashboard = () => {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+
+  // Mostrar error de autenticación si existe
+  if (authError) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
+          <div className="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-4">
+            <X className="w-8 h-8 text-red-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Acceso Restringido</h3>
+          <p className="text-gray-600 mb-6">{authError}</p>
+          <button
+            onClick={() => window.location.href = '/participacion-ciudadana'}
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Volver al Inicio
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
