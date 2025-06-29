@@ -22,12 +22,16 @@ const AdminDashboard = () => {
   useEffect(() => {
     // Debug: verificar token al cargar
     const token = localStorage.getItem('authToken');
-    console.log('🔐 Token disponible:', !!token);
+    console.log('🔐 AdminDashboard - Token disponible:', !!token);
+    console.log('🔐 AdminDashboard - localStorage keys:', Object.keys(localStorage));
+    console.log('🔐 AdminDashboard - URL actual:', window.location.href);
+    
     if (token) {
       console.log('🔐 Token (primeros 50 chars):', token.substring(0, 50) + '...');
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
         console.log('🔐 Payload del token:', payload);
+        console.log('🔐 Token expirado?', payload.exp < Date.now() / 1000);
       } catch (e) {
         console.error('🔐 Error decodificando token:', e);
       }
