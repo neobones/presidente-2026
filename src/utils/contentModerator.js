@@ -18,7 +18,7 @@ class ContentModerator {
     
     // Chileno específico
     'weón', 'weon', 'weona', 'weá', 'wea', 'culiado', 'culiada', 'culiao', 'culia',
-    'sacowea', 'sacohuea', 'sacoweas', 'conchetumare', 'conche tu mare',
+    'sacowea', 'sacohuea', 'sacoweas', 'conchetumare', 'conche tu mare', 'conchadetumadre', 'concha de tu madre',
     'aweonao', 'aweonado', 'aweonada', 'picao', 'picado', 'picada',
     'flaite', 'flaites', 'peazo', 'pelotudo', 'pelotuda', 'tarado', 'tarada',
     'huevón', 'huevona', 'reconchesumadre', 'reconchesumare',

@@ -312,7 +312,9 @@ consultaSchema.statics.getConsultasPublicas = async function(filtros = {}, opcio
   const consulta = {
     esPublica: true,
     moderada: false,
-    estadoModeracion: { $ne: 'rechazado_manual' }, // Excluir consultas rechazadas
+    estadoModeracion: { 
+      $in: ['automatico_aprobado', 'aprobado_manual'] // Solo mostrar consultas aprobadas
+    },
     ...filtros
   };
 

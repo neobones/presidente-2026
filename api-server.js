@@ -650,6 +650,49 @@ app.get('/api/consultas/moderacion', verifyJWT, verifyAdmin, async (req, res) =>
   }
 });
 
+// Endpoint para re-procesar moderación de todas las consultas existentes
+app.post('/api/consultas/reprocess-moderation', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const consultas = await Consulta.find({
+      $or: [
+        { estadoModeracion: { $exists: false } },
+        { 'analisisContenido.esOfensivo': { $exists: false } }
+      ]
+    });
+
+    let procesadas = 0;
+    let rechazadas = 0;
+
+    for (const consulta of consultas) {
+      const analisisOriginal = consulta.analisisContenido;
+      consulta.moderarContenido();
+      
+      if (consulta.estadoModeracion === 'pendiente_revision') {
+        rechazadas++;
+      }
+      
+      await consulta.save();
+      procesadas++;
+    }
+
+    console.log(`🔄 Re-procesamiento completado: ${procesadas} consultas procesadas, ${rechazadas} marcadas para revisión`);
+
+    res.json({
+      success: true,
+      message: `Re-procesamiento completado exitosamente`,
+      estadisticas: {
+        procesadas,
+        rechazadas,
+        aprobadas: procesadas - rechazadas
+      }
+    });
+
+  } catch (error) {
+    console.error('Error re-procesando moderación:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 // Endpoint para aprobar/rechazar consultas
 app.post('/api/consultas/:id/moderar', verifyJWT, verifyAdmin, async (req, res) => {
   try {
