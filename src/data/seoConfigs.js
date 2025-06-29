@@ -1,3 +1,5 @@
+import { getCurrentDomain } from '../utils/domainUtils';
+
 export const seoConfigs = {
   home: {
     title: "Juan Pablo Melinao González - Candidato Presidencial Chile 2026",
@@ -24,7 +26,7 @@ export const seoConfigs = {
       'elecciones presidenciales 2026',
       'reforma tributaria Chile'
     ],
-    canonicalUrl: "https://chiledigno.cl/",
+    canonicalUrl: () => getCurrentDomain() + "/",
     structuredData: {
       "@context": "https://schema.org",
       "@type": ["Person", "PoliticalCandidate"],
@@ -37,8 +39,8 @@ export const seoConfigs = {
       "profession": "Ingeniero en Informática",
       "politicalAffiliation": "Independiente",
       "campaignSlogan": "Tecnología para Todos, Unidad para Chile",
-      "url": "https://chiledigno.cl",
-      "email": "contacto@chiledigno.cl",
+      "url": () => getCurrentDomain(),
+      "email": () => `contacto@${getCurrentDomain().replace('https://', '').replace('http://', '')}`,
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "Chile",

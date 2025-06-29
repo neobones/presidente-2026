@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, LogIn, AlertCircle, CheckCircle, Settings } from 'lucide-react';
+import { buildApiUrl } from '../utils/domainUtils';
 
 const AuthStatus = ({ onAuthChange }) => {
   const [user, setUser] = useState(null);
@@ -37,6 +38,8 @@ const AuthStatus = ({ onAuthChange }) => {
 
   const handleLogin = async () => {
     try {
+      const apiUrl = buildApiUrl('/api/auth/google');
+      
       // Verificar si OAuth está disponible
       const response = await fetch('/api/auth/google', {
         method: 'GET',
@@ -51,7 +54,7 @@ const AuthStatus = ({ onAuthChange }) => {
       }
 
       // Si OAuth está disponible, redirigir
-      window.location.href = '/api/auth/google';
+      window.location.href = apiUrl;
     } catch (error) {
       setError('Error iniciando sesión');
       setOauthAvailable(false);

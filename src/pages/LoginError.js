@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertCircle, ArrowLeft, RefreshCw } from 'lucide-react';
+import { buildApiUrl, getMainDomain } from '../utils/domainUtils';
 
 const LoginError = () => {
   useEffect(() => {
@@ -8,9 +9,7 @@ const LoginError = () => {
   }, []);
 
   const handleRetryLogin = () => {
-    const apiUrl = window.location.hostname === 'localhost' 
-      ? 'http://localhost:8000/api/auth/google'
-      : 'https://chiledigno.cl/api/auth/google';
+    const apiUrl = buildApiUrl('/api/auth/google');
     window.location.href = apiUrl;
   };
 
@@ -104,10 +103,10 @@ const LoginError = () => {
             <p>
               Puedes enviarnos tu consulta por correo a:{' '}
               <a 
-                href="mailto:contacto@chiledigno.cl" 
+                href={`mailto:contacto@${getMainDomain()}`}
                 className="text-blue-400 hover:text-blue-300 underline"
               >
-                contacto@chiledigno.cl
+                contacto@{getMainDomain()}
               </a>
             </p>
           </div>

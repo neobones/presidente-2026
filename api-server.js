@@ -76,13 +76,18 @@ if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
   console.warn('ℹ️  Ejecuta: /root/application/setup-oauth.sh para configurar');
 }
 
+// Función para obtener la URL base de producción
+const getProductionUrl = () => {
+  return process.env.FRONTEND_URL_PROD || 'https://melinao2026.cl';
+};
+
 // Configurar Google OAuth Strategy solo si hay credenciales
 if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
   passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.NODE_ENV === 'production' 
-      ? 'https://chiledigno.cl/api/auth/google/callback'
+      ? `${getProductionUrl()}/api/auth/google/callback`
       : 'http://localhost:8000/api/auth/google/callback'
   }, async (accessToken, refreshToken, profile, done) => {
     try {
@@ -157,11 +162,15 @@ app.get('/api/auth/google', (req, res, next) => {
 
 // Callback de Google OAuth
 app.get('/api/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login-error' }),
+  passport.authenticate('google', { 
+    failureRedirect: process.env.NODE_ENV === 'production' 
+      ? `${getProductionUrl()}/login-error`
+      : 'http://localhost:3000/login-error'
+  }),
   (req, res) => {
     // Redirigir a la página de participación con éxito
     res.redirect(process.env.NODE_ENV === 'production' 
-      ? 'https://chiledigno.cl/participacion-ciudadana?login=success'
+      ? `${getProductionUrl()}/participacion-ciudadana?login=success`
       : 'http://localhost:3000/participacion-ciudadana?login=success'
     );
   }

@@ -1,16 +1,22 @@
 import { useEffect } from 'react';
+import { getCurrentDomain, getMainDomain } from '../utils/domainUtils';
 
 export const useSEO = (config = {}) => {
   const {
     title = 'Juan Pablo Melinao González - Candidato Presidencial Chile 2026',
     description = 'Ingeniero Mapuche Independiente. Automatización IA del Estado, reducción IVA 5%, sueldo mínimo $900k. Desarrollo Araucanía $300 mil millones. Tecnología para Todos, Unidad para Chile.',
     keywords = [],
-    canonicalUrl = 'https://chiledigno.cl',
+    canonicalUrl = null,
     openGraph = {},
     structuredData = null,
     politicalKeywords = []
   } = config;
   useEffect(() => {
+    // Obtener URLs dinámicas
+    const currentDomain = getCurrentDomain();
+    const mainDomain = getMainDomain();
+    const currentCanonicalUrl = canonicalUrl || currentDomain;
+    
     // Título
     document.title = `${title} | Melinao 2026 - Presidente de Chile`;
     
@@ -71,13 +77,13 @@ export const useSEO = (config = {}) => {
     updateMeta('keywords', allKeywords);
     
     // Canonical URL
-    updateLink('canonical', canonicalUrl);
+    updateLink('canonical', currentCanonicalUrl);
     
     // Open Graph optimizado para campaña política
     updateMeta('property', 'og:type', 'website');
     updateMeta('property', 'og:title', title);
     updateMeta('property', 'og:description', description);
-    updateMeta('property', 'og:url', canonicalUrl);
+    updateMeta('property', 'og:url', currentCanonicalUrl);
     updateMeta('property', 'og:site_name', 'Melinao 2026 - Chile Digno');
     updateMeta('property', 'og:image', openGraph.image || '/images/melinao-og-default.jpg');
     updateMeta('property', 'og:image:width', '1200');
@@ -91,7 +97,7 @@ export const useSEO = (config = {}) => {
     updateMeta('property', 'og:rich_attachment', 'true');
     updateMeta('property', 'og:updated_time', new Date().toISOString());
     updateMeta('property', 'article:author', 'Juan Pablo Melinao González');
-    updateMeta('property', 'article:publisher', 'https://chiledigno.cl');
+    updateMeta('property', 'article:publisher', currentDomain);
     updateMeta('property', 'article:section', 'Política');
     updateMeta('property', 'article:tag', 'Elecciones 2026, Candidato Presidencial, Chile, Mapuche, Tecnología');
     
@@ -103,8 +109,8 @@ export const useSEO = (config = {}) => {
     updateMeta('name', 'twitter:description', description);
     updateMeta('name', 'twitter:image', openGraph.image || '/images/melinao-twitter-default.jpg');
     updateMeta('name', 'twitter:image:alt', 'Juan Pablo Melinao González - Candidato Presidencial Chile 2026');
-    updateMeta('name', 'twitter:domain', 'chiledigno.cl');
-    updateMeta('name', 'twitter:url', canonicalUrl);
+    updateMeta('name', 'twitter:domain', mainDomain);
+    updateMeta('name', 'twitter:url', currentCanonicalUrl);
     
     // Meta para otras redes sociales
     updateMeta('name', 'facebook-domain-verification', 'melinao2026campaign');
@@ -144,10 +150,37 @@ export const useSEO = (config = {}) => {
     
     // Schema.org JSON-LD
     if (structuredData) {
-      updateStructuredData(structuredData);
+      // Ejecutar funciones dinámicas en structuredData
+      const processedData = processStructuredData(structuredData, currentDomain, mainDomain);
+      updateStructuredData(processedData);
     }
     
   }, [title, description, keywords, canonicalUrl, openGraph, structuredData, politicalKeywords]);
+};
+
+// Función para procesar structuredData dinámico
+const processStructuredData = (data, currentDomain, mainDomain) => {
+  if (typeof data !== 'object' || data === null) return data;
+  
+  if (Array.isArray(data)) {
+    return data.map(item => processStructuredData(item, currentDomain, mainDomain));
+  }
+  
+  const processed = {};
+  
+  for (const [key, value] of Object.entries(data)) {
+    if (typeof value === 'function') {
+      // Ejecutar funciones dinámicas
+      processed[key] = value();
+    } else if (typeof value === 'object') {
+      // Procesar objetos anidados recursivamente
+      processed[key] = processStructuredData(value, currentDomain, mainDomain);
+    } else {
+      processed[key] = value;
+    }
+  }
+  
+  return processed;
 };
 
 // Funciones auxiliares para manipular DOM
