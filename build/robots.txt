@@ -1,0 +1,54 @@
+# Robots.txt para Campaña Presidencial Melinao 2026
+# https://chiledigno.cl/robots.txt
+
+User-agent: *
+Allow: /
+
+# Permitir acceso completo a buscadores principales
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Bloquear crawlers problemáticos
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Configuraciones específicas
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://chiledigno.cl/sitemap.xml
+
+# Información adicional
+# Sitio web oficial de Juan Pablo Melinao González
+# Candidato Presidencial Chile 2026 - Independiente
+# Contacto: contacto@chiledigno.cl
