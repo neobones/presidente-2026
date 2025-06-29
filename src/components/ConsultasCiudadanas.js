@@ -6,9 +6,26 @@ const ConsultasCiudadanas = ({
   tema = "general", 
   titulo = "Consulta Ciudadana", 
   descripcion = "Tu opinión es importante para mejorar nuestras propuestas",
-  showStats = true 
+  showStats = true,
+  isOpen: externalIsOpen = null,
+  onClose = null
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = externalIsOpen !== null ? externalIsOpen : internalIsOpen;
+  
+  const handleClose = () => {
+    if (externalIsOpen !== null && onClose) {
+      onClose(false);
+    } else {
+      setInternalIsOpen(false);
+    }
+  };
+  
+  const handleOpen = () => {
+    if (externalIsOpen === null) {
+      setInternalIsOpen(true);
+    }
+  };
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -65,6 +82,13 @@ const ConsultasCiudadanas = ({
     setIsSubmitting(true);
 
     try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        setIsSubmitting(false);
+        return;
+      }
+
       const consultaData = {
         ...formData,
         tema,
@@ -76,6 +100,7 @@ const ConsultasCiudadanas = ({
       const response = await fetch('/api/consultas', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(consultaData)
@@ -90,7 +115,7 @@ const ConsultasCiudadanas = ({
         
         // Reset form after success
         setTimeout(() => {
-          setIsOpen(false);
+          handleClose();
           setIsSubmitted(false);
           setFormData({
             nombre: '',
@@ -101,6 +126,10 @@ const ConsultasCiudadanas = ({
             mensaje: ''
           });
         }, 3000);
+      } else if (response.status === 401) {
+        localStorage.removeItem('authToken');
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        window.location.reload();
       } else {
         throw new Error('Error al enviar consulta');
       }
@@ -120,7 +149,7 @@ const ConsultasCiudadanas = ({
     <div className="relative">
       {/* Trigger Button */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpen}
         className="group fixed bottom-6 right-6 z-40 bg-gradient-to-r from-blue-600 to-green-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
       >
         <MessageSquare className="w-6 h-6 group-hover:animate-pulse" />
@@ -160,7 +189,7 @@ const ConsultasCiudadanas = ({
                       <p className="text-blue-100">{descripcion}</p>
                     </div>
                     <button 
-                      onClick={() => setIsOpen(false)}
+                      onClick={handleClose}
                       className="p-2 hover:bg-white/20 rounded-full transition-colors"
                     >
                       <X className="w-6 h-6" />
@@ -308,7 +337,7 @@ const ConsultasCiudadanas = ({
                   <div className="flex space-x-4">
                     <button
                       type="button"
-                      onClick={() => setIsOpen(false)}
+                      onClick={handleClose}
                       className="flex-1 bg-gray-500 text-white font-bold py-3 rounded-xl hover:bg-gray-600 transition-colors"
                     >
                       Cancelar
