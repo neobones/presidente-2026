@@ -200,6 +200,7 @@ app.get('/api/auth/google/callback',
       id: req.user._id,
       nombre: req.user.nombre,
       email: req.user.email,
+      avatar: req.user.avatar,
       provider: req.user.provider
     };
     
@@ -226,6 +227,7 @@ app.get('/api/auth/user', (req, res) => {
         id: decoded.id,
         nombre: decoded.nombre,
         email: decoded.email,
+        avatar: decoded.avatar,
         provider: decoded.provider
       });
     } catch (error) {

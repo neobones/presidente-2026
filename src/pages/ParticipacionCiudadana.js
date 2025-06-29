@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MessageSquare, Users, TrendingUp, Filter, Search, Heart, Flag, Home, User, LogIn, LogOut, MapPin, Calendar, Tag, ChevronDown } from 'lucide-react';
 import SEOWrapper from '../components/SEOWrapper';
 import AuthStatus from '../components/AuthStatus';
+import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import { seoConfigs } from '../data/seoConfigs';
 
 const ParticipacionCiudadana = () => {
@@ -20,6 +21,7 @@ const ParticipacionCiudadana = () => {
   });
   const [usuario, setUsuario] = useState(null);
   const [showFiltros, setShowFiltros] = useState(false);
+  const [showConsultaModal, setShowConsultaModal] = useState(false);
 
   // Verificar estado de autenticación al cargar
   useEffect(() => {
@@ -30,12 +32,25 @@ const ParticipacionCiudadana = () => {
 
   const checkAuthStatus = async () => {
     try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setUsuario(null);
+        return;
+      }
+      
       const response = await fetch('/api/auth/user', {
-        credentials: 'include'
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
+      
       if (response.ok) {
         const userData = await response.json();
         setUsuario(userData);
+      } else if (response.status === 401) {
+        localStorage.removeItem('authToken');
+        setUsuario(null);
       }
     } catch (error) {
       console.log('Usuario no autenticado');
@@ -81,17 +96,10 @@ const ParticipacionCiudadana = () => {
     window.location.href = '/api/auth/google';
   };
 
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      setUsuario(null);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error cerrando sesión:', error);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setUsuario(null);
+    window.location.reload();
   };
 
   const handleLike = async (consultaId) => {
@@ -101,9 +109,18 @@ const ParticipacionCiudadana = () => {
     }
 
     try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        return;
+      }
+
       const response = await fetch(`/api/consultas/${consultaId}/like`, {
         method: 'POST',
-        credentials: 'include'
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
       
       if (response.ok) {
@@ -113,9 +130,56 @@ const ParticipacionCiudadana = () => {
             ? { ...c, likes: data.totalLikes }
             : c
         ));
+      } else if (response.status === 401) {
+        localStorage.removeItem('authToken');
+        setUsuario(null);
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
       }
     } catch (error) {
       console.error('Error procesando like:', error);
+    }
+  };
+
+  const handleReport = async (consultaId) => {
+    if (!usuario) {
+      alert('Debes iniciar sesión para reportar consultas');
+      return;
+    }
+
+    const motivo = prompt('¿Por qué deseas reportar esta consulta?\n\n1. Contenido inapropiado\n2. Spam\n3. Información falsa\n4. Otro\n\nEscribe tu motivo:');
+    
+    if (!motivo || motivo.trim() === '') {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+        return;
+      }
+
+      const response = await fetch(`/api/consultas/${consultaId}/report`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ motivo: motivo.trim() })
+      });
+      
+      if (response.ok) {
+        alert('Reporte enviado correctamente. Gracias por ayudarnos a mantener una comunidad saludable.');
+      } else if (response.status === 401) {
+        localStorage.removeItem('authToken');
+        setUsuario(null);
+        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+      } else {
+        alert('Error enviando el reporte. Inténtalo nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error reportando consulta:', error);
+      alert('Error enviando el reporte. Inténtalo nuevamente.');
     }
   };
 
@@ -326,7 +390,10 @@ const ParticipacionCiudadana = () => {
                       </button>
 
                       {usuario && (
-                        <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-700 transition-colors">
+                        <button 
+                          onClick={() => handleReport(consulta._id)}
+                          className="flex items-center space-x-1 text-gray-500 hover:text-gray-700 transition-colors"
+                        >
                           <Flag className="w-4 h-4" />
                           <span className="text-xs">Reportar</span>
                         </button>
@@ -365,13 +432,13 @@ const ParticipacionCiudadana = () => {
               }
             </p>
             {usuario ? (
-              <Link
-                to="/"
+              <button
+                onClick={() => setShowConsultaModal(true)}
                 className="inline-flex items-center space-x-2 bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all duration-300"
               >
                 <MessageSquare className="w-5 h-5" />
                 <span>Participar Ahora</span>
-              </Link>
+              </button>
             ) : (
               <button
                 onClick={handleLogin}
@@ -384,6 +451,16 @@ const ParticipacionCiudadana = () => {
           </div>
         </section>
       </div>
+
+      {/* Consultation Modal */}
+      <ConsultasCiudadanas 
+        tema="participacion-ciudadana"
+        titulo="Nueva Consulta Ciudadana"
+        descripcion="Comparte tu propuesta para formar parte del cambio que necesita nuestro país"
+        showStats={false}
+        isOpen={showConsultaModal}
+        onClose={setShowConsultaModal}
+      />
     </SEOWrapper>
   );
 };
