@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare, Users, TrendingUp, Filter, Search, Heart, Flag, Home, User, LogIn, LogOut, MapPin, Calendar, Tag, ChevronDown } from 'lucide-react';
 import SEOWrapper from '../components/SEOWrapper';
+import AuthStatus from '../components/AuthStatus';
 import { seoConfigs } from '../data/seoConfigs';
 
 const ParticipacionCiudadana = () => {
@@ -182,33 +183,7 @@ const ParticipacionCiudadana = () => {
               </Link>
 
               {/* Usuario */}
-              <div className="flex items-center space-x-4">
-                {usuario ? (
-                  <div className="flex items-center space-x-3">
-                    <img 
-                      src={usuario.avatar || '/images/default-avatar.svg'} 
-                      alt={usuario.nombre}
-                      className="w-8 h-8 rounded-full"
-                    />
-                    <span className="text-sm font-medium text-gray-700">{usuario.nombre}</span>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center space-x-1 text-red-600 hover:text-red-700 transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span className="text-sm">Salir</span>
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={handleLogin}
-                    className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    <span>Iniciar Sesión</span>
-                  </button>
-                )}
-              </div>
+              <AuthStatus onAuthChange={setUsuario} />
             </div>
           </div>
         </header>

@@ -66,21 +66,35 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Configurar Google OAuth Strategy
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID || 'your-google-client-id',
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'your-google-client-secret',
-  callbackURL: process.env.NODE_ENV === 'production' 
-    ? 'https://chiledigno.cl/api/auth/google/callback'
-    : 'http://localhost:8000/api/auth/google/callback'
-}, async (accessToken, refreshToken, profile, done) => {
-  try {
-    const usuario = await Usuario.buscarOCrearOAuth(profile, 'google');
-    return done(null, usuario);
-  } catch (error) {
-    return done(error, null);
-  }
-}));
+// Verificar configuración OAuth
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
+  console.warn('⚠️  Credenciales OAuth no configuradas. Login deshabilitado.');
+  console.warn('ℹ️  Ejecuta: /root/application/setup-oauth.sh para configurar');
+}
+
+// Configurar Google OAuth Strategy solo si hay credenciales
+if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
+  passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.NODE_ENV === 'production' 
+      ? 'https://chiledigno.cl/api/auth/google/callback'
+      : 'http://localhost:8000/api/auth/google/callback'
+  }, async (accessToken, refreshToken, profile, done) => {
+    try {
+      const usuario = await Usuario.buscarOCrearOAuth(profile, 'google');
+      return done(null, usuario);
+    } catch (error) {
+      return done(error, null);
+    }
+  }));
+  console.log('✅ Google OAuth configurado correctamente');
+} else {
+  console.log('⏭️  Google OAuth omitido - configurar credenciales');
+}
 
 // Serialización de usuarios para sesiones
 passport.serializeUser((user, done) => {
@@ -129,9 +143,16 @@ const requireAuth = (req, res, next) => {
 // Rutas de Autenticación
 
 // Iniciar autenticación con Google
-app.get('/api/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
+app.get('/api/auth/google', (req, res, next) => {
+  if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
+    return res.status(503).json({
+      error: 'OAuth no configurado',
+      message: 'Las credenciales de Google OAuth no están configuradas en el servidor.',
+      setup: 'Contacta al administrador para configurar las credenciales'
+    });
+  }
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+});
 
 // Callback de Google OAuth
 app.get('/api/auth/google/callback',
