@@ -1,4 +1,4 @@
-# Juan Pablo Melinao González - Presidente 2026
+# Juan Pablo Melinao González - Presidente 2026 - Independiente
 
 <div align="center">
 
