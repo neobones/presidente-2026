@@ -38,7 +38,7 @@ const ConsultasCiudadanas = ({
     region: '',
     edad: '',
     tema: tema || 'general',
-    tipoConsulta: 'propuesta-nueva',
+    tipoConsulta: 'sugerencia',
     mensaje: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -105,15 +105,15 @@ const ConsultasCiudadanas = ({
 
   const tiposConsulta = [
     // Relacionadas con reformas existentes
-    { id: 'apoyo-reforma', name: 'Apoyo a reforma propuesta', icon: <CheckCircle className="w-4 h-4" />, categoria: 'reforma' },
-    { id: 'mejora-reforma', name: 'Mejora a reforma propuesta', icon: <Lightbulb className="w-4 h-4" />, categoria: 'reforma' },
-    { id: 'critica-reforma', name: 'Crítica constructiva a reforma', icon: <MessageSquare className="w-4 h-4" />, categoria: 'reforma' },
-    { id: 'duda-reforma', name: 'Consulta sobre reforma', icon: <ArrowRight className="w-4 h-4" />, categoria: 'reforma' },
+    { id: 'apoyo', name: 'Apoyo a reforma propuesta', icon: <CheckCircle className="w-4 h-4" />, categoria: 'reforma' },
+    { id: 'sugerencia', name: 'Mejora a reforma propuesta', icon: <Lightbulb className="w-4 h-4" />, categoria: 'reforma' },
+    { id: 'critica', name: 'Crítica constructiva a reforma', icon: <MessageSquare className="w-4 h-4" />, categoria: 'reforma' },
+    { id: 'duda', name: 'Consulta sobre reforma', icon: <ArrowRight className="w-4 h-4" />, categoria: 'reforma' },
     
-    // Nuevas propuestas ciudadanas
-    { id: 'propuesta-nueva', name: 'Nueva propuesta ciudadana', icon: <Lightbulb className="w-4 h-4" />, categoria: 'propuesta' },
-    { id: 'problema-local', name: 'Problema local/regional', icon: <MessageSquare className="w-4 h-4" />, categoria: 'propuesta' },
-    { id: 'idea-innovacion', name: 'Idea de innovación', icon: <ArrowRight className="w-4 h-4" />, categoria: 'propuesta' }
+    // Nuevas propuestas ciudadanas - reutilizamos los tipos válidos del schema
+    { id: 'sugerencia', name: 'Nueva propuesta ciudadana', icon: <Lightbulb className="w-4 h-4" />, categoria: 'propuesta' },
+    { id: 'critica', name: 'Problema local/regional', icon: <MessageSquare className="w-4 h-4" />, categoria: 'propuesta' },
+    { id: 'duda', name: 'Idea de innovación', icon: <ArrowRight className="w-4 h-4" />, categoria: 'propuesta' }
   ];
 
   const handleSubmit = async (e) => {
@@ -134,7 +134,7 @@ const ConsultasCiudadanas = ({
         ...formData,
         tema: formData.tema, // Usar el tema seleccionado por el usuario
         esAnonima,
-        categoria: tipoSeleccionado?.categoria || 'general',
+        categoria: formData.tema, // Usar el tema como categoría (ambos usan los mismos valores válidos)
         // Si es anónima, no enviar datos personales
         nombre: esAnonima ? '' : formData.nombre,
         email: esAnonima ? '' : formData.email,
@@ -169,7 +169,7 @@ const ConsultasCiudadanas = ({
           region: '',
           edad: '',
           tema: tema || 'general',
-          tipoConsulta: 'propuesta-nueva',
+          tipoConsulta: 'sugerencia',
           mensaje: ''
         });
         setEsAnonima(false);
