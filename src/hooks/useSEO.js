@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 
-export const useSEO = ({ 
-  title, 
-  description, 
-  keywords = [], 
-  canonicalUrl,
-  openGraph = {},
-  structuredData = null,
-  politicalKeywords = []
-}) => {
+export const useSEO = (config = {}) => {
+  const {
+    title = 'Juan Pablo Melinao González - Candidato Presidencial Chile 2026',
+    description = 'Ingeniero Mapuche Independiente. Automatización IA del Estado, reducción IVA 5%, sueldo mínimo $900k. Desarrollo Araucanía $300 mil millones. Tecnología para Todos, Unidad para Chile.',
+    keywords = [],
+    canonicalUrl = 'https://chiledigno.cl',
+    openGraph = {},
+    structuredData = null,
+    politicalKeywords = []
+  } = config;
   useEffect(() => {
     // Título
     document.title = `${title} | Melinao 2026 - Presidente de Chile`;
