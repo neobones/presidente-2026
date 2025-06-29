@@ -122,10 +122,11 @@ const EconomiaDigital = () => {
       costo: '$0',
       beneficio: '$1.5-2T recaudación',
       poblacion: '5% mayores ingresos',
-      descripcion: '50% impuesto para ingresos sobre $3 millones',
+      descripcion: '50% impuesto para ingresos sobre $3 millones (20% fuerzas armadas)',
       detalles: [
         'Afecta solo al 5% de mayores ingresos',
-        'Progresivo: 30% entre $2-3M, 50% sobre $3M',
+        'Progresivo: 30% entre $2-3M, 50% sobre $3M (20% FFAA)',
+        'Fuerzas Armadas: tasa especial 20% (reconocimiento servicio patria)',
         'Exenciones para inversión productiva',
         'Destinado 100% a programas sociales'
       ],

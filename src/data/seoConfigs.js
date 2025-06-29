@@ -173,7 +173,7 @@ export const seoConfigs = {
         "value": "500000000000000"
       },
       "funding": [
-        "Impuesto 50% sueldos sobre $3 millones",
+        "Impuesto progresivo sueldos altos (20% FFAA, 50% otros)",
         "Ingresos formalización economía digital",
         "Fondos internacionales CAF y BID"
       ],
@@ -284,7 +284,7 @@ export const seoConfigs = {
         "Ahorro promedio $50,000 mensuales por familia",
         "Formalización 80% economía chilena",
         "Facturas electrónicas obligatorias arriendos",
-        "Impuesto 50% sueldos sobre $3 millones",
+        "Impuesto progresivo sueldos altos (20% FFAA, 50% otros)",
         "Superávit fiscal $1.1 billones garantizado",
         "Beneficia 70% familias chilenas directamente"
       ],
@@ -315,7 +315,7 @@ export const seoConfigs = {
         "IVAReducido": "Canasta básica 5%, otros bienes 10%",
         "SueldoMinimo": "$900,000 con subsidio estatal 50% PYMES",
         "Formalizacion": "Facturas electrónicas arriendos/comercio/fundaciones",
-        "ImpuestoAlto": "50% progresivo sobre $3M, 30% entre $2-3M",
+        "ImpuestoAlto": "50% progresivo sobre $3M (20% FFAA), 30% entre $2-3M",
         "Sostenibilidad": "Superávit $1.1T, retorno inversión 2-3 años"
       },
       "economicImpact": {
