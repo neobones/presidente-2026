@@ -157,6 +157,28 @@ const verifyJWT = (req, res, next) => {
   }
 };
 
+// Middleware para verificar administrador autorizado
+const verifyAdmin = (req, res, next) => {
+  const authorizedAdmins = ['neobones@gmail.com'];
+  
+  // Verificar si el usuario tiene JWT válido
+  if (!req.user) {
+    return res.status(401).json({ error: 'Autenticación requerida' });
+  }
+  
+  // Verificar si el email está en la lista de administradores autorizados
+  if (!authorizedAdmins.includes(req.user.email)) {
+    return res.status(403).json({ 
+      error: 'Acceso denegado. No tienes permisos de administrador.',
+      requiredRole: 'Administrador autorizado',
+      userEmail: req.user.email
+    });
+  }
+  
+  console.log(`🔐 Acceso admin autorizado para: ${req.user.email}`);
+  next();
+};
+
 // Middleware de autenticación (soporte para JWT y sesiones)
 const requireAuth = (req, res, next) => {
   // Primero intentamos verificar JWT
@@ -522,9 +544,8 @@ app.get('/api/consultas/stats', async (req, res) => {
 });
 
 // GET - Obtener consultas recientes (solo para admin)
-app.get('/api/consultas/admin', async (req, res) => {
+app.get('/api/consultas/admin', verifyJWT, verifyAdmin, async (req, res) => {
   try {
-    // En producción, esto debería tener autenticación
     const { page = 1, limit = 20, estado, categoria, region } = req.query;
     
     const filtros = {};
@@ -557,7 +578,7 @@ app.get('/api/consultas/admin', async (req, res) => {
 });
 
 // PUT - Actualizar estado de consulta (solo para admin)
-app.put('/api/consultas/:id/estado', async (req, res) => {
+app.put('/api/consultas/:id/estado', verifyJWT, verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const { estado, respuesta, implementada } = req.body;
@@ -599,7 +620,7 @@ app.put('/api/consultas/:id/estado', async (req, res) => {
 });
 
 // Endpoint para consultas pendientes de moderación
-app.get('/api/consultas/moderacion', async (req, res) => {
+app.get('/api/consultas/moderacion', verifyJWT, verifyAdmin, async (req, res) => {
   try {
     const consultasPendientes = await Consulta.find({
       estadoModeracion: 'pendiente_revision'
@@ -630,7 +651,7 @@ app.get('/api/consultas/moderacion', async (req, res) => {
 });
 
 // Endpoint para aprobar/rechazar consultas
-app.post('/api/consultas/:id/moderar', async (req, res) => {
+app.post('/api/consultas/:id/moderar', verifyJWT, verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const { accion, razon } = req.body; // accion: 'aprobar' o 'rechazar'
