@@ -20,6 +20,19 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
+    // Debug: verificar token al cargar
+    const token = localStorage.getItem('authToken');
+    console.log('🔐 Token disponible:', !!token);
+    if (token) {
+      console.log('🔐 Token (primeros 50 chars):', token.substring(0, 50) + '...');
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log('🔐 Payload del token:', payload);
+      } catch (e) {
+        console.error('🔐 Error decodificando token:', e);
+      }
+    }
+    
     loadStats();
     loadConsultas();
   }, [filtros]);
@@ -44,11 +57,20 @@ const AdminDashboard = () => {
       });
 
       const token = localStorage.getItem('authToken');
+      console.log('🔍 loadConsultas - Token disponible:', !!token);
+      
       if (!token) {
         console.error('Token de autenticación requerido');
+        setAuthError('Sesión no encontrada. Por favor, inicia sesión nuevamente.');
         setConsultas([]);
         return;
       }
+
+      console.log('🔍 loadConsultas - Enviando petición a:', `/api/consultas/admin?${params}`);
+      console.log('🔍 loadConsultas - Headers:', {
+        'Authorization': `Bearer ${token.substring(0, 20)}...`,
+        'Content-Type': 'application/json'
+      });
 
       const response = await fetch(`/api/consultas/admin?${params}`, {
         headers: {
@@ -56,6 +78,9 @@ const AdminDashboard = () => {
           'Content-Type': 'application/json'
         }
       });
+
+      console.log('🔍 loadConsultas - Response status:', response.status);
+      console.log('🔍 loadConsultas - Response headers:', Object.fromEntries(response.headers.entries()));
 
       if (response.status === 401) {
         console.error('No autorizado - Token inválido o expirado');
