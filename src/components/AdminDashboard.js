@@ -61,7 +61,7 @@ const AdminDashboard = () => {
       
       if (!token) {
         console.error('Token de autenticación requerido');
-        setAuthError('Sesión no encontrada. Por favor, inicia sesión nuevamente.');
+        setAuthError('Sesión no encontrada. Por favor, ve a "Participación Ciudadana" e inicia sesión con Google antes de acceder al admin.');
         setConsultas([]);
         return;
       }
@@ -186,12 +186,20 @@ const AdminDashboard = () => {
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Acceso Restringido</h3>
           <p className="text-gray-600 mb-6">{authError}</p>
-          <button
-            onClick={() => window.location.href = '/participacion-ciudadana'}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Volver al Inicio
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={() => window.location.href = '/participacion-ciudadana'}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Ir a Iniciar Sesión
+            </button>
+            <button
+              onClick={() => window.location.href = '/'}
+              className="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+            >
+              Volver al Inicio
+            </button>
+          </div>
         </div>
       </div>
     );
