@@ -225,12 +225,28 @@ const AutomatizacionIA = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="group px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3">
+                <button 
+                  onClick={() => {
+                    document.getElementById('beneficios')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="group px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3"
+                >
                   <span>VER PLAN COMPLETO</span>
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
                 </button>
                 
-                <button className="px-8 py-4 border-2 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300">
+                <button 
+                  onClick={() => {
+                    const simulador = document.getElementById('procesos');
+                    if (simulador) {
+                      simulador.scrollIntoView({ behavior: 'smooth' });
+                      setTimeout(() => {
+                        alert('🤖 ¡Simulador IA Activado!\n\n• Selecciona un proceso (Registro Civil, SII, Notarías)\n• Ve cómo la IA automatiza cada paso\n• Comprueba el ahorro de tiempo y dinero\n\n¡El futuro del Estado es ahora!');
+                      }, 1000);
+                    }
+                  }}
+                  className="px-8 py-4 border-2 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300"
+                >
                   SIMULAR TRÁMITE IA
                 </button>
               </div>
@@ -310,7 +326,7 @@ const AutomatizacionIA = () => {
         </section>
 
         {/* Solution Section - Interactive Tabs */}
-        <section className="py-24 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <section id="beneficios" className="py-24 bg-gradient-to-br from-blue-50 to-cyan-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <div className="inline-flex items-center space-x-2 bg-blue-600 rounded-full px-6 py-3 text-white font-semibold mb-6">
@@ -342,7 +358,7 @@ const AutomatizacionIA = () => {
             </div>
 
             {/* Tab Content */}
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <div id="procesos" className="bg-white rounded-3xl shadow-2xl overflow-hidden">
               {procesos.map((proceso) => (
                 <div
                   key={proceso.id}
@@ -505,11 +521,31 @@ const AutomatizacionIA = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
-                <button className="px-12 py-6 bg-white text-blue-600 font-black text-xl rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <button 
+                  onClick={() => {
+                    window.open('mailto:contacto@chiledigno.cl?subject=Apoyo%20Reforma%20IA%20Estado&body=Hola%20Juan%20Pablo,%0A%0AQuiero%20apoyar%20la%20reforma%20de%20Automatización%20del%20Estado%20con%20IA.%0A%0AEsta%20propuesta%20de:%0A• Trámites%20en%205%20minutos%0A• Ahorro%20de%20$500%20mil%20millones%0A• Estado%20eficiente%2024/7%0A%0AEs%20exactamente%20lo%20que%20Chile%20necesita.%0A%0A¿Cómo%20puedo%20ayudar%20a%20difundir%20esta%20propuesta?%0A%0ASaludos', '_blank');
+                  }}
+                  className="px-12 py-6 bg-white text-blue-600 font-black text-xl rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                >
                   APOYAR ESTA REFORMA
                 </button>
                 
-                <button className="px-12 py-6 border-2 border-white text-white font-black text-xl rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300">
+                <button 
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({
+                        title: 'Automatización del Estado con IA - Melinao 2026',
+                        text: '🤖 REVOLUCIÓN DIGITAL: Trámites en 5 minutos, ahorro de $500 mil millones. ¡El Estado eficiente que Chile necesita!',
+                        url: window.location.href
+                      });
+                    } else {
+                      navigator.clipboard.writeText(window.location.href).then(() => {
+                        alert('🔗 ¡Enlace copiado!\n\nComparte esta propuesta revolucionaria:\n\n"Automatización del Estado con IA - Trámites en 5 minutos, ahorro de $500 mil millones. ¡El futuro es ahora con Melinao 2026!"\n\n' + window.location.href);
+                      });
+                    }
+                  }}
+                  className="px-12 py-6 border-2 border-white text-white font-black text-xl rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300"
+                >
                   COMPARTIR PROPUESTA
                 </button>
               </div>
