@@ -37,6 +37,7 @@ const ConsultasCiudadanas = ({
     email: usuario?.email || '',
     region: '',
     edad: '',
+    tema: tema || 'general',
     tipoConsulta: 'propuesta-nueva',
     mensaje: ''
   });
@@ -93,6 +94,15 @@ const ConsultasCiudadanas = ({
     'La Araucanía', 'Los Ríos', 'Los Lagos', 'Aysén', 'Magallanes'
   ];
 
+  const temasDisponibles = [
+    { id: 'general', name: 'General', descripcion: 'Propuestas generales y otros temas', icon: '📋' },
+    { id: 'economia', name: 'Economía', descripcion: 'Reformas económicas, impuestos, empleo', icon: '💰' },
+    { id: 'ia', name: 'Inteligencia Artificial', descripcion: 'Automatización, innovación tecnológica', icon: '🤖' },
+    { id: 'seguridad', name: 'Seguridad', descripcion: 'Seguridad ciudadana, fronteras, migración', icon: '🛡️' },
+    { id: 'justicia', name: 'Justicia', descripcion: 'Sistema judicial, equidad social', icon: '⚖️' },
+    { id: 'unidad', name: 'Unidad Nacional', descripcion: 'Reconciliación, diversidad, derechos', icon: '🤝' }
+  ];
+
   const tiposConsulta = [
     // Relacionadas con reformas existentes
     { id: 'apoyo-reforma', name: 'Apoyo a reforma propuesta', icon: <CheckCircle className="w-4 h-4" />, categoria: 'reforma' },
@@ -122,7 +132,7 @@ const ConsultasCiudadanas = ({
       
       const consultaData = {
         ...formData,
-        tema,
+        tema: formData.tema, // Usar el tema seleccionado por el usuario
         esAnonima,
         categoria: tipoSeleccionado?.categoria || 'general',
         // Si es anónima, no enviar datos personales
@@ -158,6 +168,7 @@ const ConsultasCiudadanas = ({
           email: usuario?.email || '',
           region: '',
           edad: '',
+          tema: tema || 'general',
           tipoConsulta: 'propuesta-nueva',
           mensaje: ''
         });
@@ -344,6 +355,37 @@ const ConsultasCiudadanas = ({
                         <option value="56-65">56-65 años</option>
                         <option value="65+">65+ años</option>
                       </select>
+                    </div>
+                  </div>
+
+                  {/* Selector de Tema */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                      Tema de la consulta *
+                    </label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {temasDisponibles.map(temaItem => (
+                        <button
+                          key={temaItem.id}
+                          type="button"
+                          onClick={() => handleInputChange('tema', temaItem.id)}
+                          className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
+                            formData.tema === temaItem.id
+                              ? 'border-blue-500 bg-blue-50 text-blue-700'
+                              : 'border-gray-200 hover:border-gray-300 bg-white'
+                          }`}
+                        >
+                          <div className="flex items-start space-x-3">
+                            <span className="text-xl">{temaItem.icon}</span>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-sm">{temaItem.name}</h4>
+                              <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                                {temaItem.descripcion}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
                     </div>
                   </div>
 

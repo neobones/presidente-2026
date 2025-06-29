@@ -472,7 +472,7 @@ const ParticipacionCiudadana = () => {
 
       {/* Consultation Modal */}
       <ConsultasCiudadanas 
-        tema="participacion-ciudadana"
+        tema="general"
         titulo="Nueva Consulta Ciudadana"
         descripcion="Comparte tu propuesta para formar parte del cambio que necesita nuestro país"
         showStats={false}
