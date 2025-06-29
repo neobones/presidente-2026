@@ -16,7 +16,7 @@
 
 ## 👨‍💻 Sobre Juan Pablo Melinao González
 
-**Ingeniero en Informática • Emprendedor • Mapuche**
+**Ingeniero en Informática • Emprendedor • Mapuche  • Independiente**
 
 Juan Pablo Melinao González representa una nueva generación de liderazgo político en Chile. Como ingeniero en informática con más de 10 años de experiencia y emprendedor exitoso, combina expertise técnico con una profunda comprensión de las necesidades sociales del país.
 
