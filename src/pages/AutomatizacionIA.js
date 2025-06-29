@@ -286,19 +286,25 @@ const AutomatizacionIA = () => {
       nombre: 'Ley de Transformación Digital',
       numero: 'N° 21.180',
       descripcion: 'Base legal para digitalización de servicios públicos',
-      url: 'https://www.gob.cl/transformaciondigital'
+      url: 'https://digital.gob.cl/transformacion-digital/ley-de-transformacion-digital/'
     },
     {
       nombre: 'Política Nacional de IA',
       numero: 'Minciencia',
       descripcion: '70 acciones prioritarias para desarrollo de IA',
-      url: 'https://minciencia.gob.cl'
+      url: 'https://www.minciencia.gob.cl/areas/inteligencia-artificial/politica-nacional-de-inteligencia-artificial/'
     },
     {
-      nombre: 'OECD Digital Review',
-      numero: '2020',
+      nombre: 'Digital Government Review Chile',
+      numero: 'OECD 2020',
       descripcion: 'Marco internacional de mejores prácticas',
-      url: 'https://oecd.org'
+      url: 'https://www.oecd.org/gov/digital-government-review-of-chile-2020.pdf'
+    },
+    {
+      nombre: 'Circular Uso Responsable IA',
+      numero: 'Minciencia 2024',
+      descripcion: 'Uso responsable IA en servicios públicos',
+      url: 'https://minciencia.gob.cl/noticias/gobierno-publica-circular-para-un-uso-responsable-de-la-ia-en-los-servicios-publicos/'
     }
   ];
 
@@ -587,14 +593,26 @@ const AutomatizacionIA = () => {
             {/* Legal Framework */}
             <div className="bg-gray-900 rounded-3xl p-8 text-white">
               <h3 className="text-2xl font-bold mb-6 text-center">Fundamentos Legales Existentes</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {fundamentosLegales.map((ley, index) => (
-                  <div key={index} className="bg-white/10 backdrop-blur rounded-xl p-4">
-                    <div className="font-bold text-cyan-400 mb-2">{ley.nombre}</div>
+                  <a 
+                    key={index} 
+                    href={ley.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white/10 backdrop-blur rounded-xl p-4 hover:bg-white/20 transition-all duration-300 group"
+                  >
+                    <div className="font-bold text-cyan-400 mb-2 group-hover:text-cyan-300">{ley.nombre}</div>
                     <div className="text-sm text-gray-300 mb-2">{ley.numero}</div>
-                    <div className="text-xs text-gray-400">{ley.descripcion}</div>
-                  </div>
+                    <div className="text-xs text-gray-400 mb-3">{ley.descripcion}</div>
+                    <div className="text-xs text-cyan-500 group-hover:text-cyan-400">Ver documento →</div>
+                  </a>
                 ))}
+              </div>
+              <div className="text-center mt-6">
+                <div className="text-gray-400 text-sm">
+                  Propuesta fundamentada en legislación chilena vigente
+                </div>
               </div>
             </div>
           </div>
@@ -1188,13 +1206,109 @@ const AutomatizacionIA = () => {
 
               {/* References */}
               <div className="pt-12 border-t border-white/20">
-                <div className="text-white/70 text-sm mb-4">Referencias técnicas y legales:</div>
-                <div className="flex flex-wrap justify-center gap-4 text-xs text-white/60">
-                  <span>• Ley N° 21.180</span>
-                  <span>• Política Nacional IA</span>
-                  <span>• OECD Digital 2020</span>
-                  <span>• CEPAL ILIA 2024</span>
-                  <span>• Circular Uso Responsable IA</span>
+                <div className="text-white/70 text-lg font-semibold mb-6 text-center">Referencias Técnicas y Legales</div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[1] Ley de Transformación Digital (N° 21.180)</div>
+                    <a 
+                      href="https://digital.gob.cl/transformacion-digital/ley-de-transformacion-digital/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      digital.gob.cl/transformacion-digital/ley-de-transformacion-digital/
+                    </a>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[2] Política Nacional de IA</div>
+                    <a 
+                      href="https://www.minciencia.gob.cl/areas/inteligencia-artificial/politica-nacional-de-inteligencia-artificial/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      minciencia.gob.cl/areas/inteligencia-artificial/politica-nacional-de-inteligencia-artificial/
+                    </a>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[3] ILIA 2024 (CEPAL)</div>
+                    <a 
+                      href="https://www.cepal.org/es/publicaciones/69126-estrategia-transformacion-digital-chile-digital-2035-plan-conectividad-efectiva"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      cepal.org/es/publicaciones/69126-estrategia-transformacion-digital-chile-digital-2035
+                    </a>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[4] Programa de Supercómputo</div>
+                    <a 
+                      href="https://blog.investchile.gob.cl/chile-impulsa-la-inteligencia-artificial-con-programa-de-supercomputo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      blog.investchile.gob.cl/chile-impulsa-la-inteligencia-artificial-con-programa-de-supercomputo
+                    </a>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[5] Circular de Uso Responsable de IA</div>
+                    <a 
+                      href="https://minciencia.gob.cl/noticias/gobierno-publica-circular-para-un-uso-responsable-de-la-ia-en-los-servicios-publicos/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      minciencia.gob.cl/noticias/gobierno-publica-circular-para-un-uso-responsable-de-la-ia
+                    </a>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[6] Digital Government Review Chile 2020</div>
+                    <a 
+                      href="https://www.oecd.org/gov/digital-government-review-of-chile-2020.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      oecd.org/gov/digital-government-review-of-chile-2020.pdf
+                    </a>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[7] Encuesta Cadem 2025</div>
+                    <a 
+                      href="https://www.cadem.cl/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      cadem.cl/
+                    </a>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+                    <div className="text-white font-semibold mb-2">[8] INE Chile</div>
+                    <a 
+                      href="https://www.ine.cl/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 hover:text-cyan-200 text-sm break-all"
+                    >
+                      ine.cl/
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="text-center mt-8">
+                  <div className="text-white/60 text-sm">
+                    Propuesta basada en marcos legales existentes y mejores prácticas internacionales
+                  </div>
                 </div>
               </div>
             </div>
