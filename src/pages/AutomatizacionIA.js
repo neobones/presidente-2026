@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, CheckCircle, Cpu, Clock, DollarSign, Users, Zap, TrendingUp, Shield, Globe, BarChart3, Monitor, Building2, MapPin, Star, Target, Calculator, BookOpen, Play, ChevronRight, Award, Briefcase, Heart, TreePine, Mountain, Building, X } from 'lucide-react';
+import { ArrowRight, CheckCircle, Cpu, Clock, DollarSign, Users, Zap, TrendingUp, Shield, Globe, BarChart3, Monitor, Building2, MapPin, Star, Target, Calculator, BookOpen, Play, ChevronRight, Award, Briefcase, Heart, TreePine, Mountain, Building, X, Home, FileText, Timer, CheckSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
 import { seoConfigs } from '../data/seoConfigs';
 
@@ -10,6 +11,15 @@ const AutomatizacionIA = () => {
   const [activeRegion, setActiveRegion] = useState('araucania');
   const [activeFase, setActiveFase] = useState(0);
   const [showCalculator, setShowCalculator] = useState(false);
+  const [showSimulator, setShowSimulator] = useState(false);
+  const [simulatorStep, setSimulatorStep] = useState(0);
+  const [simulatorData, setSimulatorData] = useState({
+    nombre: '',
+    rut: '',
+    proceso: '',
+    documento: '',
+    resultado: null
+  });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -292,9 +302,102 @@ const AutomatizacionIA = () => {
     }
   ];
 
+  // Simulador Functions
+  const startSimulation = (proceso) => {
+    setSimulatorData({ ...simulatorData, proceso });
+    setSimulatorStep(1);
+    setShowSimulator(true);
+  };
+
+  const processSimulation = () => {
+    setSimulatorStep(2);
+    // Simular procesamiento IA
+    setTimeout(() => {
+      const resultados = {
+        'registro': {
+          tiempo: '2 minutos 30 segundos',
+          ahorro: '$45,000',
+          documentos: ['Certificado de Nacimiento Digital', 'Actualización RUT', 'Notificación FONASA'],
+          siguiente: 'Tu certificado estará disponible en tu ChileID digital'
+        },
+        'sii': {
+          tiempo: '4 minutos 15 segundos',
+          ahorro: '$120,000',
+          documentos: ['Declaración Pre-llenada', 'Deducciones Automáticas', 'Formulario 22'],
+          siguiente: 'IA detectó 3 deducciones adicionales que puedes aplicar'
+        },
+        'notarias': {
+          tiempo: '3 minutos 45 segundos',
+          ahorro: '$85,000',
+          documentos: ['Contrato Autenticado', 'Firma Digital', 'Registro Blockchain'],
+          siguiente: 'Documento almacenado permanentemente en blockchain'
+        },
+        'registro-social': {
+          tiempo: '1 minuto 50 segundos',
+          ahorro: '$25,000',
+          documentos: ['Ficha Social Actualizada', 'Beneficios Asignados', 'Calendario Pagos'],
+          siguiente: 'Subsidio habitacional pre-aprobado automáticamente'
+        },
+        'salud': {
+          tiempo: '2 minutos 10 segundos',
+          ahorro: '$200,000',
+          documentos: ['Cita Médica Asignada', 'Pre-diagnóstico IA', 'Plan Tratamiento'],
+          siguiente: 'Cita con especialista programada para mañana 10:00 AM'
+        }
+      };
+      
+      setSimulatorData({ ...simulatorData, resultado: resultados[simulatorData.proceso] });
+      setSimulatorStep(3);
+    }, 3000);
+  };
+
+  const resetSimulator = () => {
+    setSimulatorStep(0);
+    setSimulatorData({
+      nombre: '',
+      rut: '',
+      proceso: '',
+      documento: '',
+      resultado: null
+    });
+    setShowSimulator(false);
+  };
+
   return (
     <SEOWrapper config={seoConfigs.automatizacionIA}>
       <div className="min-h-screen bg-gray-50">
+        {/* Header Navigation */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <Link 
+                to="/" 
+                className="flex items-center space-x-3 text-gray-900 hover:text-blue-600 transition-colors"
+              >
+                <Home className="w-6 h-6" />
+                <span className="font-bold">Volver al Menú Principal</span>
+              </Link>
+              
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={() => setShowSimulator(true)}
+                  className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors"
+                >
+                  <Play className="w-4 h-4" />
+                  <span>Simulador IA</span>
+                </button>
+                
+                <button
+                  onClick={() => setShowCalculator(true)}
+                  className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition-colors"
+                >
+                  <Calculator className="w-4 h-4" />
+                  <span>Calculadora</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
         {/* Hero Section Enhanced */}
         <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-cyan-900 overflow-hidden">
           {/* Background Effects */}
@@ -601,13 +704,11 @@ const AutomatizacionIA = () => {
                       {/* Action Button */}
                       <div className="mt-8">
                         <button 
-                          onClick={() => {
-                            alert(`🚀 ¡Simulación ${proceso.name}!\\n\\n✅ Proceso automatizado\\n⏱️ Tiempo: 2-5 minutos\\n💰 Ahorro: ${proceso.ahorroAnual} anuales\\n\\n¡El futuro es ahora!`);
-                          }}
+                          onClick={() => startSimulation(proceso.id)}
                           className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold py-4 rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
                         >
                           <Play className="w-5 h-5" />
-                          <span>SIMULAR PROCESO</span>
+                          <span>SIMULAR PROCESO IA</span>
                         </button>
                       </div>
                     </div>
@@ -1153,6 +1254,298 @@ const AutomatizacionIA = () => {
                   Cerrar Calculadora
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* AI Simulator Modal */}
+        {showSimulator && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              
+              {/* Step 0: Process Selection */}
+              {simulatorStep === 0 && (
+                <div>
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-3xl font-bold">🤖 Simulador IA del Estado</h3>
+                    <button 
+                      onClick={resetSimulator}
+                      className="p-2 hover:bg-gray-100 rounded-full"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  <p className="text-gray-600 mb-8 text-lg">
+                    Experimenta cómo funcionará el Estado con inteligencia artificial. 
+                    Selecciona un trámite para ver la magia en acción:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {procesosAutomatizar.map((proceso) => (
+                      <button
+                        key={proceso.id}
+                        onClick={() => startSimulation(proceso.id)}
+                        className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl border border-blue-100 hover:shadow-lg transition-all duration-300 text-left group"
+                      >
+                        <div className="flex items-center space-x-3 mb-4">
+                          <div className="p-3 bg-blue-600 rounded-lg text-white group-hover:scale-110 transition-transform">
+                            {proceso.icon}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-900">{proceso.name}</h4>
+                            <p className="text-sm text-gray-600">{proceso.tiempoRetorno}</p>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-700">{proceso.descripcion}</p>
+                        <div className="mt-4 text-green-600 font-bold">{proceso.ahorroAnual} ahorro anual</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1: User Data Input */}
+              {simulatorStep === 1 && (
+                <div>
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-3xl font-bold">📝 Datos del Ciudadano</h3>
+                    <button 
+                      onClick={resetSimulator}
+                      className="p-2 hover:bg-gray-100 rounded-full"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  <div className="bg-blue-50 rounded-xl p-6 border border-blue-200 mb-8">
+                    <h4 className="font-bold text-blue-800 mb-2">
+                      Proceso seleccionado: {procesosAutomatizar.find(p => p.id === simulatorData.proceso)?.name}
+                    </h4>
+                    <p className="text-blue-700">
+                      {procesosAutomatizar.find(p => p.id === simulatorData.proceso)?.descripcion}
+                    </p>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Nombre completo
+                      </label>
+                      <input
+                        type="text"
+                        value={simulatorData.nombre}
+                        onChange={(e) => setSimulatorData({...simulatorData, nombre: e.target.value})}
+                        placeholder="Ingresa tu nombre completo"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        RUT (sin puntos ni guión)
+                      </label>
+                      <input
+                        type="text"
+                        value={simulatorData.rut}
+                        onChange={(e) => setSimulatorData({...simulatorData, rut: e.target.value})}
+                        placeholder="12345678"
+                        maxLength="8"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Tipo de documento a procesar
+                      </label>
+                      <select
+                        value={simulatorData.documento}
+                        onChange={(e) => setSimulatorData({...simulatorData, documento: e.target.value})}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        <option value="">Selecciona un documento</option>
+                        {simulatorData.proceso === 'registro' && (
+                          <>
+                            <option value="certificado-nacimiento">Certificado de Nacimiento</option>
+                            <option value="certificado-matrimonio">Certificado de Matrimonio</option>
+                            <option value="certificado-defuncion">Certificado de Defunción</option>
+                          </>
+                        )}
+                        {simulatorData.proceso === 'sii' && (
+                          <>
+                            <option value="declaracion-renta">Declaración de Renta</option>
+                            <option value="inicio-actividades">Inicio de Actividades</option>
+                            <option value="facturacion-electronica">Facturación Electrónica</option>
+                          </>
+                        )}
+                        {simulatorData.proceso === 'notarias' && (
+                          <>
+                            <option value="contrato-arriendo">Contrato de Arriendo</option>
+                            <option value="compraventa">Compraventa</option>
+                            <option value="poder-notarial">Poder Notarial</option>
+                          </>
+                        )}
+                        {simulatorData.proceso === 'registro-social' && (
+                          <>
+                            <option value="ficha-social">Actualización Ficha Social</option>
+                            <option value="subsidio-habitacional">Subsidio Habitacional</option>
+                            <option value="bono-marzo">Bono de Marzo</option>
+                          </>
+                        )}
+                        {simulatorData.proceso === 'salud' && (
+                          <>
+                            <option value="hora-medica">Solicitud Hora Médica</option>
+                            <option value="receta-digital">Receta Digital</option>
+                            <option value="interconsulta">Interconsulta Especialista</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
+
+                    <div className="flex space-x-4">
+                      <button
+                        onClick={() => setSimulatorStep(0)}
+                        className="flex-1 bg-gray-500 text-white font-bold py-3 rounded-xl hover:bg-gray-600 transition-colors"
+                      >
+                        Volver
+                      </button>
+                      <button
+                        onClick={processSimulation}
+                        disabled={!simulatorData.nombre || !simulatorData.rut || !simulatorData.documento}
+                        className="flex-1 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Procesar con IA
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 2: AI Processing */}
+              {simulatorStep === 2 && (
+                <div className="text-center">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-3xl font-bold">🧠 IA Procesando...</h3>
+                    <button 
+                      onClick={resetSimulator}
+                      className="p-2 hover:bg-gray-100 rounded-full"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-12 text-white mb-8">
+                    <div className="animate-spin w-16 h-16 border-4 border-white border-t-transparent rounded-full mx-auto mb-6"></div>
+                    <h4 className="text-2xl font-bold mb-4">Inteligencia Artificial en Acción</h4>
+                    <div className="space-y-3 text-left max-w-md mx-auto">
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-5 h-5 text-green-300" />
+                        <span>Validando identidad con reconocimiento biométrico...</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-5 h-5 text-green-300" />
+                        <span>Consultando bases de datos gubernamentales...</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-5 h-5 text-green-300" />
+                        <span>Procesando con algoritmos de machine learning...</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <Timer className="w-5 h-5 text-yellow-300 animate-pulse" />
+                        <span>Generando documentos con blockchain...</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600">
+                    La IA está analizando tu solicitud en tiempo real. 
+                    En el Estado actual esto tomaría semanas...
+                  </p>
+                </div>
+              )}
+
+              {/* Step 3: Results */}
+              {simulatorStep === 3 && simulatorData.resultado && (
+                <div>
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-3xl font-bold">🎉 ¡Trámite Completado!</h3>
+                    <button 
+                      onClick={resetSimulator}
+                      className="p-2 hover:bg-gray-100 rounded-full"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  <div className="bg-green-50 rounded-xl p-6 border border-green-200 mb-8">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <CheckCircle className="w-8 h-8 text-green-600" />
+                      <div>
+                        <h4 className="text-xl font-bold text-green-800">
+                          Proceso completado exitosamente
+                        </h4>
+                        <p className="text-green-700">
+                          Hola {simulatorData.nombre}, tu trámite ha sido procesado
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div className="bg-blue-50 rounded-xl p-6 border border-blue-200 text-center">
+                      <Timer className="w-8 h-8 text-blue-600 mx-auto mb-3" />
+                      <div className="text-2xl font-black text-blue-600">{simulatorData.resultado.tiempo}</div>
+                      <div className="text-sm text-blue-700">Tiempo total</div>
+                    </div>
+                    <div className="bg-green-50 rounded-xl p-6 border border-green-200 text-center">
+                      <DollarSign className="w-8 h-8 text-green-600 mx-auto mb-3" />
+                      <div className="text-2xl font-black text-green-600">{simulatorData.resultado.ahorro}</div>
+                      <div className="text-sm text-green-700">Ahorro vs Estado actual</div>
+                    </div>
+                    <div className="bg-purple-50 rounded-xl p-6 border border-purple-200 text-center">
+                      <FileText className="w-8 h-8 text-purple-600 mx-auto mb-3" />
+                      <div className="text-2xl font-black text-purple-600">{simulatorData.resultado.documentos.length}</div>
+                      <div className="text-sm text-purple-700">Documentos generados</div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-xl p-6 mb-8">
+                    <h5 className="font-bold text-gray-900 mb-4">📄 Documentos Generados:</h5>
+                    <div className="space-y-2">
+                      {simulatorData.resultado.documentos.map((doc, index) => (
+                        <div key={index} className="flex items-center space-x-3">
+                          <CheckSquare className="w-5 h-5 text-green-600" />
+                          <span className="text-gray-700">{doc}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="bg-yellow-50 rounded-xl p-6 border border-yellow-200 mb-8">
+                    <h5 className="font-bold text-yellow-800 mb-2">🔥 Siguiente paso automático:</h5>
+                    <p className="text-yellow-700">{simulatorData.resultado.siguiente}</p>
+                  </div>
+
+                  <div className="flex space-x-4">
+                    <button
+                      onClick={() => setSimulatorStep(0)}
+                      className="flex-1 bg-gray-500 text-white font-bold py-3 rounded-xl hover:bg-gray-600 transition-colors"
+                    >
+                      Probar Otro Trámite
+                    </button>
+                    <button
+                      onClick={() => {
+                        alert('🎊 ¡Increíble! Has experimentado el futuro del Estado chileno.\\n\\n✨ Con Melinao 2026, esto será realidad:\\n\\n• Trámites en minutos, no semanas\\n• Ahorro masivo para ciudadanos\\n• Estado eficiente 24/7\\n• Tecnología al servicio de la gente\\n\\n¡Vota por el cambio digital!');
+                        resetSimulator();
+                      }}
+                      className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 rounded-xl hover:shadow-lg transition-all duration-300"
+                    >
+                      ¡Apoyar Esta Visión!
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
