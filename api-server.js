@@ -423,6 +423,9 @@ app.post('/api/consultas', consultasLimiter, requireAuth, async (req, res) => {
     // Análisis automático
     consulta.categorizarAutomaticamente();
     consulta.analizarSentimiento();
+    
+    // Moderación automática de contenido
+    const analisisModeracion = consulta.moderarContenido();
 
     // Determinar prioridad automáticamente
     if (consulta.tipoConsulta === 'critica' || consulta.sentiment === 'negativo') {
@@ -434,14 +437,26 @@ app.post('/api/consultas', consultasLimiter, requireAuth, async (req, res) => {
     // Guardar en base de datos
     await consulta.save();
 
-    console.log(`🆕 Nueva consulta recibida - Región: ${region}, Tipo: ${tipoConsulta}, Categoría: ${consulta.categoria}`);
+    console.log(`🆕 Nueva consulta recibida - Región: ${region}, Tipo: ${tipoConsulta}, Categoría: ${consulta.categoria}, Moderación: ${consulta.estadoModeracion}`);
+
+    // Mensaje personalizado según el estado de moderación
+    let message = 'Consulta recibida exitosamente';
+    let requiresReview = false;
+    
+    if (consulta.estadoModeracion === 'pendiente_revision') {
+      message = 'Consulta recibida y en proceso de revisión. Será publicada una vez que sea aprobada por nuestro equipo de moderación.';
+      requiresReview = true;
+    }
 
     res.status(201).json({
       success: true,
-      message: 'Consulta recibida exitosamente',
+      message,
       id: consulta._id,
       categoria: consulta.categoria,
-      sentiment: consulta.sentiment
+      sentiment: consulta.sentiment,
+      requiresReview,
+      estadoModeracion: consulta.estadoModeracion,
+      esPublica: consulta.esPublica
     });
 
   } catch (error) {
@@ -580,6 +595,80 @@ app.put('/api/consultas/:id/estado', async (req, res) => {
     res.status(500).json({
       error: 'Error actualizando consulta'
     });
+  }
+});
+
+// Endpoint para consultas pendientes de moderación
+app.get('/api/consultas/moderacion', async (req, res) => {
+  try {
+    const consultasPendientes = await Consulta.find({
+      estadoModeracion: 'pendiente_revision'
+    })
+      .populate('userId', 'nombre email avatar')
+      .sort({ fechaEnvio: -1 });
+
+    const estadisticas = await Consulta.aggregate([
+      {
+        $group: {
+          _id: '$estadoModeracion',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    res.json({
+      consultas: consultasPendientes,
+      estadisticas: estadisticas.reduce((acc, stat) => {
+        acc[stat._id] = stat.count;
+        return acc;
+      }, {})
+    });
+  } catch (error) {
+    console.error('Error obteniendo consultas de moderación:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Endpoint para aprobar/rechazar consultas
+app.post('/api/consultas/:id/moderar', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { accion, razon } = req.body; // accion: 'aprobar' o 'rechazar'
+
+    const consulta = await Consulta.findById(id);
+    if (!consulta) {
+      return res.status(404).json({ error: 'Consulta no encontrada' });
+    }
+
+    if (accion === 'aprobar') {
+      consulta.estadoModeracion = 'aprobado_manual';
+      consulta.esPublica = true;
+      consulta.moderada = false;
+      consulta.razonModeracion = razon || 'Aprobado manualmente por moderador';
+    } else if (accion === 'rechazar') {
+      consulta.estadoModeracion = 'rechazado_manual';
+      consulta.esPublica = false;
+      consulta.moderada = true;
+      consulta.razonModeracion = razon || 'Rechazado por contenido inapropiado';
+    }
+
+    await consulta.save();
+
+    console.log(`📝 Consulta ${accion}da - ID: ${id}, Razón: ${razon || 'Sin razón especificada'}`);
+
+    res.json({
+      success: true,
+      message: `Consulta ${accion}da exitosamente`,
+      consulta: {
+        id: consulta._id,
+        estadoModeracion: consulta.estadoModeracion,
+        esPublica: consulta.esPublica
+      }
+    });
+
+  } catch (error) {
+    console.error('Error moderando consulta:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 

@@ -153,8 +153,10 @@ const ConsultasCiudadanas = ({
       });
 
       if (response.ok) {
-        // Mostrar alerta de éxito
-        await AlertService.consultationSuccess();
+        const data = await response.json();
+        
+        // Mostrar alerta según el estado de moderación
+        await AlertService.consultationSuccess(data.requiresReview);
         
         setStats(prev => ({
           ...prev,

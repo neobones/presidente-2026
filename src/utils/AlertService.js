@@ -266,13 +266,37 @@ class AlertService {
   /**
    * Éxito al enviar consulta
    */
-  static consultationSuccess() {
-    return this.success(
-      '¡Consulta Enviada!',
-      'Gracias por tu participación. Tu consulta será revisada por nuestro equipo de campaña.',
+  static consultationSuccess(requiresReview = false) {
+    if (requiresReview) {
+      return this.warning(
+        '¡Consulta Recibida!',
+        'Tu consulta ha sido recibida y está en proceso de revisión. Será publicada una vez que sea aprobada por nuestro equipo de moderación.',
+        {
+          confirmText: 'Entendido',
+          autoClose: false
+        }
+      );
+    } else {
+      return this.success(
+        '¡Consulta Enviada!',
+        'Gracias por tu participación. Tu consulta será revisada por nuestro equipo de campaña.',
+        {
+          confirmText: 'Continuar',
+          autoClose: true
+        }
+      );
+    }
+  }
+
+  /**
+   * Consulta requiere moderación
+   */
+  static moderationRequired() {
+    return this.info(
+      'Consulta en Revisión',
+      'Tu consulta contiene contenido que requiere revisión manual. Será publicada una vez que sea aprobada por nuestro equipo.',
       {
-        confirmText: 'Continuar',
-        autoClose: true
+        confirmText: 'Entendido'
       }
     );
   }

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ContentModerator = require('../utils/contentModerator');
 
 const consultaSchema = new mongoose.Schema({
   // Datos del ciudadano
@@ -141,7 +142,41 @@ const consultaSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  razonModeracion: String
+  razonModeracion: String,
+  
+  // Sistema de moderación automática
+  analisisContenido: {
+    esOfensivo: {
+      type: Boolean,
+      default: false
+    },
+    nivel: {
+      type: String,
+      enum: ['limpio', 'sospechoso', 'ofensivo', 'muy_ofensivo'],
+      default: 'limpio'
+    },
+    palabrasDetectadas: [String],
+    patronesDetectados: [String],
+    requiereRevision: {
+      type: Boolean,
+      default: false
+    },
+    puntuacion: {
+      type: Number,
+      default: 0
+    },
+    fechaAnalisis: {
+      type: Date,
+      default: Date.now
+    }
+  },
+  
+  // Estado de moderación
+  estadoModeracion: {
+    type: String,
+    enum: ['automatico_aprobado', 'pendiente_revision', 'aprobado_manual', 'rechazado_manual'],
+    default: 'automatico_aprobado'
+  }
 }, {
   timestamps: true,
   collection: 'consultas_ciudadanas'
@@ -226,6 +261,48 @@ consultaSchema.methods.analizarSentimiento = function() {
   }
   
   return this.sentiment;
+};
+
+// Moderación automática de contenido
+consultaSchema.methods.moderarContenido = function() {
+  // Analizar el mensaje principal
+  const analisisTexto = ContentModerator.analizarContenido(this.mensaje);
+  
+  // También analizar el nombre si existe
+  if (this.nombre) {
+    const analisisNombre = ContentModerator.analizarContenido(this.nombre);
+    if (analisisNombre.esOfensivo) {
+      analisisTexto.esOfensivo = true;
+      analisisTexto.palabrasDetectadas = [...analisisTexto.palabrasDetectadas, ...analisisNombre.palabrasDetectadas];
+      analisisTexto.patronesDetectados = [...analisisTexto.patronesDetectados, ...analisisNombre.patronesDetectados];
+      analisisTexto.puntuacion += analisisNombre.puntuacion;
+    }
+  }
+  
+  // Guardar análisis
+  this.analisisContenido = {
+    esOfensivo: analisisTexto.esOfensivo,
+    nivel: analisisTexto.nivel,
+    palabrasDetectadas: analisisTexto.palabrasDetectadas,
+    patronesDetectados: analisisTexto.patronesDetectados,
+    requiereRevision: analisisTexto.requiereRevision,
+    puntuacion: analisisTexto.puntuacion,
+    fechaAnalisis: new Date()
+  };
+  
+  // Establecer estado de moderación
+  if (analisisTexto.requiereRevision) {
+    this.estadoModeracion = 'pendiente_revision';
+    this.esPublica = false; // No publicar hasta que sea revisado
+    this.moderada = true;
+    this.razonModeracion = `Contenido detectado como ${analisisTexto.nivel} - Requiere revisión manual`;
+  } else {
+    this.estadoModeracion = 'automatico_aprobado';
+    this.esPublica = true;
+    this.moderada = false;
+  }
+  
+  return this.analisisContenido;
 };
 
 // Método para obtener consultas públicas con paginación
