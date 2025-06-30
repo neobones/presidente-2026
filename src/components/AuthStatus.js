@@ -51,7 +51,7 @@ const AuthStatus = ({ onAuthChange }) => {
         if (onAuthChange) onAuthChange(null);
       }
     } catch (error) {
-      console.log('Error verificando autenticación:', error);
+      // Error verificando autenticación
       localStorage.removeItem('authToken');
       setError('Error de conexión');
     } finally {

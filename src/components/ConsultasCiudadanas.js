@@ -80,7 +80,7 @@ const ConsultasCiudadanas = ({
           });
         }
       } catch (error) {
-        console.log('Error cargando estadísticas:', error);
+        // Error cargando estadísticas
         // Mantener valores por defecto en caso de error
       }
     };
@@ -183,7 +183,7 @@ const ConsultasCiudadanas = ({
         throw new Error('Error al enviar consulta');
       }
     } catch (error) {
-      console.error('Error:', error);
+      // Error en envío
       await AlertService.networkError();
     } finally {
       setIsSubmitting(false);

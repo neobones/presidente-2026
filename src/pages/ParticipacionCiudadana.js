@@ -54,7 +54,7 @@ const ParticipacionCiudadana = () => {
         setUsuario(null);
       }
     } catch (error) {
-      console.log('Usuario no autenticado');
+      // Usuario no autenticado
     }
   };
 
@@ -77,7 +77,7 @@ const ParticipacionCiudadana = () => {
         setConsultas(prev => [...prev, ...(data.consultas || [])]);
       }
     } catch (error) {
-      console.error('Error cargando consultas:', error);
+      // Error cargando consultas
     } finally {
       setLoading(false);
     }
@@ -89,7 +89,7 @@ const ParticipacionCiudadana = () => {
       const data = await response.json();
       setEstadisticas(data);
     } catch (error) {
-      console.error('Error cargando estadísticas:', error);
+      // Error cargando estadísticas
     }
   };
 
@@ -140,7 +140,7 @@ const ParticipacionCiudadana = () => {
         await AlertService.sessionExpired();
       }
     } catch (error) {
-      console.error('Error procesando like:', error);
+      // Error procesando like
       await AlertService.networkError();
     }
   };
@@ -196,7 +196,7 @@ const ParticipacionCiudadana = () => {
       }
     } catch (error) {
       AlertService.close(); // Cerrar el loading si hay error
-      console.error('Error reportando consulta:', error);
+      // Error reportando consulta
       await AlertService.networkError();
     }
   };

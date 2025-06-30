@@ -72,8 +72,7 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
-  console.warn('⚠️  Credenciales OAuth no configuradas. Login deshabilitado.');
-  console.warn('ℹ️  Ejecuta: /root/application/setup-oauth.sh para configurar');
+  // OAuth credentials not configured
 }
 
 // Función para obtener la URL base de producción
@@ -97,9 +96,9 @@ if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
       return done(error, null);
     }
   }));
-  console.log('✅ Google OAuth configurado correctamente');
+  // Google OAuth configured
 } else {
-  console.log('⏭️  Google OAuth omitido - configurar credenciales');
+  // Google OAuth skipped - configure credentials
 }
 
 // Serialización de usuarios para sesiones
@@ -125,8 +124,12 @@ mongoose.connect('mongodb://localhost:27017/melinao2026', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ Conectado a MongoDB'))
-.catch(err => console.error('❌ Error conectando a MongoDB:', err));
+.then(() => {
+  // Connected to MongoDB
+})
+.catch(err => {
+  // MongoDB connection error
+});
 
 // Middleware para capturar IP real
 app.use((req, res, next) => {
@@ -140,27 +143,19 @@ app.use((req, res, next) => {
 
 // Middleware de verificación JWT
 const verifyJWT = (req, res, next) => {
-  console.log('🔍 verifyJWT - Headers recibidos:', req.headers);
-  
   const authHeader = req.headers.authorization;
-  console.log('🔍 verifyJWT - Authorization header:', authHeader);
   
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    console.log('❌ verifyJWT - No hay Bearer token');
     return res.status(401).json({ error: 'Token de acceso requerido' });
   }
   
   const token = authHeader.split(' ')[1];
-  console.log('🔍 verifyJWT - Token extraído (primeros 50 chars):', token.substring(0, 50) + '...');
-  console.log('🔍 verifyJWT - JWT_SECRET disponible:', !!process.env.JWT_SECRET);
   
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log('✅ verifyJWT - Token decodificado exitosamente:', decoded);
     req.user = decoded;
     next();
   } catch (error) {
-    console.log('❌ verifyJWT - Error verificando token:', error.message);
     return res.status(401).json({ error: 'Token inválido o expirado' });
   }
 };
@@ -169,27 +164,19 @@ const verifyJWT = (req, res, next) => {
 const verifyAdmin = (req, res, next) => {
   const authorizedAdmins = ['neobones@gmail.com'];
   
-  console.log('🔍 verifyAdmin - Verificando usuario:', req.user);
-  console.log('🔍 verifyAdmin - Email del usuario:', req.user?.email);
-  console.log('🔍 verifyAdmin - Lista de admins autorizados:', authorizedAdmins);
-  
   // Verificar si el usuario tiene JWT válido
   if (!req.user) {
-    console.log('❌ verifyAdmin - No hay req.user');
     return res.status(401).json({ error: 'Autenticación requerida' });
   }
   
   // Verificar si el email está en la lista de administradores autorizados
   if (!authorizedAdmins.includes(req.user.email)) {
-    console.log('❌ verifyAdmin - Email no autorizado:', req.user.email);
     return res.status(403).json({ 
       error: 'Acceso denegado. No tienes permisos de administrador.',
-      requiredRole: 'Administrador autorizado',
-      userEmail: req.user.email
+      requiredRole: 'Administrador autorizado'
     });
   }
   
-  console.log(`✅ verifyAdmin - Acceso admin autorizado para: ${req.user.email}`);
   next();
 };
 
@@ -319,7 +306,7 @@ app.get('/api/consultas/public', async (req, res) => {
     res.json(resultado);
 
   } catch (error) {
-    console.error('Error obteniendo consultas públicas:', error);
+    // console.error('Error obteniendo consultas públicas:', error);
     res.status(500).json({
       error: 'Error obteniendo consultas públicas'
     });
@@ -345,7 +332,7 @@ app.post('/api/consultas/:id/like', requireAuth, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error procesando like:', error);
+    // console.error('Error procesando like:', error);
     res.status(500).json({ error: 'Error procesando like' });
   }
 });
@@ -369,7 +356,7 @@ app.post('/api/consultas/:id/report', requireAuth, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error procesando reporte:', error);
+    // console.error('Error procesando reporte:', error);
     res.status(500).json({ error: 'Error procesando reporte' });
   }
 });
@@ -473,7 +460,7 @@ app.post('/api/consultas', consultasLimiter, requireAuth, async (req, res) => {
     // Guardar en base de datos
     await consulta.save();
 
-    console.log(`🆕 Nueva consulta recibida - Región: ${region}, Tipo: ${tipoConsulta}, Categoría: ${consulta.categoria}, Moderación: ${consulta.estadoModeracion}`);
+    // console.log(`🆕 Nueva consulta recibida - Región: ${region}, Tipo: ${tipoConsulta}, Categoría: ${consulta.categoria}, Moderación: ${consulta.estadoModeracion}`);
 
     // Mensaje personalizado según el estado de moderación
     let message = 'Consulta recibida exitosamente';
@@ -496,7 +483,7 @@ app.post('/api/consultas', consultasLimiter, requireAuth, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error guardando consulta:', error);
+    // console.error('Error guardando consulta:', error);
     res.status(500).json({
       error: 'Error interno del servidor',
       message: 'No se pudo guardar la consulta. Inténtalo nuevamente.'
@@ -550,7 +537,7 @@ app.get('/api/consultas/stats', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error obteniendo estadísticas:', error);
+    // console.error('Error obteniendo estadísticas:', error);
     res.status(500).json({
       error: 'Error obteniendo estadísticas'
     });
@@ -584,7 +571,7 @@ app.get('/api/consultas/admin', verifyJWT, verifyAdmin, async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error obteniendo consultas:', error);
+    // console.error('Error obteniendo consultas:', error);
     res.status(500).json({
       error: 'Error obteniendo consultas'
     });
@@ -629,7 +616,7 @@ app.put('/api/consultas/:id/estado', verifyJWT, verifyAdmin, async (req, res) =>
     });
 
   } catch (error) {
-    console.error('Error actualizando consulta:', error);
+    // console.error('Error actualizando consulta:', error);
     res.status(500).json({
       error: 'Error actualizando consulta'
     });
@@ -662,7 +649,7 @@ app.get('/api/consultas/moderacion', verifyJWT, verifyAdmin, async (req, res) =>
       }, {})
     });
   } catch (error) {
-    console.error('Error obteniendo consultas de moderación:', error);
+    // console.error('Error obteniendo consultas de moderación:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -692,7 +679,7 @@ app.post('/api/consultas/reprocess-moderation', verifyJWT, verifyAdmin, async (r
       procesadas++;
     }
 
-    console.log(`🔄 Re-procesamiento completado: ${procesadas} consultas procesadas, ${rechazadas} marcadas para revisión`);
+    // console.log(`🔄 Re-procesamiento completado: ${procesadas} consultas procesadas, ${rechazadas} marcadas para revisión`);
 
     res.json({
       success: true,
@@ -705,7 +692,7 @@ app.post('/api/consultas/reprocess-moderation', verifyJWT, verifyAdmin, async (r
     });
 
   } catch (error) {
-    console.error('Error re-procesando moderación:', error);
+    // console.error('Error re-procesando moderación:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -735,7 +722,7 @@ app.post('/api/consultas/:id/moderar', verifyJWT, verifyAdmin, async (req, res) 
 
     await consulta.save();
 
-    console.log(`📝 Consulta ${accion}da - ID: ${id}, Razón: ${razon || 'Sin razón especificada'}`);
+    // console.log(`📝 Consulta ${accion}da - ID: ${id}, Razón: ${razon || 'Sin razón especificada'}`);
 
     res.json({
       success: true,
@@ -748,7 +735,7 @@ app.post('/api/consultas/:id/moderar', verifyJWT, verifyAdmin, async (req, res) 
     });
 
   } catch (error) {
-    console.error('Error moderando consulta:', error);
+    // console.error('Error moderando consulta:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -763,7 +750,7 @@ app.get('*', (req, res) => {
 
 // Manejo de errores
 app.use((error, req, res, next) => {
-  console.error('Error no manejado:', error);
+  // console.error('Error no manejado:', error);
   res.status(500).json({
     error: 'Error interno del servidor',
     message: process.env.NODE_ENV === 'development' ? error.message : 'Algo salió mal'
@@ -773,9 +760,9 @@ app.use((error, req, res, next) => {
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor API ejecutándose en puerto ${PORT}`);
-  console.log(`📊 Dashboard admin: http://localhost:${PORT}/api/consultas/admin`);
-  console.log(`📈 Estadísticas públicas: http://localhost:${PORT}/api/consultas/stats`);
+  // console.log(`🚀 Servidor API ejecutándose en puerto ${PORT}`);
+  // console.log(`📊 Dashboard admin: http://localhost:${PORT}/api/consultas/admin`);
+  // console.log(`📈 Estadísticas públicas: http://localhost:${PORT}/api/consultas/stats`);
 });
 
 module.exports = app;

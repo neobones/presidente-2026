@@ -23,23 +23,6 @@ const AdminDashboard = () => {
   const [implementDescription, setImplementDescription] = useState('');
 
   useEffect(() => {
-    // Debug: verificar token al cargar
-    const token = localStorage.getItem('authToken');
-    console.log('🔐 AdminDashboard - Token disponible:', !!token);
-    console.log('🔐 AdminDashboard - localStorage keys:', Object.keys(localStorage));
-    console.log('🔐 AdminDashboard - URL actual:', window.location.href);
-    
-    if (token) {
-      console.log('🔐 Token (primeros 50 chars):', token.substring(0, 50) + '...');
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        console.log('🔐 Payload del token:', payload);
-        console.log('🔐 Token expirado?', payload.exp < Date.now() / 1000);
-      } catch (e) {
-        console.error('🔐 Error decodificando token:', e);
-      }
-    }
-    
     loadStats();
     loadConsultas();
   }, [filtros]);
@@ -50,7 +33,7 @@ const AdminDashboard = () => {
       const data = await response.json();
       setStats(data);
     } catch (error) {
-      console.error('Error cargando estadísticas:', error);
+      // Error silencioso en producción
     }
   };
 
@@ -64,31 +47,12 @@ const AdminDashboard = () => {
       });
 
       const token = localStorage.getItem('authToken');
-      console.log('🔍 loadConsultas - Token disponible:', !!token);
-      console.log('🔍 loadConsultas - Token completo:', token);
       
       if (!token) {
-        console.error('Token de autenticación requerido');
         setAuthError('Sesión no encontrada. Por favor, ve a "Participación Ciudadana" e inicia sesión con Google antes de acceder al admin.');
         setConsultas([]);
         return;
       }
-
-      // Debug: Decodificar token para ver el contenido
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        console.log('🔍 loadConsultas - Payload del token:', payload);
-        console.log('🔍 loadConsultas - Email en token:', payload.email);
-        console.log('🔍 loadConsultas - Token expirado?', payload.exp < Date.now() / 1000);
-      } catch (e) {
-        console.error('🔍 Error decodificando token en loadConsultas:', e);
-      }
-
-      console.log('🔍 loadConsultas - Enviando petición a:', `/api/consultas/admin?${params}`);
-      console.log('🔍 loadConsultas - Headers:', {
-        'Authorization': `Bearer ${token.substring(0, 20)}...`,
-        'Content-Type': 'application/json'
-      });
 
       const response = await fetch(`/api/consultas/admin?${params}`, {
         headers: {
@@ -97,11 +61,7 @@ const AdminDashboard = () => {
         }
       });
 
-      console.log('🔍 loadConsultas - Response status:', response.status);
-      console.log('🔍 loadConsultas - Response headers:', Object.fromEntries(response.headers.entries()));
-
       if (response.status === 401) {
-        console.error('No autorizado - Token inválido o expirado');
         localStorage.removeItem('authToken');
         setAuthError('Sesión expirada. Por favor, inicia sesión nuevamente.');
         setConsultas([]);
@@ -109,7 +69,6 @@ const AdminDashboard = () => {
       }
 
       if (response.status === 403) {
-        console.error('Acceso denegado - No tienes permisos de administrador');
         setAuthError('Acceso denegado. Solo administradores autorizados pueden acceder a esta sección.');
         setConsultas([]);
         return;
@@ -118,7 +77,7 @@ const AdminDashboard = () => {
       const data = await response.json();
       setConsultas(data.consultas || []);
     } catch (error) {
-      console.error('Error cargando consultas:', error);
+      // Error silencioso en producción
     } finally {
       setLoading(false);
     }
@@ -128,7 +87,6 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
-        console.error('Token de autenticación requerido');
         return;
       }
 
@@ -146,13 +104,11 @@ const AdminDashboard = () => {
       });
 
       if (response.status === 401) {
-        console.error('No autorizado - Token inválido o expirado');
         localStorage.removeItem('authToken');
         return;
       }
 
       if (response.status === 403) {
-        console.error('Acceso denegado - No tienes permisos de administrador');
         return;
       }
 
@@ -169,7 +125,7 @@ const AdminDashboard = () => {
         await loadStats(); // Recargar estadísticas
       }
     } catch (error) {
-      console.error('Error actualizando estado:', error);
+      // Error silencioso en producción
     }
   };
 
