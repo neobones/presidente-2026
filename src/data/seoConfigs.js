@@ -652,14 +652,138 @@ export const seoConfigs = {
     ]
   },
   
-  unidad: {
-    title: "Unidad Nacional - Araucanía y Desarrollo Indígena Sustentable",
-    description: "$300 mil millones en desarrollo Araucanía, educación intercultural, Consejo Nacional Reconciliación. Unidad en la diversidad con Juan Pablo Melinao.",
-    keywords: ['Araucanía', 'mapuche', 'unidad nacional', 'desarrollo indígena', 'reconciliación'],
-    canonicalUrl: "https://chiledigno.cl/programa-gobierno-2026/unidad-nacional-araucania-desarrollo",
+  chileUnido: {
+    title: "Chile Unido - Desarrollo Sostenible Araucanía y Unidad Nacional | Melinao 2026",
+    description: "Revolución de unidad nacional: $470B desarrollo sostenible Araucanía, reconocimiento cultura mapuche, 5,000 empleos turismo, educación intercultural. Juan Pablo Melinao González, ingeniero mapuche, construye Chile unido en diversidad con diálogo y desarrollo.",
+    keywords: [
+      'Chile unido Melinao',
+      'desarrollo sostenible Araucanía',
+      'cultura mapuche reconocimiento',
+      'turismo sostenible Chile',
+      'unidad nacional diversidad',
+      'integración social mapuche',
+      'Juan Pablo Melinao Araucanía',
+      'candidato presidencial mapuche',
+      'ingeniero mapuche unidad',
+      'desarrollo indígena Chile',
+      'reconciliación nacional Chile',
+      'derechos territoriales mapuche',
+      'educación intercultural',
+      'protección ambiental Chile',
+      'diálogo intercomunitario',
+      'cohesión social Chile',
+      'Temuco desarrollo turístico',
+      'bosques protegidos Araucanía',
+      'emprendimiento mapuche',
+      'Chile diversidad fortaleza'
+    ],
+    canonicalUrl: "https://chiledigno.cl/reformas/chile-unido-desarrollo-araucania",
     openGraph: {
-      image: '/images/araucania-og.jpg'
-    }
+      image: '/images/chile-unido-melinao-2026.jpg',
+      imageAlt: 'Juan Pablo Melinao - Chile Unido Desarrollo Araucanía 2026'
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": ["GovernmentService", "PublicPolicy", "SocialPolicy"],
+      "name": "Chile Unido - Desarrollo Sostenible e Integración Araucanía",
+      "headline": "Chile Unido 2026: Desarrollo Sostenible, Cultura Mapuche y Unidad Nacional",
+      "description": "Plan integral de unidad nacional chilena: desarrollo sostenible Araucanía, reconocimiento cultural mapuche, turismo responsable y educación intercultural para cohesión social y prosperidad compartida.",
+      "author": {
+        "@type": "Person",
+        "name": "Juan Pablo Melinao González",
+        "jobTitle": "Candidato Presidencial Chile 2026",
+        "ethnicity": "Mapuche",
+        "profession": "Ingeniero en Informática",
+        "politicalAffiliation": "Independiente"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Campaña Melinao 2026",
+        "url": "https://chiledigno.cl"
+      },
+      "serviceType": "National Unity and Cultural Integration Policy",
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        {
+          "@type": "Place",
+          "name": "Araucanía"
+        },
+        {
+          "@type": "Place", 
+          "name": "Santiago"
+        },
+        {
+          "@type": "Place",
+          "name": "Antofagasta"
+        },
+        {
+          "@type": "Place",
+          "name": "Valparaíso"
+        }
+      ],
+      "expectedBenefit": [
+        "Desarrollo sostenible $470B inversión integral Araucanía",
+        "Reconocimiento cultura mapuche en 500 escuelas públicas",
+        "Creación 5,000 empleos turismo cultural y tecnología",
+        "Protección ambiental con $100B reforestación y manejo residuos",
+        "Consejo Regional Desarrollo Sostenible con participación indígena",
+        "Educación intercultural para 50,000 estudiantes",
+        "Regularización derechos territoriales 5,000 familias mapuche",
+        "Turismo sostenible con 20 centros culturales regionales"
+      ],
+      "cost": {
+        "@type": "MonetaryAmount",
+        "currency": "CLP",
+        "value": "470000000000000"
+      },
+      "funding": [
+        "Impuesto progresivo sueldos altos ($1.5-2T anuales)",
+        "Formalización arriendos y comercio digital ($500-800B)",
+        "Fondo minero cobre y litio ($500B anuales)",
+        "Ahorros automatización estado ($200B)",
+        "Cooperación internacional ONU-UE ($100B)"
+      ],
+      "timeline": {
+        "phase1": "Primeros 100 días: Consejo Regional, programas ambientales piloto",
+        "phase2": "Año 1-2: Regularización tierras, infraestructura educativa y salud",
+        "phase3": "Año 3-5: Turismo consolidado, educación cívica nacional"
+      },
+      "targetAudience": [
+        "Comunidades mapuche y pueblos originarios",
+        "Habitantes región Araucanía (100,000 personas)",
+        "Familias demandantes educación intercultural",
+        "Emprendedores turismo sostenible",
+        "Ciudadanos buscando unidad nacional (80%)",
+        "Estudiantes educación pública nacional"
+      ],
+      "keyFeatures": {
+        "DesarrolloSostenible": "$470B inversión integral Araucanía 2026-2031",
+        "ReconocimientoCultural": "Idioma mapuche en 500 escuelas, educación intercultural",
+        "TurismoSostenible": "20 centros turísticos culturales, 5,000 empleos directos",
+        "ProteccionAmbiental": "$100B reforestación, reducción 15% contaminación",
+        "IntegracionSocial": "Consejo Regional participativo, diálogo intercomunitario"
+      },
+      "socialImpact": {
+        "culturalRecognition": "50,000 estudiantes educación intercultural",
+        "economicDevelopment": "5,000 empleos turismo y tecnología Araucanía",
+        "environmentalProtection": "15% reducción contaminación regional", 
+        "territorialRights": "5,000 familias mapuche derechos territoriales asegurados",
+        "nationalUnity": "80% chilenos beneficiados cohesión social mejorada"
+      }
+    },
+    politicalKeywords: [
+      'elecciones Chile 2026',
+      'candidato presidencial mapuche',
+      'independiente unidad nacional',
+      'desarrollo sostenible Chile',
+      'cultura mapuche integración',
+      'Chile unido diversidad',
+      'reconciliación nacional',
+      'Araucanía desarrollo turístico'
+    ]
   },
 
   // Configuraciones SEO Regionales

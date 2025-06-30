@@ -99,7 +99,7 @@ const HomePage = () => {
       color: "from-indigo-500 to-violet-600",
       bgColor: "bg-gradient-to-br from-indigo-50 to-violet-50",
       features: ["Desarrollo Araucanía", "Educación intercultural", "Consejo Reconciliación"],
-      link: "/reformas/unidad-nacional-araucania-desarrollo"
+      link: "/reformas/chile-unido-desarrollo-araucania"
     }
   ];
 
