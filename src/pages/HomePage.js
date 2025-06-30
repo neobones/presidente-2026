@@ -44,61 +44,96 @@ const HomePage = () => {
     {
       icon: <Cpu className="w-12 h-12" />,
       title: "IA en el Estado",
-      subtitle: "Revolución Digital",
-      description: "Automatización completa de servicios públicos. Trámites en 5 minutos, no 5 semanas.",
+      subtitle: "Trámites en 2 Minutos",
+      description: "Con IA, sacas tu carnet de identidad en 2 minutos desde tu celular. El SII detecta automáticamente tus descuentos. Las notarías funcionan 24/7 sin colas.",
       metric: "$500 mil millones",
-      detail: "ahorro anual",
+      detail: "ahorro anual garantizado",
       color: "from-cyan-500 to-blue-600",
       bgColor: "bg-gradient-to-br from-cyan-50 to-blue-50",
-      features: ["Registro Civil automatizado", "SII con IA predictiva", "Notarías digitales 24/7"],
+      features: [
+        "📱 Carnet de identidad desde tu celular", 
+        "🏦 SII calcula tus impuestos automáticamente", 
+        "📄 Notarías digitales abiertas 24/7",
+        "🔒 Transparencia total con blockchain"
+      ],
+      ejemplo: "María en Temuco renueva su carnet sin salir de casa. Juan en Santiago hace su declaración de impuestos en un click.",
+      secundarias: ["Transparencia digital: cada peso público será rastreado", "Empleos digitales: 50,000 capacitaciones gratuitas"],
       link: "/reformas/automatizacion-estado-inteligencia-artificial"
     },
     {
       icon: <DollarSign className="w-12 h-12" />,
       title: "Economía Real",
-      subtitle: "Más Plata en tu Bolsillo",
-      description: "IVA 5% canasta básica. Sueldo mínimo $900k. Formalización que genera empleos.",
-      metric: "10% menos",
-      detail: "costo de vida",
+      subtitle: "$50,000 Más al Mes",
+      description: "Pagas IVA 5% en pan, leche y carne. Tu sueldo mínimo sube a $900,000. Los arriendos se formalizan y bajan. Tu familia ahorra $50,000 mensuales.",
+      metric: "$50,000",
+      detail: "ahorro familiar mensual",
       color: "from-emerald-500 to-green-600",
       bgColor: "bg-gradient-to-br from-emerald-50 to-green-50",
-      features: ["IVA reducido productos básicos", "Sueldo mínimo digno", "Formalización masiva"],
+      features: [
+        "🛒 IVA 5% en canasta básica (pan, leche, carne)", 
+        "💰 Sueldo mínimo $900,000 con subsidio PYME", 
+        "🏠 Arriendos con factura: precios justos",
+        "📊 Trabajadores informales se formalizan con beneficios"
+      ],
+      ejemplo: "Ana en La Pintana paga $2,000 menos por sus compras semanales. Pedro en Valparaíso gana $370,000 más como sueldo mínimo.",
+      secundarias: ["Empleo masivo: 200,000 nuevos empleos formales", "Emprendimiento: microcréditos hasta $5 millones"],
       link: "/reformas/reduccion-costo-vida-impuestos"
     },
     {
       icon: <Shield className="w-12 h-12" />,
       title: "Fronteras Inteligentes",
-      subtitle: "Seguridad + Humanidad",
-      description: "Tecnología satelital en fronteras. Acuerdos internacionales. Prevención, no represión.",
+      subtitle: "Calles Seguras, Migración Ordenada",
+      description: "Drones detectan cruces ilegales en tiempo real. Centros humanitarios dignos para migrantes. Programas de prevención para jóvenes en riesgo.",
       metric: "50% menos",
-      detail: "migración ilegal",
+      detail: "migración ilegal y delitos",
       color: "from-orange-500 to-red-600",
       bgColor: "bg-gradient-to-br from-orange-50 to-red-50",
-      features: ["Drones en fronteras", "Centros humanitarios", "Acuerdos Bolivia-Perú"],
+      features: [
+        "🛡️ Drones 24/7 en fronteras norte (Arica-Antofagasta)", 
+        "🏥 Centros humanitarios dignos para familias migrantes", 
+        "🤝 Acuerdos con Bolivia y Perú para control conjunto",
+        "👮 IA predice delitos: más carabineros donde se necesitan"
+      ],
+      ejemplo: "En Arica, un drone detecta contrabando y alerta a Carabineros al instante. En Temuco, jóvenes en riesgo reciben capacitación laboral.",
+      secundarias: ["Seguridad urbana: cámaras IA en 500 puntos críticos", "Prevención: 20,000 jóvenes en programas deportivos y laborales"],
       link: "/reformas/fronteras-inteligentes-seguridad-nacional"
     },
     {
       icon: <Heart className="w-12 h-12" />,
       title: "Justicia Histórica",
-      subtitle: "Pagamos las Deudas",
-      description: "Deuda histórica profesores. Fin de privilegios políticos. Equidad real para todos.",
+      subtitle: "Pagamos Lo Que Se Debe",
+      description: "57,000 profesores reciben $4.5 millones cada uno. Todos los docentes activos ganan $900,000. Se acaban los sueldos vitalicios de ex-presidentes.",
       metric: "57,000",
-      detail: "profesores beneficiados",
+      detail: "profesores recibirán justicia",
       color: "from-purple-500 to-pink-600",
       bgColor: "bg-gradient-to-br from-purple-50 to-pink-50",
-      features: ["$4.5 millones por profesor", "Fin sueldos vitalicios", "Salud y educación dignas"],
+      features: [
+        "💰 $4.5 millones a cada profesor con deuda histórica", 
+        "👩‍🏫 Sueldo $900,000 para 200,000 docentes activos", 
+        "❌ Fin de sueldos vitalicios ex-presidentes/parlamentarios",
+        "🏥 Sistema universal de salud con lista de espera cero"
+      ],
+      ejemplo: "Don Carlos, profesor jubilado en Valdivia, recibe $4.5 millones. Profesora Elena en Antofagasta gana $900,000 mensuales.",
+      secundarias: ["Educación digna: becas para 100,000 estudiantes vulnerables", "Salud universal: acceso garantizado sin importar ingresos"],
       link: "/reformas/justicia-social-equidad-fin-privilegios"
     },
     {
       icon: <Users className="w-12 h-12" />,
       title: "Chile Unido",
-      subtitle: "Diversidad es Fortaleza",
-      description: "Desarrollo en La Araucanía. Reconocimiento cultural. Diálogo, no confrontación.",
-      metric: "$300 mil millones",
-      detail: "inversión desarrollo",
+      subtitle: "Araucanía Próspera, Chile Fuerte",
+      description: "Bosques protegidos generan turismo mapuche. Escuelas enseñan cultura ancestral. 5,000 empleos en turismo sustentable. Desarrollo que respeta el medio ambiente.",
+      metric: "5,000",
+      detail: "empleos turismo sostenible",
       color: "from-indigo-500 to-violet-600",
       bgColor: "bg-gradient-to-br from-indigo-50 to-violet-50",
-      features: ["Desarrollo Araucanía", "Educación intercultural", "Consejo Reconciliación"],
+      features: [
+        "🌲 Protección bosques nativos: 50,000 hectáreas seguras", 
+        "🏫 Educación intercultural en 500 escuelas públicas", 
+        "🚌 20 centros turísticos culturales mapuche",
+        "🌍 Reducción 15% contaminación ambiental regional"
+      ],
+      ejemplo: "Familia mapuche en Temuco abre ruka turística y genera $800,000 mensuales. Niños en Santiago aprenden mapudungun en su escuela.",
+      secundarias: ["Medio ambiente: reforestación de 100,000 árboles anuales", "Reconciliación: Consejo Nacional con participación indígena real"],
       link: "/reformas/chile-unido-desarrollo-araucania"
     }
   ];
@@ -270,8 +305,8 @@ const HomePage = () => {
 
                 <div className="space-y-6">
                   <div className="text-lg sm:text-xl text-gray-300 max-w-xl">
-                    Tecnología para automatizar el Estado. Economía para tu bolsillo. 
-                    Unidad para construir el Chile que todos merecemos.
+                    Como ingeniero mapuche, combino tecnología de vanguardia con justicia social. 
+                    Tu carnet en 2 minutos, $50,000 más al mes en tu bolsillo, y un Chile unido que respeta nuestra diversidad.
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4">
@@ -300,11 +335,11 @@ const HomePage = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
                     <div className="flex items-center space-x-4">
                       <div className="p-3 bg-blue-500/20 rounded-full">
-                        <Zap className="w-8 h-8 text-blue-400" />
+                        <Cpu className="w-8 h-8 text-blue-400" />
                       </div>
                       <div>
-                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">$500B</div>
-                        <div className="text-sm text-gray-300">Ahorro con IA</div>
+                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">2 min</div>
+                        <div className="text-sm text-gray-300">Trámites con IA</div>
                       </div>
                     </div>
                   </div>
@@ -312,11 +347,23 @@ const HomePage = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
                     <div className="flex items-center space-x-4">
                       <div className="p-3 bg-green-500/20 rounded-full">
-                        <TrendingUp className="w-8 h-8 text-green-400" />
+                        <DollarSign className="w-8 h-8 text-green-400" />
                       </div>
                       <div>
-                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">70%</div>
-                        <div className="text-sm text-gray-300">Buscan alivio</div>
+                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">$50K</div>
+                        <div className="text-sm text-gray-300">Más al mes</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div className="flex items-center space-x-4">
+                      <div className="p-3 bg-orange-500/20 rounded-full">
+                        <Shield className="w-8 h-8 text-orange-400" />
+                      </div>
+                      <div>
+                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">50%</div>
+                        <div className="text-sm text-gray-300">Menos delitos</div>
                       </div>
                     </div>
                   </div>
@@ -324,23 +371,11 @@ const HomePage = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
                     <div className="flex items-center space-x-4">
                       <div className="p-3 bg-purple-500/20 rounded-full">
-                        <Globe className="w-8 h-8 text-purple-400" />
-                      </div>
-                      <div>
-                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">50%</div>
-                        <div className="text-sm text-gray-300">Menos trámites</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-yellow-500/20 rounded-full">
-                        <Heart className="w-8 h-8 text-yellow-400" />
+                        <Heart className="w-8 h-8 text-purple-400" />
                       </div>
                       <div>
                         <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">57K</div>
-                        <div className="text-sm text-gray-300">Profesores</div>
+                        <div className="text-sm text-gray-300">Profesores pagados</div>
                       </div>
                     </div>
                   </div>
@@ -397,13 +432,13 @@ const HomePage = () => {
               </div>
               
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-8">
-                5 Reformas que 
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent"> Cambian Todo</span>
+                5 Reformas con 
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent"> Beneficios Reales</span>
               </h2>
               
               <p className="text-xl sm:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Propuestas concretas, con números reales y plazos definidos. 
-                No son promesas: son compromisos técnicamente viables.
+                Cada reforma incluye ejemplos concretos de cómo mejorará tu vida diaria. 
+                Con números reales, plazos definidos y beneficios que puedes calcular.
               </p>
             </div>
 
@@ -437,12 +472,38 @@ const HomePage = () => {
                         
                         <div className="space-y-4 mb-8">
                           {reforma.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-center space-x-4">
-                              <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                            <div key={idx} className="flex items-start space-x-4">
+                              <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-2 flex-shrink-0"></div>
                               <span className="text-lg text-gray-600">{feature}</span>
                             </div>
                           ))}
                         </div>
+
+                        {/* Ejemplo Real */}
+                        {reforma.ejemplo && (
+                          <div className="bg-gray-50 rounded-2xl p-6 mb-8">
+                            <h4 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                              <Star className="w-5 h-5 text-yellow-500" />
+                              Ejemplo Real
+                            </h4>
+                            <p className="text-gray-700 italic">{reforma.ejemplo}</p>
+                          </div>
+                        )}
+
+                        {/* Reformas Secundarias */}
+                        {reforma.secundarias && (
+                          <div className="mb-8">
+                            <h4 className="text-lg font-bold text-gray-900 mb-4">También incluye:</h4>
+                            <div className="space-y-2">
+                              {reforma.secundarias.map((secundaria, idx) => (
+                                <div key={idx} className="flex items-start space-x-3">
+                                  <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mt-2 flex-shrink-0"></div>
+                                  <span className="text-gray-600">{secundaria}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                         
                         <Link 
                           to={reforma.link}
