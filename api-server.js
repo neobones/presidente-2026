@@ -140,19 +140,27 @@ app.use((req, res, next) => {
 
 // Middleware de verificación JWT
 const verifyJWT = (req, res, next) => {
+  console.log('🔍 verifyJWT - Headers recibidos:', req.headers);
+  
   const authHeader = req.headers.authorization;
+  console.log('🔍 verifyJWT - Authorization header:', authHeader);
   
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    console.log('❌ verifyJWT - No hay Bearer token');
     return res.status(401).json({ error: 'Token de acceso requerido' });
   }
   
   const token = authHeader.split(' ')[1];
+  console.log('🔍 verifyJWT - Token extraído (primeros 50 chars):', token.substring(0, 50) + '...');
+  console.log('🔍 verifyJWT - JWT_SECRET disponible:', !!process.env.JWT_SECRET);
   
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('✅ verifyJWT - Token decodificado exitosamente:', decoded);
     req.user = decoded;
     next();
   } catch (error) {
+    console.log('❌ verifyJWT - Error verificando token:', error.message);
     return res.status(401).json({ error: 'Token inválido o expirado' });
   }
 };
@@ -161,13 +169,19 @@ const verifyJWT = (req, res, next) => {
 const verifyAdmin = (req, res, next) => {
   const authorizedAdmins = ['neobones@gmail.com'];
   
+  console.log('🔍 verifyAdmin - Verificando usuario:', req.user);
+  console.log('🔍 verifyAdmin - Email del usuario:', req.user?.email);
+  console.log('🔍 verifyAdmin - Lista de admins autorizados:', authorizedAdmins);
+  
   // Verificar si el usuario tiene JWT válido
   if (!req.user) {
+    console.log('❌ verifyAdmin - No hay req.user');
     return res.status(401).json({ error: 'Autenticación requerida' });
   }
   
   // Verificar si el email está en la lista de administradores autorizados
   if (!authorizedAdmins.includes(req.user.email)) {
+    console.log('❌ verifyAdmin - Email no autorizado:', req.user.email);
     return res.status(403).json({ 
       error: 'Acceso denegado. No tienes permisos de administrador.',
       requiredRole: 'Administrador autorizado',
@@ -175,7 +189,7 @@ const verifyAdmin = (req, res, next) => {
     });
   }
   
-  console.log(`🔐 Acceso admin autorizado para: ${req.user.email}`);
+  console.log(`✅ verifyAdmin - Acceso admin autorizado para: ${req.user.email}`);
   next();
 };
 

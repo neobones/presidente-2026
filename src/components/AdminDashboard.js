@@ -62,12 +62,23 @@ const AdminDashboard = () => {
 
       const token = localStorage.getItem('authToken');
       console.log('🔍 loadConsultas - Token disponible:', !!token);
+      console.log('🔍 loadConsultas - Token completo:', token);
       
       if (!token) {
         console.error('Token de autenticación requerido');
         setAuthError('Sesión no encontrada. Por favor, ve a "Participación Ciudadana" e inicia sesión con Google antes de acceder al admin.');
         setConsultas([]);
         return;
+      }
+
+      // Debug: Decodificar token para ver el contenido
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log('🔍 loadConsultas - Payload del token:', payload);
+        console.log('🔍 loadConsultas - Email en token:', payload.email);
+        console.log('🔍 loadConsultas - Token expirado?', payload.exp < Date.now() / 1000);
+      } catch (e) {
+        console.error('🔍 Error decodificando token en loadConsultas:', e);
       }
 
       console.log('🔍 loadConsultas - Enviando petición a:', `/api/consultas/admin?${params}`);

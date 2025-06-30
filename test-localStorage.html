@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test localStorage</title>
+</head>
+<body>
+    <h1>Test de localStorage</h1>
+    <button onclick="setToken()">Guardar Token de Prueba</button>
+    <button onclick="getToken()">Verificar Token</button>
+    <button onclick="clearToken()">Limpiar Token</button>
+    <div id="result"></div>
+
+    <script>
+        function setToken() {
+            const testToken = 'test-token-' + new Date().getTime();
+            localStorage.setItem('authToken', testToken);
+            document.getElementById('result').innerHTML = 'Token guardado: ' + testToken;
+        }
+
+        function getToken() {
+            const token = localStorage.getItem('authToken');
+            document.getElementById('result').innerHTML = 'Token encontrado: ' + (token || 'NO ENCONTRADO');
+        }
+
+        function clearToken() {
+            localStorage.removeItem('authToken');
+            document.getElementById('result').innerHTML = 'Token eliminado';
+        }
+
+        // Auto-verificar al cargar
+        window.onload = function() {
+            getToken();
+        }
+    </script>
+</body>
+</html>
