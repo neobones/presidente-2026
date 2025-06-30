@@ -771,7 +771,7 @@ const HomePage = () => {
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
               <button 
-                onClick={() => window.open('mailto:contacto@chiledigno.cl?subject=Quiero apoyar la campaña Melinao 2026', '_blank')}
+                onClick={() => window.open('mailto:contacto@melinao2026.cl?subject=Quiero apoyar la campaña Melinao 2026', '_blank')}
                 className="group px-12 py-6 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 text-white font-black text-xl rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-4"
               >
                 <span>APOYAR CAMPAÑA</span>
@@ -779,7 +779,7 @@ const HomePage = () => {
               </button>
               
               <button 
-                onClick={() => window.open('mailto:voluntarios@chiledigno.cl?subject=Quiero ser voluntario - Melinao 2026', '_blank')}
+                onClick={() => window.open('mailto:voluntarios@melinao2026.cl?subject=Quiero ser voluntario - Melinao 2026', '_blank')}
                 className="px-12 py-6 border-3 border-white text-white font-black text-xl rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300"
               >
                 SER VOLUNTARIO
@@ -791,7 +791,7 @@ const HomePage = () => {
                 <h3 className="text-2xl font-bold text-white mb-4">Dona</h3>
                 <p className="text-gray-300 mb-6">Financia el cambio tecnológico que Chile necesita</p>
                 <button 
-                  onClick={() => alert('Sistema de donaciones en desarrollo. Mientras tanto, puedes contactarnos en contacto@chiledigno.cl')}
+                  onClick={() => alert('Sistema de donaciones en desarrollo. Mientras tanto, puedes contactarnos en contacto@melinao2026.cl')}
                   className="w-full px-6 py-3 bg-white text-gray-900 font-semibold rounded-full hover:bg-gray-100 transition-colors"
                 >
                   Contribuir
@@ -802,7 +802,7 @@ const HomePage = () => {
                 <h3 className="text-2xl font-bold text-white mb-4">Voluntario</h3>
                 <p className="text-gray-300 mb-6">Sé parte activa de la transformación digital</p>
                 <button 
-                  onClick={() => window.open('mailto:voluntarios@chiledigno.cl?subject=Formulario de Voluntariado&body=Nombre:%0D%0ARegión:%0D%0AÁrea de interés:%0D%0ADisponibilidad:%0D%0ATe contactaremos en 24-48 horas.', '_blank')}
+                  onClick={() => window.open('mailto:voluntarios@melinao2026.cl?subject=Formulario de Voluntariado&body=Nombre:%0D%0ARegión:%0D%0AÁrea de interés:%0D%0ADisponibilidad:%0D%0ATe contactaremos en 24-48 horas.', '_blank')}
                   className="w-full px-6 py-3 bg-white text-gray-900 font-semibold rounded-full hover:bg-gray-100 transition-colors"
                 >
                   Unirse

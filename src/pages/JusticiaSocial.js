@@ -79,7 +79,7 @@ const JusticiaSocial = () => {
         'Pago de $4.5 millones a cada uno de los 57,000 docentes',
         'Prioridad a profesores jubilados y mayores de edad',
         'Transferencia directa vía ChileAtiende digitalizado',
-        'Cronograma transparente publicado en chiledigno.cl'
+        'Cronograma transparente publicado en melinao2026.cl'
       ],
       ejemplo: 'Un profesor jubilado en Temuco recibirá $4.5 millones para complementar su pensión'
     },
@@ -1089,7 +1089,7 @@ const JusticiaSocial = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Registro Público</h3>
                 <div className="space-y-4">
-                  <div className="text-3xl font-black text-blue-600">chiledigno.cl</div>
+                  <div className="text-3xl font-black text-blue-600">melinao2026.cl</div>
                   <div className="text-gray-600">Transparencia total pagos y ahorros</div>
                   <div className="bg-white rounded-xl p-4 shadow-sm">
                     <div className="font-bold text-blue-600 mb-2">Incluye:</div>
@@ -1158,7 +1158,7 @@ const JusticiaSocial = () => {
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
                 <button 
                   onClick={() => {
-                    window.open('mailto:contacto@chiledigno.cl?subject=Apoyo%20Justicia%20Social&body=Hola%20Juan%20Pablo,%0A%0AQuiero%20apoyar%20la%20reforma%20de%20Justicia%20Social.%0A%0AEsta%20propuesta%20integral%20de:%0A\u2022 $4.5%20millones%20a%2057,000%20profesores%0A\u2022 Sueldo%20docente%20$900K%0A\u2022 Eliminaci\u00f3n%20sueldos%20vitalicios%0A\u2022 Transparencia%20total%20chiledigno.cl%0A%0AEs%20exactamente%20la%20justicia%20que%20Chile%20necesita.%0A%0A\u00bfC\u00f3mo%20puedo%20ayudar%20a%20difundir%20esta%20propuesta?%0A%0ASaludos', '_blank');
+                    window.open('mailto:contacto@melinao2026.cl?subject=Apoyo%20Justicia%20Social&body=Hola%20Juan%20Pablo,%0A%0AQuiero%20apoyar%20la%20reforma%20de%20Justicia%20Social.%0A%0AEsta%20propuesta%20integral%20de:%0A\u2022 $4.5%20millones%20a%2057,000%20profesores%0A\u2022 Sueldo%20docente%20$900K%0A\u2022 Eliminaci\u00f3n%20sueldos%20vitalicios%0A\u2022 Transparencia%20total%20melinao2026.cl%0A%0AEs%20exactamente%20la%20justicia%20que%20Chile%20necesita.%0A%0A\u00bfC\u00f3mo%20puedo%20ayudar%20a%20difundir%20esta%20propuesta?%0A%0ASaludos', '_blank');
                   }}
                   className="px-12 py-6 bg-white text-purple-600 font-black text-xl rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
                 >
@@ -1518,7 +1518,7 @@ const JusticiaSocial = () => {
                       </div>
                       <div className="flex items-center space-x-3">
                         <CheckSquare className="w-5 h-5 text-green-600" />
-                        <span className="text-gray-700">Registro transparente en chiledigno.cl</span>
+                        <span className="text-gray-700">Registro transparente en melinao2026.cl</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <CheckSquare className="w-5 h-5 text-green-600" />

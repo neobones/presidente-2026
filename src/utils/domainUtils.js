@@ -1,6 +1,6 @@
 /**
  * Utilidades para manejo dinámico de dominios
- * Soporta múltiples dominios: chiledigno.cl y melinao2026.cl
+ * Soporta múltiples dominios: melinao2026.cl (principal) y chiledigno.cl (secundario)
  */
 
 // Función para obtener el dominio base actual
@@ -58,10 +58,10 @@ export const buildApiUrl = (endpoint = '') => {
 
 // Lista de dominios soportados
 export const SUPPORTED_DOMAINS = [
-  'chiledigno.cl',
   'melinao2026.cl',
-  'www.chiledigno.cl',
-  'www.melinao2026.cl'
+  'chiledigno.cl',
+  'www.melinao2026.cl',
+  'www.chiledigno.cl'
 ];
 
 // Función para validar si un dominio es soportado

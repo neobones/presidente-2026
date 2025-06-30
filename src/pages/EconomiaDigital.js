@@ -928,7 +928,7 @@ const EconomiaDigital = () => {
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
                 <button 
                   onClick={() => {
-                    window.open('mailto:contacto@chiledigno.cl?subject=Apoyo%20Reforma%20Economica&body=Hola%20Juan%20Pablo,%0A%0AQuiero%20apoyar%20la%20reforma%20económica%20de%20reducción%20de%20impuestos%20y%20formalización.%0A%0AEsta%20propuesta%20de:%0A\u2022 IVA%205%%20canasta%20básica%0A\u2022 Sueldo%20mínimo%20$900,000%0A\u2022 Formalización%20digital%0A\u2022 Impuestos%20justos%20a%20sueldos%20altos%0A%0AEs%20exactamente%20lo%20que%20necesitamos%20para%20un%20Chile%20más%20justo.%0A%0A\u00bfCómo%20puedo%20ayudar%20a%20difundir%20esta%20propuesta?%0A%0ASaludos', '_blank');
+                    window.open('mailto:contacto@melinao2026.cl?subject=Apoyo%20Reforma%20Economica&body=Hola%20Juan%20Pablo,%0A%0AQuiero%20apoyar%20la%20reforma%20económica%20de%20reducción%20de%20impuestos%20y%20formalización.%0A%0AEsta%20propuesta%20de:%0A\u2022 IVA%205%%20canasta%20básica%0A\u2022 Sueldo%20mínimo%20$900,000%0A\u2022 Formalización%20digital%0A\u2022 Impuestos%20justos%20a%20sueldos%20altos%0A%0AEs%20exactamente%20lo%20que%20necesitamos%20para%20un%20Chile%20más%20justo.%0A%0A\u00bfCómo%20puedo%20ayudar%20a%20difundir%20esta%20propuesta?%0A%0ASaludos', '_blank');
                   }}
                   className="px-12 py-6 bg-white text-green-600 font-black text-xl rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
                 >

@@ -114,7 +114,7 @@ export const seoConfigs = {
       'reforma digital Chile',
       'estado eficiente IA'
     ],
-    canonicalUrl: "https://chiledigno.cl/reformas/automatizacion-estado-inteligencia-artificial",
+    canonicalUrl: "https://melinao2026.cl/reformas/automatizacion-estado-inteligencia-artificial",
     openGraph: {
       image: '/images/automatizacion-ia-melinao-2026.jpg',
       imageAlt: 'Juan Pablo Melinao - Automatización del Estado con IA Chile 2026'
@@ -136,7 +136,7 @@ export const seoConfigs = {
       "publisher": {
         "@type": "Organization",
         "name": "Campaña Melinao 2026",
-        "url": "https://chiledigno.cl"
+        "url": "https://melinao2026.cl"
       },
       "serviceType": "Digital Government Transformation",
       "areaServed": [
@@ -231,7 +231,7 @@ export const seoConfigs = {
       'gobierno abierto Chile',
       'participación democrática'
     ],
-    canonicalUrl: "https://chiledigno.cl/participacion-ciudadana",
+    canonicalUrl: "https://melinao2026.cl/participacion-ciudadana",
     openGraph: {
       image: '/images/participacion-ciudadana-melinao-2026.jpg',
       imageAlt: 'Participación Ciudadana - Tu Voz Construye Chile'
@@ -241,7 +241,7 @@ export const seoConfigs = {
       "@type": "WebPage",
       "name": "Participación Ciudadana - Melinao 2026",
       "description": "Plataforma de participación ciudadana para la campaña presidencial de Juan Pablo Melinao González 2026",
-      "url": "https://chiledigno.cl/participacion-ciudadana",
+      "url": "https://melinao2026.cl/participacion-ciudadana",
       "mainEntity": {
         "@type": "GovernmentService",
         "name": "Sistema de Consultas Ciudadanas",
@@ -284,7 +284,7 @@ export const seoConfigs = {
       'justicia fiscal Chile',
       'alivio económico familias'
     ],
-    canonicalUrl: "https://chiledigno.cl/reformas/reduccion-costo-vida-impuestos",
+    canonicalUrl: "https://melinao2026.cl/reformas/reduccion-costo-vida-impuestos",
     openGraph: {
       image: '/images/economia-reforma-melinao-2026.jpg',
       imageAlt: 'Juan Pablo Melinao - Reforma Económica Chile 2026: Menos Impuestos, Más Sueldo'
@@ -306,7 +306,7 @@ export const seoConfigs = {
       "publisher": {
         "@type": "Organization",
         "name": "Campaña Melinao 2026",
-        "url": "https://chiledigno.cl"
+        "url": "https://melinao2026.cl"
       },
       "serviceType": "Economic Reform Policy",
       "areaServed": [
@@ -412,7 +412,7 @@ export const seoConfigs = {
       'candidato independiente seguridad',
       'Melinao fronteras seguras'
     ],
-    canonicalUrl: "https://chiledigno.cl/reformas/fronteras-inteligentes-seguridad-nacional",
+    canonicalUrl: "https://melinao2026.cl/reformas/fronteras-inteligentes-seguridad-nacional",
     openGraph: {
       image: '/images/fronteras-inteligentes-melinao-2026.jpg',
       imageAlt: 'Juan Pablo Melinao - Fronteras Inteligentes Chile 2026'
@@ -434,7 +434,7 @@ export const seoConfigs = {
       "publisher": {
         "@type": "Organization",
         "name": "Campaña Melinao 2026",
-        "url": "https://chiledigno.cl"
+        "url": "https://melinao2026.cl"
       },
       "serviceType": "National Security Reform Policy",
       "areaServed": [
@@ -544,7 +544,7 @@ export const seoConfigs = {
       'profesores mapuche',
       'eliminar desigualdades Chile'
     ],
-    canonicalUrl: "https://chiledigno.cl/reformas/justicia-social-equidad-fin-privilegios",
+    canonicalUrl: "https://melinao2026.cl/reformas/justicia-social-equidad-fin-privilegios",
     openGraph: {
       image: '/images/justicia-social-melinao-2026.jpg',
       imageAlt: 'Juan Pablo Melinao - Justicia Social Chile 2026'
@@ -566,7 +566,7 @@ export const seoConfigs = {
       "publisher": {
         "@type": "Organization",
         "name": "Campaña Melinao 2026",
-        "url": "https://chiledigno.cl"
+        "url": "https://melinao2026.cl"
       },
       "serviceType": "Social Justice Reform Policy",
       "areaServed": [
@@ -598,7 +598,7 @@ export const seoConfigs = {
         "Ahorro $1,500 millones anuales reinvertidos programas sociales",
         "Bonos rurales $100,000 para 50,000 docentes zonas vulnerables",
         "Programas educativos $50B específicos para docentes mapuche",
-        "Transparencia total pagos via chiledigno.cl",
+        "Transparencia total pagos via melinao2026.cl",
         "Equidad regional con inversión focalizada Araucanía"
       ],
       "cost": {
@@ -629,7 +629,7 @@ export const seoConfigs = {
         "DeudaHistorica": "$4.5M por docente, 57,000 beneficiados 2025-2031",
         "SueldoDocente": "$900,000 base + bonos rurales zonas vulnerables",
         "EliminacionPrivilegios": "Fin sueldos vitalicios ex presidentes/parlamentarios gradual",
-        "Transparencia": "Registro público pagos y ahorros en chiledigno.cl",
+        "Transparencia": "Registro público pagos y ahorros en melinao2026.cl",
         "EquidadRegional": "Programas específicos docentes mapuche y rurales"
       },
       "socialImpact": {
@@ -677,7 +677,7 @@ export const seoConfigs = {
       'emprendimiento mapuche',
       'Chile diversidad fortaleza'
     ],
-    canonicalUrl: "https://chiledigno.cl/reformas/chile-unido-desarrollo-araucania",
+    canonicalUrl: "https://melinao2026.cl/reformas/chile-unido-desarrollo-araucania",
     openGraph: {
       image: '/images/chile-unido-melinao-2026.jpg',
       imageAlt: 'Juan Pablo Melinao - Chile Unido Desarrollo Araucanía 2026'
@@ -699,7 +699,7 @@ export const seoConfigs = {
       "publisher": {
         "@type": "Organization",
         "name": "Campaña Melinao 2026",
-        "url": "https://chiledigno.cl"
+        "url": "https://melinao2026.cl"
       },
       "serviceType": "National Unity and Cultural Integration Policy",
       "areaServed": [
@@ -801,7 +801,7 @@ export const seoConfigs = {
         'Centro Nacional IA Santiago',
         'gobierno digital metropolitano'
       ],
-      canonicalUrl: "https://chiledigno.cl/regiones/santiago",
+      canonicalUrl: "https://melinao2026.cl/regiones/santiago",
       structuredData: {
         "@context": "https://schema.org",
         "@type": "Place",
@@ -826,7 +826,7 @@ export const seoConfigs = {
         'reconciliación Araucanía',
         'desarrollo indígena Chile'
       ],
-      canonicalUrl: "https://chiledigno.cl/regiones/araucania",
+      canonicalUrl: "https://melinao2026.cl/regiones/araucania",
       structuredData: {
         "@context": "https://schema.org",
         "@type": "Place",
@@ -851,7 +851,7 @@ export const seoConfigs = {
         'minería 4.0 Chile',
         'desierto Atacama tecnología'
       ],
-      canonicalUrl: "https://chiledigno.cl/regiones/antofagasta",
+      canonicalUrl: "https://melinao2026.cl/regiones/antofagasta",
       structuredData: {
         "@context": "https://schema.org",
         "@type": "Place",
@@ -876,7 +876,7 @@ export const seoConfigs = {
         'candidato Valparaíso',
         'tecnología marítima'
       ],
-      canonicalUrl: "https://chiledigno.cl/regiones/valparaiso",
+      canonicalUrl: "https://melinao2026.cl/regiones/valparaiso",
       structuredData: {
         "@context": "https://schema.org",
         "@type": "Place",
@@ -901,7 +901,7 @@ export const seoConfigs = {
         'tecnología educativa',
         'innovación Concepción'
       ],
-      canonicalUrl: "https://chiledigno.cl/regiones/concepcion",
+      canonicalUrl: "https://melinao2026.cl/regiones/concepcion",
       structuredData: {
         "@context": "https://schema.org",
         "@type": "Place",

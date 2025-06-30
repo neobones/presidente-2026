@@ -1180,7 +1180,7 @@ const AutomatizacionIA = () => {
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
                 <button 
                   onClick={() => {
-                    window.open('mailto:contacto@chiledigno.cl?subject=Apoyo%20Reforma%20IA%20Estado&body=Hola%20Juan%20Pablo,%0A%0AQuiero%20apoyar%20la%20reforma%20de%20Automatizaci\u00f3n%20del%20Estado%20con%20IA.%0A%0AEsta%20propuesta%20integral%20de:%0A\u2022 Ahorro%20de%20$500B%20anuales%0A\u2022 Tr\u00e1mites%20en%205%20minutos%0A\u2022 Estado%20eficiente%2024/7%0A\u2022 Desarrollo%20regional%20equitativo%0A%0AEs%20exactamente%20lo%20que%20Chile%20necesita.%0A%0A\u00bfC\u00f3mo%20puedo%20ayudar%20a%20difundir%20esta%20propuesta%20t\u00e9cnica?%0A%0ASaludos', '_blank');
+                    window.open('mailto:contacto@melinao2026.cl?subject=Apoyo%20Reforma%20IA%20Estado&body=Hola%20Juan%20Pablo,%0A%0AQuiero%20apoyar%20la%20reforma%20de%20Automatizaci\u00f3n%20del%20Estado%20con%20IA.%0A%0AEsta%20propuesta%20integral%20de:%0A\u2022 Ahorro%20de%20$500B%20anuales%0A\u2022 Tr\u00e1mites%20en%205%20minutos%0A\u2022 Estado%20eficiente%2024/7%0A\u2022 Desarrollo%20regional%20equitativo%0A%0AEs%20exactamente%20lo%20que%20Chile%20necesita.%0A%0A\u00bfC\u00f3mo%20puedo%20ayudar%20a%20difundir%20esta%20propuesta%20t\u00e9cnica?%0A%0ASaludos', '_blank');
                   }}
                   className="px-12 py-6 bg-white text-blue-600 font-black text-xl rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
                 >
