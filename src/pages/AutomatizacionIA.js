@@ -420,73 +420,75 @@ const AutomatizacionIA = () => {
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 flex flex-col justify-center min-h-screen">
-            <div className="text-center space-y-8">
-              {/* Updated Badge */}
-              <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-8 py-4 border border-white/20">
-                <Cpu className="w-6 h-6 text-cyan-400" />
-                <span className="text-white font-bold text-lg">REFORMA ESTRUCTURAL</span>
+            <div className="text-center space-y-6 lg:space-y-8">
+              {/* Updated Badge - Mobile Optimized */}
+              <div className="inline-flex items-center space-x-2 lg:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 lg:px-8 py-3 lg:py-4 border border-white/20">
+                <Cpu className="w-5 h-5 lg:w-6 lg:h-6 text-cyan-400" />
+                <span className="text-white font-bold text-sm lg:text-lg">REFORMA ESTRUCTURAL</span>
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
               </div>
 
-              {/* Main Title */}
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight">
+              {/* Main Title - Mobile Optimized */}
+              <h1 className="text-2xl sm:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-black leading-tight">
                 <span className="block text-white">AUTOMATIZACIÓN</span>
                 <span className="block text-white">DEL ESTADO</span>
-                <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent text-xl sm:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
                   CON INTELIGENCIA ARTIFICIAL
                 </span>
               </h1>
 
-              {/* Enhanced Subtitle */}
-              <div className="max-w-5xl mx-auto space-y-4">
-                <p className="text-xl sm:text-2xl lg:text-3xl text-gray-200">
+              {/* Enhanced Subtitle - Mobile Optimized */}
+              <div className="max-w-5xl mx-auto space-y-3 lg:space-y-4">
+                <p className="text-base lg:text-xl xl:text-2xl 2xl:text-3xl text-gray-200">
                   <span className="font-bold text-white">Liderada por Juan Pablo Melinao González</span>
                   <br />
-                  <span className="text-cyan-300">Ingeniero informático, emprendedor mapuche, candidato presidencial independiente</span>
+                  <span className="text-cyan-300 text-sm lg:text-base xl:text-xl 2xl:text-2xl">Ingeniero informático, emprendedor mapuche, candidato presidencial independiente</span>
                 </p>
-                <p className="text-lg sm:text-xl text-gray-300 max-w-4xl mx-auto">
+                <p className="text-sm lg:text-lg xl:text-xl text-gray-300 max-w-4xl mx-auto">
                   Posicionando a Chile como referente en innovación pública en América Latina
                 </p>
               </div>
 
-              {/* Key Stats Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              {/* Key Stats Grid - Mobile Optimized */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 max-w-6xl mx-auto">
                 {keyStats.map((stat, index) => (
                   <div 
                     key={index} 
-                    className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center hover:bg-white/20 transition-all duration-300 group cursor-pointer"
+                    className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-3 lg:p-6 border border-white/20 text-center hover:bg-white/20 transition-all duration-300 group cursor-pointer"
                     onClick={() => setShowCalculator(true)}
                   >
-                    <div className={`inline-flex p-3 rounded-full bg-gradient-to-r ${stat.color} text-white mb-4 group-hover:scale-110 transition-transform`}>
-                      {stat.icon}
+                    <div className={`inline-flex p-2 lg:p-3 rounded-full bg-gradient-to-r ${stat.color} text-white mb-2 lg:mb-4 group-hover:scale-110 transition-transform`}>
+                      <div className="text-sm lg:text-base">{stat.icon}</div>
                     </div>
-                    <div className="text-3xl font-black text-white mb-2">{stat.title}</div>
-                    <div className="text-sm text-cyan-300 font-semibold mb-1">{stat.subtitle}</div>
-                    <div className="text-xs text-gray-300">{stat.description}</div>
+                    <div className="text-lg lg:text-3xl font-black text-white mb-1 lg:mb-2">{stat.title}</div>
+                    <div className="text-xs lg:text-sm text-cyan-300 font-semibold mb-1">{stat.subtitle}</div>
+                    <div className="text-xs text-gray-300 hidden lg:block">{stat.description}</div>
                   </div>
                 ))}
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+              {/* CTA Buttons - Mobile Optimized */}
+              <div className="flex flex-col gap-3 lg:gap-4 justify-center pt-6 lg:pt-8">
                 <button 
                   onClick={() => {
                     document.getElementById('contexto')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="group px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3"
+                  className="group px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 text-white font-bold text-sm lg:text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 lg:space-x-3 w-full sm:w-auto"
                 >
-                  <span>VER PLAN TÉCNICO COMPLETO</span>
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                  <span className="hidden sm:inline">VER PLAN TÉCNICO COMPLETO</span>
+                  <span className="sm:hidden">VER PLAN COMPLETO</span>
+                  <ArrowRight className="w-5 h-5 lg:w-6 lg:h-6 group-hover:translate-x-2 transition-transform" />
                 </button>
                 
                 <button 
                   onClick={() => {
                     setShowCalculator(true);
                   }}
-                  className="px-8 py-4 border-2 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 flex items-center justify-center space-x-3"
+                  className="px-6 lg:px-8 py-3 lg:py-4 border-2 border-white text-white font-bold text-sm lg:text-lg rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 flex items-center justify-center space-x-2 lg:space-x-3 w-full sm:w-auto"
                 >
-                  <Calculator className="w-6 h-6" />
-                  <span>CALCULADORA DE AHORROS</span>
+                  <Calculator className="w-5 h-5 lg:w-6 lg:h-6" />
+                  <span className="hidden sm:inline">CALCULADORA DE AHORROS</span>
+                  <span className="sm:hidden">CALCULADORA</span>
                 </button>
               </div>
             </div>
@@ -1666,12 +1668,13 @@ const AutomatizacionIA = () => {
         )}
 
         {/* Consultas Ciudadanas */}
-        <ConsultasCiudadanas 
+        <div className=\"pb-20 lg:pb-0\">\n          <ConsultasCiudadanas 
           tema="ia" 
           titulo="Mejora la Reforma de Automatización con IA"
           descripcion="¿Qué otros trámites te gustaría automatizar? Tu experiencia nos ayuda a priorizar"
           showStats={true}
         />
+        </div>
 
       </div>
     </SEOWrapper>

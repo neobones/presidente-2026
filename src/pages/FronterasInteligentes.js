@@ -359,41 +359,43 @@ const FronterasInteligentes = () => {
   return (
     <SEOWrapper seoConfig={seoConfigs.fronterasInteligentes}>
       <div className="min-h-screen bg-gray-50">
-        {/* Header Navigation */}
+        {/* Header Navigation - Mobile Optimized */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
+            <div className="flex justify-between items-center h-14 lg:h-16">
               <Link 
                 to="/" 
-                className="flex items-center space-x-3 text-gray-900 hover:text-red-600 transition-colors"
+                className="flex items-center space-x-2 lg:space-x-3 text-gray-900 hover:text-red-600 transition-colors"
               >
-                <Home className="w-6 h-6" />
-                <span className="font-bold">Volver al Menú Principal</span>
+                <Home className="w-5 h-5 lg:w-6 lg:h-6" />
+                <span className="font-bold text-sm lg:text-base">Volver al Menú Principal</span>
               </Link>
               
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 lg:space-x-4">
                 <button
                   onClick={() => setShowSimulator(true)}
-                  className="flex items-center space-x-2 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition-colors"
+                  className="flex items-center space-x-1 lg:space-x-2 bg-red-600 text-white px-3 lg:px-4 py-2 rounded-full hover:bg-red-700 transition-colors text-xs lg:text-sm"
                 >
                   <Play className="w-4 h-4" />
-                  <span>Simulador Seguridad</span>
+                  <span className="hidden sm:inline">Simulador Seguridad</span>
+                  <span className="sm:hidden">Simular</span>
                 </button>
                 
                 <button
                   onClick={() => setShowCalculator(true)}
-                  className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition-colors"
+                  className="flex items-center space-x-1 lg:space-x-2 bg-green-600 text-white px-3 lg:px-4 py-2 rounded-full hover:bg-green-700 transition-colors text-xs lg:text-sm"
                 >
                   <Calculator className="w-4 h-4" />
-                  <span>Calculadora</span>
+                  <span className="hidden sm:inline">Calculadora</span>
+                  <span className="sm:hidden">Calc</span>
                 </button>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Hero Section Enhanced */}
-        <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-orange-900 overflow-hidden">
+        {/* Hero Section Enhanced - Mobile Optimized */}
+        <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-orange-900 overflow-hidden pt-14 lg:pt-16">
           {/* Background Effects */}
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-orange-500/20"></div>
@@ -406,30 +408,30 @@ const FronterasInteligentes = () => {
             ></div>
           </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 flex flex-col justify-center min-h-screen">
-            <div className="text-center space-y-8">
-              {/* Badge */}
-              <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-8 py-4 border border-white/20">
-                <Shield className="w-6 h-6 text-orange-400" />
-                <span className="text-white font-bold text-lg">REFORMA DE SEGURIDAD NACIONAL</span>
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-20 pb-16 flex flex-col justify-center min-h-screen">
+            <div className="text-center space-y-6 lg:space-y-8">
+              {/* Badge - Mobile Optimized */}
+              <div className="inline-flex items-center space-x-2 lg:space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 lg:px-8 py-3 lg:py-4 border border-white/20">
+                <Shield className="w-5 h-5 lg:w-6 lg:h-6 text-orange-400" />
+                <span className="text-white font-bold text-sm lg:text-lg">REFORMA DE SEGURIDAD NACIONAL</span>
                 <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
               </div>
 
-              {/* Main Title */}
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight">
+              {/* Main Title - Mobile Optimized */}
+              <h1 className="text-2xl sm:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-black leading-tight">
                 <span className="block text-white">FRONTERAS</span>
                 <span className="block text-white">INTELIGENTES</span>
-                <span className="block bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent text-xl sm:text-2xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
                   SEGURAS, CALLES TRANQUILAS
                 </span>
               </h1>
 
-              {/* Enhanced Subtitle */}
-              <div className="max-w-5xl mx-auto space-y-4">
-                <p className="text-xl sm:text-2xl lg:text-3xl text-gray-200">
+              {/* Enhanced Subtitle - Mobile Optimized */}
+              <div className="max-w-5xl mx-auto space-y-3 lg:space-y-4">
+                <p className="text-base lg:text-xl xl:text-2xl 2xl:text-3xl text-gray-200">
                   <span className="font-bold text-white">Plan integral de Juan Pablo Melinao González</span>
                   <br />
-                  <span className="text-orange-300">Ingeniero informático, emprendedor mapuche, candidato presidencial independiente</span>
+                  <span className="text-orange-300 text-sm lg:text-base xl:text-xl 2xl:text-2xl">Ingeniero informático, emprendedor mapuche, candidato presidencial independiente</span>
                 </p>
                 <p className="text-lg sm:text-xl text-gray-300 max-w-4xl mx-auto">
                   Tecnología + Prevención Social + Enfoque Humanitario = Chile Seguro
@@ -1558,12 +1560,13 @@ const FronterasInteligentes = () => {
         )}
 
         {/* Consultas Ciudadanas */}
-        <ConsultasCiudadanas 
+        <div className=\"pb-20 lg:pb-0\">\n          <ConsultasCiudadanas 
           tema="seguridad" 
           titulo="Mejora la Reforma de Fronteras Inteligentes"
           descripcion="¿Qué aspectos de seguridad son más importantes para tu región? Tu experiencia fortalece nuestra propuesta"
           showStats={true}
         />
+        </div>
 
       </div>
     </SEOWrapper>

@@ -300,8 +300,8 @@ const ChileUnido = () => {
           }} />
         </div>
 
-        {/* Hero Section */}
-        <section className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
+        {/* Hero Section - Mobile Optimized */}
+        <section className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20 pt-6 lg:pt-20">
           <div className="max-w-7xl mx-auto text-center">
             <div className="relative">
               <div 
@@ -309,10 +309,10 @@ const ChileUnido = () => {
                 style={{ transform: `translateY(${parallaxOffset}px)` }}
               />
               
-              <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20">
-                <div className="flex items-center justify-center mb-6">
-                  <div className="bg-gradient-to-r from-green-500 to-blue-500 p-4 rounded-2xl">
-                    <Users className="w-12 h-12 text-white" />
+              <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-12 shadow-2xl border border-white/20">
+                <div className="flex items-center justify-center mb-4 lg:mb-6">
+                  <div className="bg-gradient-to-r from-green-500 to-blue-500 p-3 lg:p-4 rounded-xl lg:rounded-2xl">
+                    <Users className="w-8 h-8 lg:w-12 lg:h-12 text-white" />
                   </div>
                 </div>
                 
@@ -1117,7 +1117,7 @@ const ChileUnido = () => {
         </section>
 
         {/* Consultation Section */}
-        <section className="relative z-10 py-20 px-4 bg-white/50">
+        <section className="relative z-10 py-20 px-4 bg-white/50 pb-40 lg:pb-20">
           <div className="max-w-4xl mx-auto">
             <ConsultasCiudadanas tema="unidad-nacional" />
           </div>

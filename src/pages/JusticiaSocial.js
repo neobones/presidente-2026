@@ -359,33 +359,35 @@ const JusticiaSocial = () => {
   return (
     <SEOWrapper seoConfig={seoConfigs.justiciaSocial}>
       <div className="min-h-screen bg-gray-50">
-        {/* Header Navigation */}
+        {/* Header Navigation - Mobile Optimized */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
+            <div className="flex justify-between items-center h-14 lg:h-16">
               <Link 
                 to="/" 
-                className="flex items-center space-x-3 text-gray-900 hover:text-purple-600 transition-colors"
+                className="flex items-center space-x-2 lg:space-x-3 text-gray-900 hover:text-purple-600 transition-colors"
               >
-                <Home className="w-6 h-6" />
-                <span className="font-bold">Volver al Menú Principal</span>
+                <Home className="w-5 h-5 lg:w-6 lg:h-6" />
+                <span className="font-bold text-sm lg:text-base">Volver al Menú Principal</span>
               </Link>
               
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 lg:space-x-4">
                 <button
                   onClick={() => setShowSimulator(true)}
-                  className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700 transition-colors"
+                  className="flex items-center space-x-1 lg:space-x-2 bg-purple-600 text-white px-3 lg:px-4 py-2 rounded-full hover:bg-purple-700 transition-colors text-xs lg:text-sm"
                 >
                   <Play className="w-4 h-4" />
-                  <span>Simulador Docente</span>
+                  <span className="hidden sm:inline">Simulador Docente</span>
+                  <span className="sm:hidden">Simular</span>
                 </button>
                 
                 <button
                   onClick={() => setShowCalculator(true)}
-                  className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition-colors"
+                  className="flex items-center space-x-1 lg:space-x-2 bg-green-600 text-white px-3 lg:px-4 py-2 rounded-full hover:bg-green-700 transition-colors text-xs lg:text-sm"
                 >
                   <Calculator className="w-4 h-4" />
-                  <span>Calculadora</span>
+                  <span className="hidden sm:inline">Calculadora</span>
+                  <span className="sm:hidden">Calc</span>
                 </button>
               </div>
             </div>
@@ -1554,12 +1556,13 @@ const JusticiaSocial = () => {
         )}
 
         {/* Consultas Ciudadanas */}
-        <ConsultasCiudadanas 
+        <div className=\"pb-20 lg:pb-0\">\n          <ConsultasCiudadanas 
           tema="justicia" 
           titulo="Mejora la Reforma de Justicia Social"
           descripcion="¿Qué otros aspectos de equidad social consideras importantes? Tu experiencia fortalece nuestra propuesta"
           showStats={true}
         />
+        </div>
 
       </div>
     </SEOWrapper>
