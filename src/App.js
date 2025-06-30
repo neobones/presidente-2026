@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import AutomatizacionIA from './pages/AutomatizacionIA';
 import EconomiaDigital from './pages/EconomiaDigital';
 import FronterasInteligentes from './pages/FronterasInteligentes';
+import JusticiaSocial from './pages/JusticiaSocial';
 import ParticipacionCiudadana from './pages/ParticipacionCiudadana';
 import AdminPage from './pages/AdminPage';
 
@@ -17,7 +18,7 @@ const App = () => {
         <Route path="/reformas/automatizacion-estado-inteligencia-artificial" element={<AutomatizacionIA />} />
         <Route path="/reformas/reduccion-costo-vida-impuestos" element={<EconomiaDigital />} />
         <Route path="/reformas/fronteras-inteligentes-seguridad-nacional" element={<FronterasInteligentes />} />
-        <Route path="/reformas/justicia-social-profesores-privilegios" element={<HomePage />} />
+        <Route path="/reformas/justicia-social-equidad-fin-privilegios" element={<JusticiaSocial />} />
         <Route path="/reformas/unidad-nacional-araucania-desarrollo" element={<HomePage />} />
         
         {/* Rutas regionales */}

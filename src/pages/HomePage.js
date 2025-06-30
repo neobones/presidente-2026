@@ -87,7 +87,7 @@ const HomePage = () => {
       color: "from-purple-500 to-pink-600",
       bgColor: "bg-gradient-to-br from-purple-50 to-pink-50",
       features: ["$4.5 millones por profesor", "Fin sueldos vitalicios", "Salud y educación dignas"],
-      link: "/reformas/justicia-social-profesores-privilegios"
+      link: "/reformas/justicia-social-equidad-fin-privilegios"
     },
     {
       icon: <Users className="w-12 h-12" />,

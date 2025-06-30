@@ -519,14 +519,137 @@ export const seoConfigs = {
     ]
   },
   
-  justicia: {
-    title: "Justicia Social - Deuda Histórica Profesores y Privilegios",
-    description: "Pago a 57.000 profesores, eliminación sueldos vitalicios, sueldo docente $900.000. Justicia real para quienes construyen Chile con Melinao.",
-    keywords: ['justicia social', 'profesores', 'privilegios políticos', 'educación', 'deuda histórica'],
-    canonicalUrl: "https://chiledigno.cl/programa-gobierno-2026/justicia-social-profesores-privilegios",
+  justiciaSocial: {
+    title: "Justicia Social - Deuda Histórica Profesores y Fin Privilegios | Melinao 2026",
+    description: "Revolución en justicia social: pago $4.5 millones a 57,000 profesores, sueldo docente $900K, eliminación sueldos vitalicios ex presidentes. Equidad real para trabajadores. Juan Pablo Melinao González, ingeniero mapuche, salda deudas históricas y termina privilegios políticos.",
+    keywords: [
+      'justicia social Chile',
+      'deuda histórica profesores',
+      'pago profesores 4.5 millones',
+      'sueldo docente 900 mil',
+      'eliminación sueldos vitalicios',
+      'privilegios políticos Chile',
+      'Juan Pablo Melinao justicia',
+      'candidato presidencial educación',
+      'ingeniero mapuche equidad',
+      'fin privilegios ex presidentes',
+      'transparencia política Chile',
+      'equidad social trabajadores',
+      'reforma educativa Chile',
+      'docentes dignos Chile',
+      'ex parlamentarios privilegios',
+      'colegio profesores Chile',
+      'Melinao justicia social',
+      'candidato independiente educación',
+      'profesores mapuche',
+      'eliminar desigualdades Chile'
+    ],
+    canonicalUrl: "https://chiledigno.cl/reformas/justicia-social-equidad-fin-privilegios",
     openGraph: {
-      image: '/images/justicia-og.jpg'
-    }
+      image: '/images/justicia-social-melinao-2026.jpg',
+      imageAlt: 'Juan Pablo Melinao - Justicia Social Chile 2026'
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": ["GovernmentService", "PublicPolicy", "SocialPolicy"],
+      "name": "Justicia Social - Equidad y Fin de Privilegios",
+      "headline": "Chile Justo 2026: Pagamos a Profesores, Eliminamos Privilegios Políticos",
+      "description": "Plan integral de justicia social chilena: deuda histórica profesores, sueldos docentes dignos, eliminación privilegios políticos y reinversión en programas sociales para equidad real.",
+      "author": {
+        "@type": "Person",
+        "name": "Juan Pablo Melinao González",
+        "jobTitle": "Candidato Presidencial Chile 2026",
+        "ethnicity": "Mapuche",
+        "profession": "Ingeniero en Informática",
+        "politicalAffiliation": "Independiente"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Campaña Melinao 2026",
+        "url": "https://chiledigno.cl"
+      },
+      "serviceType": "Social Justice Reform Policy",
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        {
+          "@type": "Place",
+          "name": "Araucanía"
+        },
+        {
+          "@type": "Place", 
+          "name": "Santiago"
+        },
+        {
+          "@type": "Place",
+          "name": "Antofagasta"
+        },
+        {
+          "@type": "Place",
+          "name": "Valparaíso"
+        }
+      ],
+      "expectedBenefit": [
+        "Pago $4.5 millones a 57,000 profesores deuda histórica",
+        "Sueldo docente $900,000 para 200,000 profesores activos",
+        "Eliminación sueldos vitalicios ex presidentes y parlamentarios",
+        "Ahorro $1,500 millones anuales reinvertidos programas sociales",
+        "Bonos rurales $100,000 para 50,000 docentes zonas vulnerables",
+        "Programas educativos $50B específicos para docentes mapuche",
+        "Transparencia total pagos via chiledigno.cl",
+        "Equidad regional con inversión focalizada Araucanía"
+      ],
+      "cost": {
+        "@type": "MonetaryAmount",
+        "currency": "CLP",
+        "value": "795000000000000"
+      },
+      "funding": [
+        "Impuesto progresivo sueldos altos ($1.5-2T anuales)",
+        "Formalización arriendos y comercio digital ($500-800B)",
+        "Ahorros eliminación sueldos vitalicios ($1.5B anuales)",
+        "Fondo minero cobre y litio ($500B anuales)"
+      ],
+      "timeline": {
+        "phase1": "Primeros 100 días: Inicio pago 10,000 docentes ancianos",
+        "phase2": "Año 1-2: 30,000 docentes pagados, sueldo $900K 50% escuelas",
+        "phase3": "Año 3-5: Deuda histórica saldada, privilegios eliminados"
+      },
+      "targetAudience": [
+        "57,000 profesores con deuda histórica pendiente",
+        "200,000 docentes activos sistema educacional",
+        "Familias chilenas que buscan educación de calidad",
+        "Comunidades vulnerables Araucanía y regiones",
+        "Ciudadanos que rechazan privilegios políticos (65%)",
+        "Trabajadores que demandan equidad laboral"
+      ],
+      "keyFeatures": {
+        "DeudaHistorica": "$4.5M por docente, 57,000 beneficiados 2025-2031",
+        "SueldoDocente": "$900,000 base + bonos rurales zonas vulnerables",
+        "EliminacionPrivilegios": "Fin sueldos vitalicios ex presidentes/parlamentarios gradual",
+        "Transparencia": "Registro público pagos y ahorros en chiledigno.cl",
+        "EquidadRegional": "Programas específicos docentes mapuche y rurales"
+      },
+      "socialImpact": {
+        "teachers": "57,000 profesores reciben justicia histórica",
+        "activeTeachers": "200,000 docentes sueldo digno $900K",
+        "savings": "$1,500M anuales eliminación privilegios políticos", 
+        "education": "Mejora calidad educativa 15% en 2 años",
+        "equity": "Fin desigualdades históricas trabajadores vs políticos"
+      }
+    },
+    politicalKeywords: [
+      'elecciones Chile 2026',
+      'candidato presidencial mapuche',
+      'independiente justicia social',
+      'reforma educativa Chile',
+      'transparencia política',
+      'Chile justo profesores',
+      'equidad social trabajadores',
+      'fin privilegios políticos'
+    ]
   },
   
   unidad: {
