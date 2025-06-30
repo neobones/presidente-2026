@@ -149,8 +149,8 @@ const HomePage = () => {
   return (
     <SEOWrapper seoConfig={seoConfigs.home}>
       <div className="min-h-screen bg-gray-50 overflow-x-hidden">
-        {/* Enhanced Navigation */}
-        <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-xl z-50 border-b border-gray-100">
+        {/* Enhanced Navigation - Desktop Only */}
+        <nav className="hidden lg:block fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-xl z-50 border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-20">
               <Link to="/" className="flex items-center space-x-4">
@@ -169,7 +169,7 @@ const HomePage = () => {
               </Link>
               
               {/* Desktop Menu */}
-              <div className="hidden lg:flex space-x-12">
+              <div className="flex space-x-12">
                 {[
                   { name: 'Visión', id: 'vision' },
                   { name: 'Reformas', id: 'reformas' },
@@ -192,52 +192,35 @@ const HomePage = () => {
                 ))}
               </div>
 
-              <div className="hidden lg:flex items-center space-x-4">
-                <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+              <div className="flex items-center space-x-4">
+                <Link 
+                  to="/participacion-ciudadana"
+                  className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+                >
                   Únete Ya
-                </button>
+                </Link>
               </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="lg:hidden p-2"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                {isMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
-              </button>
             </div>
           </div>
-
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <div className="lg:hidden bg-white/95 backdrop-blur-md shadow-2xl border-t border-gray-100">
-              <div className="px-4 py-6 space-y-4">
-                {[
-                  { name: 'Visión', id: 'vision' },
-                  { name: 'Reformas', id: 'reformas' },
-                  { name: 'Impacto', id: 'impacto' },
-                  { name: 'Historia', id: 'historia' },
-                  { name: 'Actúa', id: 'accion' }
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className="block w-full text-left px-4 py-3 text-lg font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-300"
-                  >
-                    {item.name}
-                  </button>
-                ))}
-                <button className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full mt-4">
-                  Únete Ya
-                </button>
-              </div>
-            </div>
-          )}
         </nav>
 
-        {/* Rest of the HomePage component content would go here - I'll include just the hero section for brevity */}
+        {/* Mobile Header - Simple */}
+        <header className="lg:hidden bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 sticky top-0 z-40">
+          <div className="px-4 py-3">
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-sm">JM</span>
+              </div>
+              <div>
+                <div className="text-lg font-bold text-gray-900">Melinao 2026</div>
+                <div className="text-xs text-blue-600 font-semibold">PRESIDENTE DE CHILE</div>
+              </div>
+            </Link>
+          </div>
+        </header>
+
         {/* Hero Section - Cinematográfico */}
-        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden lg:pt-20">
           {/* Dynamic Background with Parallax */}
           <div className="absolute inset-0">
             <div 
@@ -280,49 +263,49 @@ const HomePage = () => {
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-8 lg:py-0">
               {/* Text Content */}
-              <div className="text-center lg:text-left space-y-8">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 text-white">
-                    <Star className="w-5 h-5 text-yellow-400" />
-                    <span className="font-semibold">CANDIDATO PRESIDENCIAL 2026</span>
+              <div className="text-center lg:text-left space-y-6 lg:space-y-8">
+                <div className="space-y-3 lg:space-y-4">
+                  <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 lg:px-6 py-2 lg:py-3 text-white">
+                    <Star className="w-4 lg:w-5 h-4 lg:h-5 text-yellow-400" />
+                    <span className="font-semibold text-sm lg:text-base">CANDIDATO PRESIDENCIAL 2026</span>
                   </div>
                   
-                  <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight">
-                    <span className="block text-white mb-2">CHILE</span>
+                  <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black leading-tight">
+                    <span className="block text-white mb-1 lg:mb-2">CHILE</span>
                     <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-pulse">
                       INNOVADOR
                     </span>
                   </h1>
                   
-                  <p className="text-xl sm:text-2xl lg:text-3xl text-gray-200 font-light max-w-2xl">
+                  <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-gray-200 font-light max-w-2xl">
                     <span className="font-bold text-white">Juan Pablo Melinao González</span>
                     <br />
                     Ingeniero • Emprendedor • Mapuche
                   </p>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="text-lg sm:text-xl text-gray-300 max-w-xl">
+                <div className="space-y-4 lg:space-y-6">
+                  <div className="text-base lg:text-lg xl:text-xl text-gray-300 max-w-xl">
                     Como ingeniero mapuche, combino tecnología de vanguardia con justicia social. 
                     Tu carnet en 2 minutos, $50,000 más al mes en tu bolsillo, y un Chile unido que respeta nuestra diversidad.
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col gap-3 lg:gap-4">
                     <button 
-                      onClick={() => scrollToSection('vision')}
-                      className="group px-8 py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3"
+                      onClick={() => scrollToSection('reformas')}
+                      className="group px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 text-white font-bold text-base lg:text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 touch-manipulation"
                     >
                       <span>VER PROPUESTAS</span>
-                      <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-5 lg:w-6 h-5 lg:h-6 group-hover:translate-x-1 transition-transform" />
                     </button>
                     
                     <button 
                       onClick={() => scrollToSection('historia')}
-                      className="group px-8 py-4 border-3 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 flex items-center justify-center space-x-3"
+                      className="group px-6 lg:px-8 py-3 lg:py-4 border-2 lg:border-3 border-white text-white font-bold text-base lg:text-lg rounded-full hover:bg-white hover:text-gray-900 transition-all duration-300 flex items-center justify-center space-x-3 touch-manipulation"
                     >
-                      <Play className="w-6 h-6" />
+                      <Play className="w-5 lg:w-6 h-5 lg:h-6" />
                       <span>MI HISTORIA</span>
                     </button>
                   </div>
@@ -330,52 +313,52 @@ const HomePage = () => {
               </div>
 
               {/* Stats Dashboard */}
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-blue-500/20 rounded-full">
-                        <Cpu className="w-8 h-8 text-blue-400" />
+              <div className="space-y-4 lg:space-y-6">
+                <div className="grid grid-cols-2 gap-3 lg:gap-6">
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-3 lg:p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div className="flex flex-col lg:flex-row items-center lg:space-x-4 space-y-2 lg:space-y-0">
+                      <div className="p-2 lg:p-3 bg-blue-500/20 rounded-full">
+                        <Cpu className="w-5 lg:w-8 h-5 lg:h-8 text-blue-400" />
                       </div>
-                      <div>
-                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">2 min</div>
-                        <div className="text-sm text-gray-300">Trámites con IA</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-green-500/20 rounded-full">
-                        <DollarSign className="w-8 h-8 text-green-400" />
-                      </div>
-                      <div>
-                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">$50K</div>
-                        <div className="text-sm text-gray-300">Más al mes</div>
+                      <div className="text-center lg:text-left">
+                        <div className="text-xl lg:text-3xl font-black text-white group-hover:scale-110 transition-transform">2 min</div>
+                        <div className="text-xs lg:text-sm text-gray-300">Trámites con IA</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-orange-500/20 rounded-full">
-                        <Shield className="w-8 h-8 text-orange-400" />
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-3 lg:p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div className="flex flex-col lg:flex-row items-center lg:space-x-4 space-y-2 lg:space-y-0">
+                      <div className="p-2 lg:p-3 bg-green-500/20 rounded-full">
+                        <DollarSign className="w-5 lg:w-8 h-5 lg:h-8 text-green-400" />
                       </div>
-                      <div>
-                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">50%</div>
-                        <div className="text-sm text-gray-300">Menos delitos</div>
+                      <div className="text-center lg:text-left">
+                        <div className="text-xl lg:text-3xl font-black text-white group-hover:scale-110 transition-transform">$50K</div>
+                        <div className="text-xs lg:text-sm text-gray-300">Más al mes</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-purple-500/20 rounded-full">
-                        <Heart className="w-8 h-8 text-purple-400" />
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-3 lg:p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div className="flex flex-col lg:flex-row items-center lg:space-x-4 space-y-2 lg:space-y-0">
+                      <div className="p-2 lg:p-3 bg-orange-500/20 rounded-full">
+                        <Shield className="w-5 lg:w-8 h-5 lg:h-8 text-orange-400" />
                       </div>
-                      <div>
-                        <div className="text-3xl font-black text-white group-hover:scale-110 transition-transform">57K</div>
-                        <div className="text-sm text-gray-300">Profesores pagados</div>
+                      <div className="text-center lg:text-left">
+                        <div className="text-xl lg:text-3xl font-black text-white group-hover:scale-110 transition-transform">50%</div>
+                        <div className="text-xs lg:text-sm text-gray-300">Menos delitos</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/10 backdrop-blur-md rounded-xl lg:rounded-2xl p-3 lg:p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 group">
+                    <div className="flex flex-col lg:flex-row items-center lg:space-x-4 space-y-2 lg:space-y-0">
+                      <div className="p-2 lg:p-3 bg-purple-500/20 rounded-full">
+                        <Heart className="w-5 lg:w-8 h-5 lg:h-8 text-purple-400" />
+                      </div>
+                      <div className="text-center lg:text-left">
+                        <div className="text-xl lg:text-3xl font-black text-white group-hover:scale-110 transition-transform">57K</div>
+                        <div className="text-xs lg:text-sm text-gray-300">Profesores pagados</div>
                       </div>
                     </div>
                   </div>
