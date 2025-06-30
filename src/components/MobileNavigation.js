@@ -141,15 +141,6 @@ const MobileNavigation = () => {
       {/* Spacer for bottom navigation - Mobile & Tablet Only */}
       <div className="lg:hidden h-20"></div>
 
-      {/* Quick Access Floating Button - Only for Participación when not on that page */}
-      {location.pathname !== '/participacion-ciudadana' && (
-        <Link
-          to="/participacion-ciudadana"
-          className="lg:hidden fixed bottom-24 right-4 z-40 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300"
-        >
-          <Users className="w-6 h-6" />
-        </Link>
-      )}
 
       {/* Reformas Quick Menu - Mobile & Tablet Only */}
       {location.pathname.includes('/reformas') && (
