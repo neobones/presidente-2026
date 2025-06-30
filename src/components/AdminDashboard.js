@@ -18,6 +18,9 @@ const AdminDashboard = () => {
     categoria: '',
     region: ''
   });
+  const [showImplementModal, setShowImplementModal] = useState(false);
+  const [selectedConsulta, setSelectedConsulta] = useState(null);
+  const [implementDescription, setImplementDescription] = useState('');
 
   useEffect(() => {
     // Debug: verificar token al cargar
@@ -121,7 +124,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const updateEstado = async (id, nuevoEstado) => {
+  const updateEstado = async (id, nuevoEstado, descripcion = '') => {
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
@@ -135,7 +138,11 @@ const AdminDashboard = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ estado: nuevoEstado })
+        body: JSON.stringify({ 
+          estado: nuevoEstado,
+          descripcionImplementacion: descripcion,
+          implementada: nuevoEstado === 'implementada'
+        })
       });
 
       if (response.status === 401) {
@@ -151,12 +158,33 @@ const AdminDashboard = () => {
 
       if (response.ok) {
         setConsultas(prev => prev.map(c => 
-          c._id === id ? { ...c, estado: nuevoEstado } : c
+          c._id === id ? { 
+            ...c, 
+            estado: nuevoEstado,
+            descripcionImplementacion: descripcion,
+            implementada: nuevoEstado === 'implementada',
+            fechaImplementacion: nuevoEstado === 'implementada' ? new Date() : c.fechaImplementacion
+          } : c
         ));
         await loadStats(); // Recargar estadísticas
       }
     } catch (error) {
       console.error('Error actualizando estado:', error);
+    }
+  };
+
+  const handleImplementar = (consulta) => {
+    setSelectedConsulta(consulta);
+    setImplementDescription('');
+    setShowImplementModal(true);
+  };
+
+  const confirmImplementacion = async () => {
+    if (selectedConsulta) {
+      await updateEstado(selectedConsulta._id, 'implementada', implementDescription);
+      setShowImplementModal(false);
+      setSelectedConsulta(null);
+      setImplementDescription('');
     }
   };
 
@@ -440,7 +468,7 @@ const AdminDashboard = () => {
                       {consulta.estado === 'revisando' && (
                         <>
                           <button
-                            onClick={() => updateEstado(consulta._id, 'implementada')}
+                            onClick={() => handleImplementar(consulta)}
                             className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
                           >
                             Implementar
@@ -474,6 +502,59 @@ const AdminDashboard = () => {
           </a>
         </div>
       </div>
+
+      {/* Modal de Implementación */}
+      {showImplementModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Implementar Consulta
+            </h3>
+            
+            {selectedConsulta && (
+              <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                <p className="text-sm text-gray-600 mb-2">Consulta de:</p>
+                <p className="font-medium">{selectedConsulta.nombre || 'Usuario Anónimo'}</p>
+                <p className="text-sm text-gray-700 mt-1 line-clamp-3">
+                  {selectedConsulta.mensaje}
+                </p>
+              </div>
+            )}
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Descripción de la implementación *
+              </label>
+              <textarea
+                value={implementDescription}
+                onChange={(e) => setImplementDescription(e.target.value)}
+                placeholder="Describe cómo se implementó esta consulta, qué acciones se tomaron, resultados esperados, etc."
+                className="w-full h-32 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none"
+                required
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Esta descripción será visible para los ciudadanos
+              </p>
+            </div>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowImplementModal(false)}
+                className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmImplementacion}
+                disabled={!implementDescription.trim()}
+                className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+              >
+                Confirmar Implementación
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

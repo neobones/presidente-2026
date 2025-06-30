@@ -298,6 +298,88 @@ const ParticipacionCiudadana = () => {
           </div>
         </section>
 
+        {/* Sección de Consultas Implementadas Destacadas */}
+        {consultas.some(c => c.estado === 'implementada') && (
+          <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-emerald-50 to-green-50">
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  🎯 Consultas Implementadas
+                </h2>
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                  Estas son las consultas ciudadanas que ya se han convertido en acciones concretas. 
+                  Tu voz cuenta y genera cambios reales.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {consultas
+                  .filter(c => c.estado === 'implementada')
+                  .slice(0, 6)
+                  .map((consulta) => (
+                    <div key={consulta._id} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-emerald-200">
+                      {/* Header destacado */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-sm">✓</span>
+                          </div>
+                          <span className="font-semibold text-emerald-700">Implementada</span>
+                        </div>
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                          {consulta.tema}
+                        </span>
+                      </div>
+
+                      {/* Contenido */}
+                      <div className="mb-4">
+                        <p className="text-gray-700 text-sm line-clamp-3 mb-3">
+                          {consulta.mensaje}
+                        </p>
+                        
+                        {/* Descripción de implementación */}
+                        {consulta.descripcionImplementacion && (
+                          <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                            <p className="text-emerald-700 text-sm font-medium mb-1">
+                              🎯 Implementación:
+                            </p>
+                            <p className="text-emerald-600 text-sm">
+                              {consulta.descripcionImplementacion}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Footer */}
+                      <div className="flex items-center justify-between text-xs text-gray-500">
+                        <span>{consulta.region}</span>
+                        {consulta.fechaImplementacion && (
+                          <span>
+                            {new Date(consulta.fechaImplementacion).toLocaleDateString('es-ES', {
+                              month: 'short',
+                              year: 'numeric'
+                            })}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              {consultas.filter(c => c.estado === 'implementada').length > 6 && (
+                <div className="text-center mt-8">
+                  <button
+                    onClick={() => setFiltros(prev => ({ ...prev, estado: 'implementada' }))}
+                    className="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition-colors"
+                  >
+                    Ver todas las implementadas ({consultas.filter(c => c.estado === 'implementada').length})
+                  </button>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* Filtros */}
         <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white/50">
           <div className="max-w-7xl mx-auto">
@@ -331,6 +413,19 @@ const ParticipacionCiudadana = () => {
                     {regiones.map(region => (
                       <option key={region.id} value={region.id}>{region.name}</option>
                     ))}
+                  </select>
+
+                  <select
+                    value={filtros.estado || ''}
+                    onChange={(e) => setFiltros(prev => ({ ...prev, estado: e.target.value, page: 1 }))}
+                    className="bg-white rounded-lg px-4 py-2 shadow-md border border-gray-200 focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Todos los estados</option>
+                    <option value="pendiente">📋 Pendientes</option>
+                    <option value="revisando">🔍 En revisión</option>
+                    <option value="implementada">✅ Implementadas</option>
+                    <option value="respondida">💬 Respondidas</option>
+                    <option value="rechazada">❌ Rechazadas</option>
                   </select>
                 </div>
               )}
@@ -375,6 +470,23 @@ const ParticipacionCiudadana = () => {
                         }`}>
                           {consulta.tema}
                         </span>
+                        
+                        {/* Badge de estado de implementación */}
+                        {consulta.estado === 'implementada' && (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            ✅ Implementada
+                          </span>
+                        )}
+                        {consulta.estado === 'revisando' && (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
+                            🔍 En Revisión
+                          </span>
+                        )}
+                        {consulta.estado === 'respondida' && (
+                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
+                            💬 Respondida
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -384,6 +496,44 @@ const ParticipacionCiudadana = () => {
                         {consulta.mensaje}
                       </p>
                     </div>
+
+                    {/* Información de implementación */}
+                    {consulta.estado === 'implementada' && (
+                      <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="text-emerald-600 font-semibold text-sm">🎯 Implementación Exitosa</span>
+                        </div>
+                        {consulta.descripcionImplementacion && (
+                          <p className="text-sm text-emerald-700 mb-2">
+                            {consulta.descripcionImplementacion}
+                          </p>
+                        )}
+                        {consulta.fechaImplementacion && (
+                          <p className="text-xs text-emerald-600">
+                            Implementada el {new Date(consulta.fechaImplementacion).toLocaleDateString('es-ES', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric'
+                            })}
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Respuesta oficial si existe */}
+                    {consulta.respuesta && (
+                      <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <span className="text-blue-600 font-semibold text-sm">💬 Respuesta Oficial</span>
+                        </div>
+                        <p className="text-sm text-blue-700 mb-2">
+                          {consulta.respuesta.mensaje}
+                        </p>
+                        <p className="text-xs text-blue-600">
+                          Por {consulta.respuesta.autor} - {new Date(consulta.respuesta.fecha).toLocaleDateString('es-ES')}
+                        </p>
+                      </div>
+                    )}
 
                     {/* Metadata */}
                     <div className="flex items-center justify-between text-xs text-gray-500 mb-4">

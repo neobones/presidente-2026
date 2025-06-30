@@ -595,7 +595,7 @@ app.get('/api/consultas/admin', verifyJWT, verifyAdmin, async (req, res) => {
 app.put('/api/consultas/:id/estado', verifyJWT, verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado, respuesta, implementada } = req.body;
+    const { estado, respuesta, implementada, descripcionImplementacion } = req.body;
 
     const consulta = await Consulta.findById(id);
     if (!consulta) {
@@ -615,6 +615,9 @@ app.put('/api/consultas/:id/estado', verifyJWT, verifyAdmin, async (req, res) =>
       consulta.implementada = implementada;
       if (implementada) {
         consulta.fechaImplementacion = new Date();
+        if (descripcionImplementacion) {
+          consulta.descripcionImplementacion = descripcionImplementacion;
+        }
       }
     }
 
