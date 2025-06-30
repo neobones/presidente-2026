@@ -387,14 +387,136 @@ export const seoConfigs = {
     ]
   },
   
-  seguridad: {
-    title: "Fronteras Seguras - Tecnología y Diplomacia Humanitaria",
-    description: "Drones y monitoreo satelital, acuerdos con Bolivia y Perú, centros dignos. 50% reducción migración ilegal con humanidad. Plan de Juan Pablo Melinao.",
-    keywords: ['seguridad fronteras', 'migración', 'drones', 'control migración', 'bolivia', 'perú'],
-    canonicalUrl: "https://chiledigno.cl/programa-gobierno-2026/fronteras-seguras-migracion-controlada",
+  fronterasInteligentes: {
+    title: "Fronteras Inteligentes - Seguridad Nacional y Tecnología | Melinao 2026",
+    description: "Revolución en seguridad nacional: drones, IA y vigilancia satelital para fronteras protegidas. 50% reducción migración ilegal, 20% menos crimen violento. Tecnología + prevención social. Juan Pablo Melinao González, ingeniero mapuche, moderniza la seguridad chilena con enfoque humanitario.",
+    keywords: [
+      'fronteras inteligentes Chile',
+      'seguridad nacional tecnología',
+      'drones fronteras Chile',
+      'vigilancia satelital migración',
+      'control migración ilegal',
+      'crimen organizado Chile',
+      'Tren de Aragua tecnología',
+      'Juan Pablo Melinao seguridad',
+      'candidato presidencial seguridad',
+      'ingeniero mapuche fronteras',
+      'migración controlada humanitaria',
+      'tecnología seguridad pública',
+      'prevención crimen social',
+      'Bukele modelo Chile',
+      'fronteras Bolivia Perú',
+      'centros humanitarios migrantes',
+      'IA seguridad nacional',
+      'automatización fronteras',
+      'candidato independiente seguridad',
+      'Melinao fronteras seguras'
+    ],
+    canonicalUrl: "https://chiledigno.cl/reformas/fronteras-inteligentes-seguridad-nacional",
     openGraph: {
-      image: '/images/seguridad-og.jpg'
-    }
+      image: '/images/fronteras-inteligentes-melinao-2026.jpg',
+      imageAlt: 'Juan Pablo Melinao - Fronteras Inteligentes Chile 2026'
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": ["GovernmentService", "PublicPolicy", "SecurityPolicy"],
+      "name": "Fronteras Inteligentes - Reforma de Seguridad Nacional",
+      "headline": "Chile Seguro 2026: Tecnología para Fronteras Protegidas y Calles Tranquilas",
+      "description": "Plan integral de seguridad nacional con tecnología avanzada. Drones, IA y vigilancia satelital para control fronterizo humanitario y prevención del crimen organizado.",
+      "author": {
+        "@type": "Person",
+        "name": "Juan Pablo Melinao González",
+        "jobTitle": "Candidato Presidencial Chile 2026",
+        "ethnicity": "Mapuche",
+        "profession": "Ingeniero en Informática",
+        "politicalAffiliation": "Independiente"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Campaña Melinao 2026",
+        "url": "https://chiledigno.cl"
+      },
+      "serviceType": "National Security Reform Policy",
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        {
+          "@type": "Place",
+          "name": "Arica y Parinacota"
+        },
+        {
+          "@type": "Place", 
+          "name": "Tarapacá"
+        },
+        {
+          "@type": "Place",
+          "name": "Antofagasta"
+        },
+        {
+          "@type": "Place",
+          "name": "Araucanía"
+        }
+      ],
+      "expectedBenefit": [
+        "50% reducción migración ilegal en fronteras norte",
+        "20% disminución delitos violentos en 3 años",
+        "Vigilancia 24/7 con drones y satélites",
+        "Centros humanitarios dignos para migrantes",
+        "Prevención social en zonas vulnerables",
+        "Acuerdos internacionales Bolivia y Perú",
+        "Tecnología IA para predicción criminal",
+        "Inclusión comunidades mapuche en Araucanía"
+      ],
+      "cost": {
+        "@type": "MonetaryAmount",
+        "currency": "CLP",
+        "value": "650000000000000"
+      },
+      "funding": [
+        "Impuesto progresivo sueldos altos ($1.5-2T)",
+        "Formalización arriendos y comercio ($500-800B)",
+        "Ahorros automatización estado ($200B)",
+        "Fondo minero cobre y litio ($500B)"
+      ],
+      "timeline": {
+        "phase1": "Primeros 100 días: Drones Arica-Tarapacá, centros humanitarios",
+        "phase2": "Año 1-2: Expansión Antofagasta-Atacama, tribunales especiales",
+        "phase3": "Año 3-5: IA nacional, acuerdos Bolivia-Perú, prevención social"
+      },
+      "technology": [
+        "Drones vigilancia fronteriza",
+        "Satélites monitoreo 24/7",
+        "Inteligencia Artificial predictiva",
+        "Cámaras térmicas avanzadas",
+        "Sistemas comunicación segura",
+        "Análisis big data criminal"
+      ],
+      "keyFeatures": {
+        "Fronteras": "Drones y satélites en 4,329 km fronteras",
+        "Centros": "Instalaciones humanitarias dignas migrantes",
+        "Prevencion": "Programas sociales zonas vulnerables",
+        "Internacional": "Acuerdos Bolivia-Perú control conjunto",
+        "IA": "Predicción criminal y optimización recursos"
+      },
+      "regionalImpact": {
+        "Araucania": "$50B programas sociales juventud mapuche",
+        "Antofagasta": "$100B vigilancia fronteriza tecnológica",
+        "Santiago": "$150B fortalecimiento unidades especiales",
+        "Norte": "50% reducción contrabando y migración ilegal"
+      }
+    },
+    politicalKeywords: [
+      'elecciones Chile 2026',
+      'candidato presidencial mapuche',
+      'independiente seguridad',
+      'reforma seguridad nacional',
+      'tecnología fronteras Chile',
+      'Chile seguro familias',
+      'migración controlada humanitaria',
+      'crimen organizado Chile'
+    ]
   },
   
   justicia: {

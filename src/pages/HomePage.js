@@ -75,7 +75,7 @@ const HomePage = () => {
       color: "from-orange-500 to-red-600",
       bgColor: "bg-gradient-to-br from-orange-50 to-red-50",
       features: ["Drones en fronteras", "Centros humanitarios", "Acuerdos Bolivia-Perú"],
-      link: "/reformas/fronteras-seguras-migracion-controlada"
+      link: "/reformas/fronteras-inteligentes-seguridad-nacional"
     },
     {
       icon: <Heart className="w-12 h-12" />,
