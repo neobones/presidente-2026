@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Cpu, DollarSign, Shield, Users, Heart, ArrowRight, Menu, X, Play, Star, Zap, Globe, TrendingUp, PiggyBank, Calculator, Clock, Target, CheckCircle, ChevronLeft, ChevronRight, MapPin, Phone, Mail, Share2, Vote, Eye, Award, Timer, BarChart3, TrendingDownIcon as TrendingDown } from 'lucide-react';
+import { ChevronDown, Cpu, DollarSign, Shield, Users, Heart, ArrowRight, Menu, X, Play, Star, Zap, Globe, TrendingUp, PiggyBank, Calculator, Clock, Target, CheckCircle, ChevronLeft, ChevronRight, MapPin, Phone, Mail, Share2, Vote, Eye, Award, Timer, BarChart3, TrendingDownIcon as TrendingDown, Quote } from 'lucide-react';
 import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import AuthStatus from '../components/AuthStatus';
@@ -40,7 +40,7 @@ const HomePageNew = () => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
       
-      const sections = ['hero', 'momentum', 'reformas', 'testimonios', 'calculadora', 'impacto', 'antes-despues', 'accion'];
+      const sections = ['hero', 'momentum', 'vision', 'reformas', 'testimonios', 'calculadora', 'impacto', 'antes-despues', 'accion'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -222,6 +222,7 @@ const HomePageNew = () => {
   const progressPercentage = derivedData?.patrociniosData ? 
     (derivedData.patrociniosData.actual / derivedData.patrociniosData.meta) * 100 : 
     84.7;
+
 
   return (
     <SEOWrapper seoConfig={seoConfigs.home}>
@@ -431,11 +432,11 @@ const HomePageNew = () => {
                 </Link>
                 
                 <button
-                  onClick={() => scrollToSection('testimonios')}
+                  onClick={() => scrollToSection('vision')}
                   className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-6 py-4 rounded-xl font-bold transition-all hover:scale-105 hover:shadow-2xl group flex flex-col items-center gap-2"
                 >
-                  <Play className="w-8 h-8 group-hover:scale-110 transition-transform" />
-                  <span className="text-sm">Ve Testimonios</span>
+                  <Heart className="w-8 h-8 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm">Mi Historia</span>
                 </button>
                 
                 <Link
@@ -571,6 +572,134 @@ const HomePageNew = () => {
                 </div>
               </div>
 
+            </div>
+          </div>
+        </section>
+
+        {/* MI VISIÓN SECTION - Toque Humano */}
+        <section id="vision" className="py-24 bg-white relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              
+              {/* Lado Izquierdo - Historia Personal */}
+              <div className="space-y-8">
+                <div className="space-y-6">
+                  <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full px-6 py-3 text-blue-800 font-semibold">
+                    <Heart className="w-5 h-5" />
+                    <span>MI HISTORIA</span>
+                  </div>
+                  
+                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900">
+                    Un Puente entre 
+                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Mundos</span>
+                  </h2>
+                </div>
+
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border-l-4 border-blue-500">
+                    <p className="text-xl">
+                      <span className="font-bold text-gray-900">Ingeniero en Informática.</span> He visto cómo la tecnología 
+                      puede transformar vidas cuando se usa con propósito y justicia social.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border-l-4 border-green-500">
+                    <p className="text-xl">
+                      <span className="font-bold text-gray-900">Emprendedor.</span> Entiendo los desafíos reales de crear 
+                      valor en una economía que debe funcionar para todos, no solo para unos pocos.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border-l-4 border-purple-500">
+                    <p className="text-xl">
+                      <span className="font-bold text-gray-900">Mapuche.</span> Conozco la riqueza de nuestra diversidad 
+                      y el poder de la unidad sin uniformidad. Chile es más fuerte cuando todos pertenecen.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quote Personal */}
+                <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-8 text-white relative">
+                  <Quote className="w-12 h-12 text-blue-400 mb-4 opacity-50" />
+                  <blockquote className="text-xl italic mb-6">
+                    "No vengo a dividir Chile entre izquierda y derecha. Vengo a unir Chile 
+                    entre el pasado que nos limita y el futuro que nos espera."
+                  </blockquote>
+                  <cite className="text-blue-300 font-semibold">
+                    — Juan Pablo Melinao González
+                  </cite>
+                </div>
+              </div>
+
+              {/* Lado Derecho - Valores y Compromisos */}
+              <div className="space-y-8">
+                <div className="text-center mb-12">
+                  <h3 className="text-3xl font-bold text-gray-900 mb-4">Mis Compromisos Contigo</h3>
+                  <p className="text-lg text-gray-600">
+                    Estos no son promesas de campaña. Son compromisos que haré realidad.
+                  </p>
+                </div>
+
+                <div className="grid gap-6">
+                  {[
+                    {
+                      icon: <Cpu className="w-8 h-8 text-blue-600" />,
+                      titulo: "Tecnología para Todos",
+                      descripcion: "Cada chileno merece acceso a servicios públicos digitales de clase mundial.",
+                      compromiso: "2 minutos máximo para cualquier trámite"
+                    },
+                    {
+                      icon: <PiggyBank className="w-8 h-8 text-green-600" />,
+                      titulo: "Economía que Funciona",
+                      descripcion: "Tu trabajo debe alcanzar para vivir dignamente y ahorrar para el futuro.",
+                      compromiso: "Sueldo mínimo $900.000 con subsidio PYME"
+                    },
+                    {
+                      icon: <Users className="w-8 h-8 text-purple-600" />,
+                      titulo: "Unidad sin Uniformidad",
+                      descripcion: "Chile es más rico en su diversidad. Respetamos diferencias, construimos juntos.",
+                      compromiso: "Reconciliación y desarrollo en La Araucanía"
+                    },
+                    {
+                      icon: <CheckCircle className="w-8 h-8 text-orange-600" />,
+                      titulo: "Fin de los Privilegios",
+                      descripcion: "La política debe servir al pueblo, no enriquecer a los políticos.",
+                      compromiso: "Eliminación gradual de sueldos vitalicios"
+                    }
+                  ].map((valor, index) => (
+                    <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+                      <div className="flex items-start space-x-4">
+                        <div className="bg-gray-50 rounded-full p-3 flex-shrink-0">
+                          {valor.icon}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-xl font-bold text-gray-900 mb-2">{valor.titulo}</h4>
+                          <p className="text-gray-600 mb-3">{valor.descripcion}</p>
+                          <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            {valor.compromiso}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Llamada a la Conexión Personal */}
+                <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center">
+                  <h4 className="text-2xl font-bold mb-4">¿Quieres conocer más de mi historia?</h4>
+                  <p className="text-blue-100 mb-6">
+                    Te invito a conversar. Chile se construye en el diálogo, no en el monólogo.
+                  </p>
+                  <Link 
+                    to="/participacion-ciudadana"
+                    className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition-colors"
+                  >
+                    <Heart className="w-5 h-5" />
+                    Conversemos
+                  </Link>
+                </div>
+              </div>
+              
             </div>
           </div>
         </section>
