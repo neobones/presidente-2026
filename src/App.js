@@ -9,6 +9,7 @@ import ChileUnido from './pages/ChileUnido';
 import ParticipacionCiudadana from './pages/ParticipacionCiudadana';
 import Patrocinios from './pages/Patrocinios';
 import PatrociniosNew from './pages/PatrociniosNew';
+import PrivilegiosPage from './pages/PrivilegiosPage';
 import AdminPage from './pages/AdminPage';
 import MobileLayout from './components/MobileLayout';
 
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/reformas/fronteras-inteligentes-seguridad-nacional" element={<FronterasInteligentes />} />
           <Route path="/reformas/justicia-social-equidad-fin-privilegios" element={<JusticiaSocial />} />
           <Route path="/reformas/chile-unido-desarrollo-araucania" element={<ChileUnido />} />
+          <Route path="/privilegios" element={<PrivilegiosPage />} />
           
           {/* Rutas regionales */}
           <Route path="/regiones/santiago" element={<HomePage />} />

@@ -194,6 +194,12 @@ const HomePage = () => {
 
               <div className="flex items-center space-x-4">
                 <Link 
+                  to="/privilegios"
+                  className="px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-sm"
+                >
+                  Fin Privilegios
+                </Link>
+                <Link 
                   to="/participacion-ciudadana"
                   className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
