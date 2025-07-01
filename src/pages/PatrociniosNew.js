@@ -16,7 +16,7 @@ const PatrociniosNew = () => {
     actual: 0,
     meta: 35361,
     porcentaje: 0,
-    diasRestantes: 45
+    diasRestantes: 0
   });
   const [testimonios, setTestimonios] = useState([]);
   const [activeTestimonio, setActiveTestimonio] = useState(0);
@@ -44,18 +44,33 @@ const PatrociniosNew = () => {
     };
   }, []);
 
+  // Función para calcular días restantes hasta el 16 de noviembre de 2025
+  const calcularDiasRestantes = () => {
+    const fechaLimite = new Date('2025-11-16T23:59:59');
+    const ahora = new Date();
+    const diferencia = fechaLimite.getTime() - ahora.getTime();
+    const dias = Math.max(0, Math.ceil(diferencia / (1000 * 60 * 60 * 24)));
+    return dias;
+  };
+
   const fetchPatrociniosData = async () => {
     try {
       const response = await fetch('/api/patrocinios/stats');
       const data = await response.json();
+      const diasRestantes = calcularDiasRestantes();
       setPatrociniosData({
         actual: data.actual || 0,
         meta: data.meta || 35361,
         porcentaje: Math.min((data.actual / (data.meta || 35361)) * 100, 100),
-        diasRestantes: 45 // Calculado dinámicamente en producción
+        diasRestantes: diasRestantes
       });
     } catch (error) {
       console.error('Error cargando datos de patrocinios:', error);
+      // En caso de error, aún calcular días restantes
+      setPatrociniosData(prev => ({
+        ...prev,
+        diasRestantes: calcularDiasRestantes()
+      }));
     }
   };
 
@@ -177,7 +192,7 @@ const PatrociniosNew = () => {
     },
     {
       pregunta: "¿Hasta cuándo puedo patrocinar?",
-      respuesta: "El plazo vence el 15 de enero de 2026. Sin embargo, recomendamos patrocinar cuanto antes para asegurar que tu firma sea procesada correctamente por el SERVEL."
+      respuesta: "El plazo vence el 16 de noviembre de 2025 a las 23:59 horas. Sin embargo, recomendamos patrocinar cuanto antes para asegurar que tu firma sea procesada correctamente por el SERVEL."
     },
     {
       pregunta: "¿Patrocinar me compromete a votar por Juan Pablo?",
@@ -337,11 +352,27 @@ const PatrociniosNew = () => {
         </section>
 
         {/* Banner de urgencia flotante */}
-        <div className="fixed top-0 left-0 right-0 z-50 bg-red-600 text-white px-4 py-2 text-center text-sm font-medium">
-          ⏰ Quedan {patrociniosData.diasRestantes} días para completar patrocinios
-          <span className="ml-4 font-bold">
-            Meta de hoy: {formatChileanNumber(metaDiaria)} patrocinantes más
-          </span>
+        <div className={`fixed top-0 left-0 right-0 z-50 px-4 py-2 text-center text-sm font-medium text-white ${
+          patrociniosData.diasRestantes === 0 
+            ? 'bg-gray-800' 
+            : patrociniosData.diasRestantes <= 7 
+            ? 'bg-red-600 animate-pulse' 
+            : 'bg-red-600'
+        }`}>
+          {patrociniosData.diasRestantes === 0 ? (
+            <span>📅 Plazo de patrocinios finalizado el 16 de noviembre de 2025</span>
+          ) : patrociniosData.diasRestantes === 1 ? (
+            <span>🚨 ¡ÚLTIMO DÍA! El plazo vence el 16 de noviembre a las 23:59 hrs</span>
+          ) : patrociniosData.diasRestantes <= 7 ? (
+            <span>🚨 ¡URGENTE! Quedan solo {patrociniosData.diasRestantes} días - Plazo: 16 noviembre 2025</span>
+          ) : (
+            <>
+              ⏰ Quedan {patrociniosData.diasRestantes} días para completar patrocinios (Plazo: 16 nov 2025)
+              <span className="ml-4 font-bold">
+                Meta de hoy: {formatChileanNumber(metaDiaria)} patrocinantes más
+              </span>
+            </>
+          )}
         </div>
 
         {/* SECCIÓN DE CREDENCIALES */}
