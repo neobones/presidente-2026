@@ -312,7 +312,7 @@ const PrivilegiosPage = () => {
       title="Eliminación de Privilegios Políticos - Juan Pablo Melinao 2026"
       description="Propuesta para eliminar sueldos vitalicios y financiamiento estatal a partidos políticos. Ahorro de $2.660-3.660 millones anuales para salud, educación y pensiones dignas."
       keywords="eliminación privilegios políticos, sueldos vitalicios, financiamiento partidos, reforma política Chile, transparencia, Juan Pablo Melinao"
-      path="/privilegios"
+      path="/reformas/eliminacion-privilegios-politicos-transparencia"
     >
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden">
         

@@ -194,7 +194,7 @@ const HomePage = () => {
 
               <div className="flex items-center space-x-4">
                 <Link 
-                  to="/privilegios"
+                  to="/reformas/eliminacion-privilegios-politicos-transparencia"
                   className="px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-sm"
                 >
                   Fin Privilegios

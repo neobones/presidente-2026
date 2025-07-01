@@ -1,5 +1,6 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 import HomePage from './pages/HomePage';
 import AutomatizacionIA from './pages/AutomatizacionIA';
 import EconomiaDigital from './pages/EconomiaDigital';
@@ -13,9 +14,21 @@ import PrivilegiosPage from './pages/PrivilegiosPage';
 import AdminPage from './pages/AdminPage';
 import MobileLayout from './components/MobileLayout';
 
+// Este componente rastrea las vistas de página
+const RouteTracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+  }, [location]);
+
+  return null;
+};
+
 const App = () => {
   return (
     <Router>
+      <RouteTracker />
       <MobileLayout>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -28,7 +41,7 @@ const App = () => {
           <Route path="/reformas/fronteras-inteligentes-seguridad-nacional" element={<FronterasInteligentes />} />
           <Route path="/reformas/justicia-social-equidad-fin-privilegios" element={<JusticiaSocial />} />
           <Route path="/reformas/chile-unido-desarrollo-araucania" element={<ChileUnido />} />
-          <Route path="/privilegios" element={<PrivilegiosPage />} />
+          <Route path="/reformas/eliminacion-privilegios-politicos-transparencia" element={<PrivilegiosPage />} />
           
           {/* Rutas regionales */}
           <Route path="/regiones/santiago" element={<HomePage />} />

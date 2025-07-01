@@ -785,6 +785,152 @@ export const seoConfigs = {
       'Araucanía desarrollo turístico'
     ]
   },
+  
+  privilegiosPoliticos: {
+    title: "Eliminación de Privilegios Políticos - Reforma Transparencia Chile | Melinao 2026",
+    description: "Revolución en transparencia política: eliminación sueldos vitalicios ex presidentes/parlamentarios, autofinanciamiento partidos políticos, fin privilegios. Ahorro $3.460M anuales para salud, educación y pensiones. Juan Pablo Melinao González termina con la política de privilegios en Chile.",
+    keywords: [
+      'eliminación privilegios políticos Chile',
+      'sueldos vitalicios ex presidentes',
+      'autofinanciamiento partidos políticos',
+      'reforma transparencia política',
+      'fin privilegios parlamentarios',
+      'Juan Pablo Melinao privilegios',
+      'candidato presidencial transparencia',
+      'ingeniero mapuche equidad',
+      'reforma política Chile 2026',
+      'eliminación financiamiento estatal partidos',
+      'transparencia política total',
+      'equidad política Chile',
+      'justicia política trabajadores',
+      'ex presidentes sin sueldos vitalicios',
+      'partidos autofinanciados Chile',
+      'Melinao reforma política',
+      'candidato independiente privilegios',
+      'ahorro 3 mil millones privilegios',
+      'política sin privilegios Chile',
+      'democracia transparente Chile'
+    ],
+    canonicalUrl: "https://melinao2026.cl/reformas/eliminacion-privilegios-politicos-transparencia",
+    openGraph: {
+      image: '/images/privilegios-politicos-melinao-2026.jpg',
+      imageAlt: 'Juan Pablo Melinao - Eliminación Privilegios Políticos Chile 2026'
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": ["GovernmentService", "PublicPolicy", "PoliticalReform"],
+      "name": "Eliminación de Privilegios Políticos - Reforma de Transparencia",
+      "headline": "Chile Transparente 2026: Fin de Privilegios Políticos y Autofinanciamiento de Partidos",
+      "description": "Plan integral de reforma política chilena: eliminación sueldos vitalicios, autofinanciamiento de partidos, transparencia total. Ahorro masivo para reinversión en prioridades sociales y fin de desigualdades políticas.",
+      "author": {
+        "@type": "Person",
+        "name": "Juan Pablo Melinao González",
+        "jobTitle": "Candidato Presidencial Chile 2026",
+        "ethnicity": "Mapuche",
+        "profession": "Ingeniero en Informática",
+        "politicalAffiliation": "Independiente"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Campaña Melinao 2026",
+        "url": "https://melinao2026.cl"
+      },
+      "serviceType": "Political Transparency Reform Policy",
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Chile"
+        },
+        {
+          "@type": "Place",
+          "name": "Santiago"
+        },
+        {
+          "@type": "Place", 
+          "name": "Araucanía"
+        },
+        {
+          "@type": "Place",
+          "name": "Valparaíso"
+        },
+        {
+          "@type": "Place",
+          "name": "Concepción"
+        }
+      ],
+      "expectedBenefit": [
+        "Eliminación sueldos vitalicios ex presidentes/parlamentarios/ministros",
+        "Autofinanciamiento total partidos políticos sin fondos públicos",
+        "Ahorro fiscal $2.660-3.660 millones anuales garantizado",
+        "Transparencia total donaciones políticas registro público",
+        "Límite 15 años remuneraciones estatales post-servicio",
+        "Reinversión ahorros en salud, educación y pensiones dignas",
+        "Equidad política: fin privilegios vs trabajadores comunes",
+        "Fondo transición 5 años para ex autoridades actuales"
+      ],
+      "cost": {
+        "@type": "MonetaryAmount",
+        "currency": "CLP",
+        "value": "200000000000000"
+      },
+      "funding": [
+        "Autofinanciado por eliminación privilegios ($3.460M anuales)",
+        "Auditoría legal identificación normativas ($200B)",
+        "Fondo transición temporal ($200B 5 años)",
+        "Fiscalización reforzada SERVEL (presupuesto existente)"
+      ],
+      "timeline": {
+        "phase1": "Primeros 100 días: Auditoría legal, proyectos ley presentados",
+        "phase2": "Año 1-2: Eliminación financiamiento estatal, reducción 20% sueldos vitalicios",
+        "phase3": "Año 3-5: Eliminación total privilegios, autofinanciamiento consolidado"
+      },
+      "legalFramework": [
+        "Derogación artículos Ley N° 19.884 financiamiento estatal",
+        "Modificación Ley N° 20.900 para autofinanciamiento exclusivo",
+        "Nueva ley límite 15 años remuneraciones post-servicio",
+        "Reforma constitucional Artículo 8 (probidad y transparencia)",
+        "Fortalecimiento SERVEL fiscalización donaciones privadas"
+      ],
+      "keyFeatures": {
+        "EliminacionSueldosVitalicios": "Gradual 5 años, $1.660-2.160M ahorro anual",
+        "AutofinanciamientoPartidos": "Solo donaciones privadas transparentes, $1.000-1.500M ahorro",
+        "TransparenciaTotal": "Registro público tiempo real todas donaciones",
+        "Limite15Anos": "Prohibición remuneraciones estatales después 15 años servicio",
+        "FondoTransicion": "Apoyo reinserción laboral ex autoridades 5-10 años"
+      },
+      "politicalImpact": {
+        "privilegeElimination": "$1.860-2.360M privilegios eliminados anualmente",
+        "publicSavings": "$2.660-3.660M total ahorro anual para programas sociales",
+        "transparency": "100% donaciones políticas públicas y auditadas", 
+        "equity": "Fin desigualdades políticos vs trabajadores comunes",
+        "citizenTrust": "65% chilenos apoyan eliminación privilegios políticos"
+      },
+      "targetAudience": [
+        "Ciudadanos que rechazan privilegios políticos (65%)",
+        "Trabajadores demandando equidad con políticos",
+        "Familias afectadas por falta recursos salud/educación",
+        "Contribuyentes exigiendo uso eficiente impuestos",
+        "Jóvenes demandando transparencia política total",
+        "Organizaciones sociedad civil anticorrupción"
+      ],
+      "comparison": {
+        "exPresidente": "De $3.500.000/mes a $0/mes = 35 pensiones dignas",
+        "exParlamentario": "De $6.000.000/mes a $400.000/mes = 56 pensiones AFP", 
+        "exMinistro": "De $2.800.000/mes a $0/mes = 28 pensiones dignas",
+        "totalEquivalencia": "Ahorros financian 34.600 pensiones dignas adicionales"
+      }
+    },
+    politicalKeywords: [
+      'elecciones Chile 2026',
+      'candidato presidencial mapuche',
+      'independiente transparencia',
+      'reforma política Chile',
+      'eliminación privilegios',
+      'Chile transparente equitativo',
+      'política sin privilegios',
+      'democracia transparente'
+    ]
+  },
 
   // Configuraciones SEO Regionales
   regional: {
