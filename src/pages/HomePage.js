@@ -63,20 +63,20 @@ const HomePage = () => {
     {
       icon: <DollarSign className="w-12 h-12" />,
       title: "Economía Real",
-      subtitle: "$50,000 Más al Mes",
-      description: "Pagas IVA 5% en pan, leche y carne. Tu sueldo mínimo sube a $900,000. Los arriendos se formalizan y bajan. Tu familia ahorra $50,000 mensuales.",
-      metric: "$50,000",
+      subtitle: "$50.000 Más al Mes",
+      description: "Pagas IVA 5% en pan, leche y carne. Tu sueldo mínimo sube a $900.000. Los arriendos se formalizan y bajan. Tu familia ahorra $50.000 mensuales.",
+      metric: "$50.000",
       detail: "ahorro familiar mensual",
       color: "from-emerald-500 to-green-600",
       bgColor: "bg-gradient-to-br from-emerald-50 to-green-50",
       features: [
         "🛒 IVA 5% en canasta básica (pan, leche, carne)", 
-        "💰 Sueldo mínimo $900,000 con subsidio PYME", 
+        "💰 Sueldo mínimo $900.000 con subsidio PYME", 
         "🏠 Arriendos con factura: precios justos",
         "📊 Trabajadores informales se formalizan con beneficios"
       ],
-      ejemplo: "Ana en La Pintana paga $2,000 menos por sus compras semanales. Pedro en Valparaíso gana $370,000 más como sueldo mínimo.",
-      secundarias: ["Empleo masivo: 200,000 nuevos empleos formales", "Emprendimiento: microcréditos hasta $5 millones"],
+      ejemplo: "Ana en La Pintana paga $2.000 menos por sus compras semanales. Pedro en Valparaíso gana $370.000 más como sueldo mínimo.",
+      secundarias: ["Empleo masivo: 200.000 nuevos empleos formales", "Emprendimiento: microcréditos hasta $5 millones"],
       link: "/reformas/reduccion-costo-vida-impuestos"
     },
     {

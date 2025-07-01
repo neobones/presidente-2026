@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { formatChileanNumber } from '../utils/numberFormat';
 import { ArrowRight, CheckCircle, Calculator, DollarSign, Users, TrendingUp, Shield, Globe, PieChart, Home, FileText, Timer, CheckSquare, Target, Building, Percent, Receipt, X, Play, Briefcase, Store, Factory, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
@@ -82,7 +83,7 @@ const EconomiaDigital = () => {
         'Ropa y calzado: IVA 10% (antes 19%)',
         'Combustibles: IVA 10%'
       ],
-      ejemplo: 'Una familia que gasta $400,000 en supermercado ahorrará $40,000 mensuales'
+      ejemplo: 'Una familia que gasta $400.000 en supermercado ahorrará $40.000 mensuales'
     },
     {
       id: 'sueldo',
@@ -93,12 +94,12 @@ const EconomiaDigital = () => {
       poblacion: '40% trabajadores',
       descripcion: 'Aumento gradual con subsidios a PYMES',
       detalles: [
-        'Incremento de $529,000 (2025) a $900,000',
+        'Incremento de $529.000 (2025) a $900.000',
         'Subsidio estatal 50% para empresas <50 trabajadores',
         'Implementación gradual en 18 meses',
         'Beneficia 1.8 millones de trabajadores'
       ],
-      ejemplo: 'Un trabajador de retail pasará de ganar $529,000 a $900,000, mejorando significativamente su calidad de vida'
+      ejemplo: 'Un trabajador de retail pasará de ganar $529.000 a $900.000, mejorando significativamente su calidad de vida'
     },
     {
       id: 'formalizacion',
@@ -1253,12 +1254,12 @@ const EconomiaDigital = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div className="bg-green-50 rounded-xl p-6 border border-green-200 text-center">
                       <DollarSign className="w-8 h-8 text-green-600 mx-auto mb-3" />
-                      <div className="text-2xl font-black text-green-600">${simulatorData.resultado.ahorroIVA.toLocaleString()}</div>
+                      <div className="text-2xl font-black text-green-600">${formatChileanNumber(simulatorData.resultado.ahorroIVA)}</div>
                       <div className="text-sm text-green-700">Ahorro mensual IVA</div>
                     </div>
                     <div className="bg-blue-50 rounded-xl p-6 border border-blue-200 text-center">
                       <TrendingUp className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                      <div className="text-2xl font-black text-blue-600">${simulatorData.resultado.nuevoSueldo.toLocaleString()}</div>
+                      <div className="text-2xl font-black text-blue-600">${formatChileanNumber(simulatorData.resultado.nuevoSueldo)}</div>
                       <div className="text-sm text-blue-700">Tu nuevo sueldo</div>
                     </div>
                     <div className="bg-purple-50 rounded-xl p-6 border border-purple-200 text-center">
@@ -1273,16 +1274,16 @@ const EconomiaDigital = () => {
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
                         <span className="text-gray-700">Ahorro en supermercado (IVA reducido):</span>
-                        <span className="font-bold text-green-600">+${simulatorData.resultado.ahorroIVA.toLocaleString()}</span>
+                        <span className="font-bold text-green-600">+${formatChileanNumber(simulatorData.resultado.ahorroIVA)}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-gray-700">Aumento de sueldo:</span>
-                        <span className="font-bold text-blue-600">+${simulatorData.resultado.aumentoSueldo.toLocaleString()}</span>
+                        <span className="font-bold text-blue-600">+${formatChileanNumber(simulatorData.resultado.aumentoSueldo)}</span>
                       </div>
                       <div className="border-t pt-3">
                         <div className="flex justify-between items-center">
                           <span className="text-gray-900 font-bold">Total extra mensual:</span>
-                          <span className="font-black text-green-600 text-xl">+${simulatorData.resultado.ahorroTotal.toLocaleString()}</span>
+                          <span className="font-black text-green-600 text-xl">+${formatChileanNumber(simulatorData.resultado.ahorroTotal)}</span>
                         </div>
                       </div>
                     </div>
@@ -1391,7 +1392,8 @@ const EconomiaDigital = () => {
         )}
 
         {/* Consultas Ciudadanas */}
-        <div className=\"pb-20 lg:pb-0\">\n          <ConsultasCiudadanas 
+        <div className="pb-20 lg:pb-0">
+          <ConsultasCiudadanas 
           tema="economia" 
           titulo="Mejora esta Reforma Económica"
           descripcion="Tu experiencia importa. Ayúdanos a perfeccionar estas medidas económicas"

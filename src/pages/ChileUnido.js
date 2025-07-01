@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { formatChileanNumber } from '../utils/numberFormat';
 import { ArrowRight, CheckCircle, Heart, Users, Trees, Globe, TrendingUp, Target, BookOpen, Award, MapPin, Clock, DollarSign, AlertTriangle, Home, Play, Calculator, X, Timer, CheckSquare, FileText, Building, TreePine, Handshake, School, Baby, Briefcase, Star, Mountain, Leaf, Sun, Eye, Camera, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
@@ -1025,7 +1026,7 @@ const ChileUnido = () => {
                       <div className="text-sm text-gray-600">Empleos Directos</div>
                     </div>
                     <div className="bg-blue-50 p-4 rounded-xl">
-                      <div className="text-2xl font-bold text-blue-600">${simulatorData.resultado.ingresoPromedio.toLocaleString()}</div>
+                      <div className="text-2xl font-bold text-blue-600">${formatChileanNumber(simulatorData.resultado.ingresoPromedio)}</div>
                       <div className="text-sm text-gray-600">Ingreso Promedio</div>
                     </div>
                     <div className="bg-purple-50 p-4 rounded-xl">
@@ -1041,7 +1042,7 @@ const ChileUnido = () => {
                   <div className="bg-gradient-to-r from-green-100 to-blue-100 p-6 rounded-xl">
                     <h5 className="font-bold text-gray-900 mb-2">Impacto Total:</h5>
                     <p className="text-gray-700">
-                      Este proyecto generará un retorno de <strong>${simulatorData.resultado.retornoInversion.toLocaleString()} millones</strong> en 5 años, 
+                      Este proyecto generará un retorno de <strong>${formatChileanNumber(simulatorData.resultado.retornoInversion)} millones</strong> en 5 años, 
                       con un impacto ambiental <strong>{simulatorData.resultado.impactoAmbiental.toLowerCase()}</strong> y beneficiando 
                       directamente a <strong>{simulatorData.resultado.familiasBeneficiadas} familias</strong> en la región.
                     </p>

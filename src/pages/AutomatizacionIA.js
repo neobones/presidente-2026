@@ -323,31 +323,31 @@ const AutomatizacionIA = () => {
       const resultados = {
         'registro': {
           tiempo: '2 minutos 30 segundos',
-          ahorro: '$45,000',
+          ahorro: '$45.000',
           documentos: ['Certificado de Nacimiento Digital', 'Actualización RUT', 'Notificación FONASA'],
           siguiente: 'Tu certificado estará disponible en tu ChileID digital'
         },
         'sii': {
           tiempo: '4 minutos 15 segundos',
-          ahorro: '$120,000',
+          ahorro: '$120.000',
           documentos: ['Declaración Pre-llenada', 'Deducciones Automáticas', 'Formulario 22'],
           siguiente: 'IA detectó 3 deducciones adicionales que puedes aplicar'
         },
         'notarias': {
           tiempo: '3 minutos 45 segundos',
-          ahorro: '$85,000',
+          ahorro: '$85.000',
           documentos: ['Contrato Autenticado', 'Firma Digital', 'Registro Blockchain'],
           siguiente: 'Documento almacenado permanentemente en blockchain'
         },
         'registro-social': {
           tiempo: '1 minuto 50 segundos',
-          ahorro: '$25,000',
+          ahorro: '$25.000',
           documentos: ['Ficha Social Actualizada', 'Beneficios Asignados', 'Calendario Pagos'],
           siguiente: 'Subsidio habitacional pre-aprobado automáticamente'
         },
         'salud': {
           tiempo: '2 minutos 10 segundos',
-          ahorro: '$200,000',
+          ahorro: '$200.000',
           documentos: ['Cita Médica Asignada', 'Pre-diagnóstico IA', 'Plan Tratamiento'],
           siguiente: 'Cita con especialista programada para mañana 10:00 AM'
         }
@@ -1668,7 +1668,8 @@ const AutomatizacionIA = () => {
         )}
 
         {/* Consultas Ciudadanas */}
-        <div className=\"pb-20 lg:pb-0\">\n          <ConsultasCiudadanas 
+        <div className="pb-20 lg:pb-0">
+          <ConsultasCiudadanas 
           tema="ia" 
           titulo="Mejora la Reforma de Automatización con IA"
           descripcion="¿Qué otros trámites te gustaría automatizar? Tu experiencia nos ayuda a priorizar"

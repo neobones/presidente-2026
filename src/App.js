@@ -7,6 +7,7 @@ import FronterasInteligentes from './pages/FronterasInteligentes';
 import JusticiaSocial from './pages/JusticiaSocial';
 import ChileUnido from './pages/ChileUnido';
 import ParticipacionCiudadana from './pages/ParticipacionCiudadana';
+import Patrocinios from './pages/Patrocinios';
 import AdminPage from './pages/AdminPage';
 import MobileLayout from './components/MobileLayout';
 
@@ -17,6 +18,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/participacion-ciudadana" element={<ParticipacionCiudadana />} />
+          <Route path="/patrocinios" element={<Patrocinios />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/reformas/automatizacion-estado-inteligencia-artificial" element={<AutomatizacionIA />} />
           <Route path="/reformas/reduccion-costo-vida-impuestos" element={<EconomiaDigital />} />

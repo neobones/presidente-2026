@@ -40,7 +40,7 @@ const JusticiaSocial = () => {
       icon: <GraduationCap className="w-8 h-8" />,
       title: "57,000",
       subtitle: "profesores beneficiados",
-      description: "$4.5 millones cada uno",
+      description: "$4,5 millones cada uno",
       color: "from-purple-500 to-pink-500"
     },
     {
@@ -71,12 +71,12 @@ const JusticiaSocial = () => {
       id: 'deuda-historica',
       name: 'Deuda Histórica',
       icon: <GraduationCap className="w-12 h-12" />,
-      inversion: '$256.5B',
+      inversion: '$256,5B',
       beneficio: '57,000 profesores',
       plazo: '2025-2031',
-      descripcion: '$4.5 millones por docente, priorizando jubilados',
+      descripcion: '$4,5 millones por docente, priorizando jubilados',
       detalles: [
-        'Pago de $4.5 millones a cada uno de los 57,000 docentes',
+        'Pago de $4,5 millones a cada uno de los 57.000 docentes',
         'Prioridad a profesores jubilados y mayores de edad',
         'Transferencia directa vía ChileAtiende digitalizado',
         'Cronograma transparente publicado en melinao2026.cl'
@@ -90,10 +90,10 @@ const JusticiaSocial = () => {
       inversion: '$600B',
       beneficio: '200,000 docentes activos',
       plazo: 'Anual',
-      descripcion: 'Sueldo base $900,000 + bonos rurales',
+      descripcion: 'Sueldo base $900.000 + bonos rurales',
       detalles: [
-        'Sueldo base $900,000 para todos los docentes del país',
-        'Bonos adicionales $100,000 para zonas rurales/vulnerables',
+        'Sueldo base $900.000 para todos los docentes del país',
+        'Bonos adicionales $100.000 para zonas rurales/vulnerables',
         'Capacitación continua y desarrollo profesional',
         'Reconocimiento especial docentes mapuche y interculturales'
       ],
@@ -747,7 +747,7 @@ const JusticiaSocial = () => {
                 <h3 className="text-3xl font-bold text-gray-900">Distribución de Inversión</h3>
                 <div className="space-y-4">
                   {[
-                    { concepto: 'Deuda histórica profesores', monto: '$256.5B', periodo: '2025-2031' },
+                    { concepto: 'Deuda histórica profesores', monto: '$256,5B', periodo: '2025-2031' },
                     { concepto: 'Sueldo docente $900K', monto: '$600B', periodo: 'Anual' },
                     { concepto: 'Bonos rurales docentes', monto: '$100B', periodo: 'Anual' },
                     { concepto: 'Fondo transición políticos', monto: '$50B', periodo: 'Una vez' }
@@ -1556,7 +1556,8 @@ const JusticiaSocial = () => {
         )}
 
         {/* Consultas Ciudadanas */}
-        <div className=\"pb-20 lg:pb-0\">\n          <ConsultasCiudadanas 
+        <div className="pb-20 lg:pb-0">
+          <ConsultasCiudadanas 
           tema="justicia" 
           titulo="Mejora la Reforma de Justicia Social"
           descripcion="¿Qué otros aspectos de equidad social consideras importantes? Tu experiencia fortalece nuestra propuesta"

@@ -14,6 +14,8 @@ const path = require('path');
 // Importar modelos
 const Consulta = require('./src/models/Consulta');
 const Usuario = require('./src/models/Usuario');
+const Patrocinio = require('./src/models/Patrocinio');
+const Testimonio = require('./src/models/Testimonio');
 
 const app = express();
 
@@ -737,6 +739,192 @@ app.post('/api/consultas/:id/moderar', verifyJWT, verifyAdmin, async (req, res) 
   } catch (error) {
     // console.error('Error moderando consulta:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// RUTAS API DE PATROCINIOS
+
+// GET - Obtener estadísticas de patrocinios
+app.get('/api/patrocinios/stats', async (req, res) => {
+  try {
+    const stats = await Patrocinio.getStats();
+    res.json({
+      actual: stats.actual,
+      meta: stats.meta,
+      porcentaje: Math.min((stats.actual / stats.meta) * 100, 100),
+      ultima_actualizacion: stats.ultima_actualizacion
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Error obteniendo estadísticas de patrocinios',
+      actual: 0,
+      meta: 35361,
+      porcentaje: 0
+    });
+  }
+});
+
+// PUT - Actualizar contador de patrocinios (solo admin)
+app.put('/api/patrocinios/stats', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { actual } = req.body;
+    
+    if (typeof actual !== 'number' || actual < 0) {
+      return res.status(400).json({ 
+        error: 'El valor actual debe ser un número mayor o igual a 0' 
+      });
+    }
+
+    const stats = await Patrocinio.updateActual(actual, req.user.email);
+    
+    res.json({
+      success: true,
+      message: 'Contador de patrocinios actualizado',
+      data: {
+        actual: stats.actual,
+        meta: stats.meta,
+        porcentaje: Math.min((stats.actual / stats.meta) * 100, 100),
+        actualizado_por: stats.actualizado_por,
+        ultima_actualizacion: stats.ultima_actualizacion
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Error actualizando contador de patrocinios' 
+    });
+  }
+});
+
+// RUTAS API DE TESTIMONIOS
+
+// GET - Obtener testimonios aprobados (público)
+app.get('/api/testimonios/aprobados', async (req, res) => {
+  try {
+    const testimonios = await Testimonio.getAprobados();
+    res.json(testimonios);
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Error obteniendo testimonios',
+      testimonios: []
+    });
+  }
+});
+
+// POST - Crear nuevo testimonio (requiere autenticación)
+app.post('/api/testimonios', verifyJWT, async (req, res) => {
+  try {
+    const { contenido, nombre_publico, ocupacion, region } = req.body;
+    
+    if (!contenido || contenido.trim().length === 0) {
+      return res.status(400).json({ 
+        error: 'El contenido del testimonio es requerido' 
+      });
+    }
+
+    if (contenido.length > 500) {
+      return res.status(400).json({ 
+        error: 'El testimonio no puede exceder 500 caracteres' 
+      });
+    }
+
+    // Verificar si el usuario ya tiene un testimonio pendiente
+    const testimonioExistente = await Testimonio.findOne({
+      usuario_id: req.user.id,
+      estado: 'pendiente'
+    });
+
+    if (testimonioExistente) {
+      return res.status(400).json({ 
+        error: 'Ya tienes un testimonio pendiente de moderación' 
+      });
+    }
+
+    const nuevoTestimonio = new Testimonio({
+      usuario_id: req.user.id,
+      contenido: contenido.trim(),
+      nombre_publico: nombre_publico?.trim() || '',
+      ocupacion: ocupacion?.trim() || '',
+      region: region?.trim() || '',
+      metadata: {
+        ip_address: req.ip,
+        user_agent: req.get('User-Agent')
+      }
+    });
+
+    await nuevoTestimonio.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Testimonio enviado exitosamente. Será revisado antes de publicarse.',
+      testimonio: {
+        id: nuevoTestimonio._id,
+        contenido: nuevoTestimonio.contenido,
+        estado: nuevoTestimonio.estado,
+        fecha_creacion: nuevoTestimonio.fecha_creacion
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Error enviando testimonio' 
+    });
+  }
+});
+
+// GET - Obtener todos los testimonios para moderación (solo admin)
+app.get('/api/testimonios/admin', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const testimonios = await Testimonio.getTodos();
+    res.json(testimonios);
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Error obteniendo testimonios para moderación',
+      testimonios: []
+    });
+  }
+});
+
+// PUT - Actualizar estado de testimonio (solo admin)
+app.put('/api/testimonios/:id/estado', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { estado } = req.body;
+    
+    if (!['aprobado', 'rechazado'].includes(estado)) {
+      return res.status(400).json({ 
+        error: 'Estado inválido. Debe ser "aprobado" o "rechazado"' 
+      });
+    }
+
+    const testimonio = await Testimonio.findById(id);
+    if (!testimonio) {
+      return res.status(404).json({ error: 'Testimonio no encontrado' });
+    }
+
+    if (testimonio.estado !== 'pendiente') {
+      return res.status(400).json({ 
+        error: 'Solo se pueden moderar testimonios pendientes' 
+      });
+    }
+
+    if (estado === 'aprobado') {
+      await testimonio.aprobar(req.user.id);
+    } else {
+      await testimonio.rechazar(req.user.id);
+    }
+
+    res.json({
+      success: true,
+      message: `Testimonio ${estado} exitosamente`,
+      testimonio: {
+        id: testimonio._id,
+        estado: testimonio.estado,
+        fecha_moderacion: testimonio.fecha_moderacion
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Error actualizando estado del testimonio' 
+    });
   }
 });
 

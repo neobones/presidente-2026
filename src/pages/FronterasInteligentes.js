@@ -1560,7 +1560,8 @@ const FronterasInteligentes = () => {
         )}
 
         {/* Consultas Ciudadanas */}
-        <div className=\"pb-20 lg:pb-0\">\n          <ConsultasCiudadanas 
+        <div className="pb-20 lg:pb-0">
+          <ConsultasCiudadanas 
           tema="seguridad" 
           titulo="Mejora la Reforma de Fronteras Inteligentes"
           descripcion="¿Qué aspectos de seguridad son más importantes para tu región? Tu experiencia fortalece nuestra propuesta"
