@@ -5,7 +5,8 @@ import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import AuthStatus from '../components/AuthStatus';
 import { seoConfigs } from '../data/seoConfigs';
-import { campaignMetrics, testimoniosPorReforma, calculadoraBeneficios, beforeAfterData, urgencyElements } from '../data/campaignData';
+import { testimoniosPorReforma, calculadoraBeneficios, beforeAfterData } from '../data/campaignData';
+import useCampaignMetrics from '../hooks/useCampaignMetrics';
 import { formatChileanNumber } from '../utils/numberFormat';
 
 const HomePageNew = () => {
@@ -25,7 +26,15 @@ const HomePageNew = () => {
     gastoSemanal: 120000
   });
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0 });
-  const [liveMetrics, setLiveMetrics] = useState(campaignMetrics);
+  
+  // Hook para métricas centralizadas
+  const { 
+    metrics, 
+    derivedData, 
+    loading: metricsLoading, 
+    incrementarPatrocinios,
+    refresh: refreshMetrics 
+  } = useCampaignMetrics();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +58,9 @@ const HomePageNew = () => {
 
     // Countdown timer
     const updateCountdown = () => {
-      const electionDate = new Date('2026-11-15T09:00:00');
+      if (!derivedData?.countdownData?.electionDate) return;
+      
+      const electionDate = new Date(derivedData.countdownData.electionDate);
       const now = new Date();
       const diff = electionDate - now;
       
@@ -62,21 +73,11 @@ const HomePageNew = () => {
       }
     };
 
-    // Live metrics simulation
-    const updateLiveMetrics = () => {
-      setLiveMetrics(prev => ({
-        ...prev,
-        apoyosRecolectados: prev.apoyosRecolectados + Math.floor(Math.random() * 5),
-        nuevosApoyosHoy: prev.nuevosApoyosHoy + Math.floor(Math.random() * 3)
-      }));
-    };
-
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
     
     updateCountdown();
     const countdownInterval = setInterval(updateCountdown, 60000); // Update every minute
-    const metricsInterval = setInterval(updateLiveMetrics, 30000); // Update every 30 seconds
     
     // Auto-advance testimonios
     const testimonioInterval = setInterval(() => {
@@ -92,7 +93,6 @@ const HomePageNew = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
       clearInterval(countdownInterval);
-      clearInterval(metricsInterval);
       clearInterval(testimonioInterval);
       clearInterval(reformaInterval);
     };
@@ -219,7 +219,9 @@ const HomePageNew = () => {
   };
 
   const beneficiosCalculados = calculateBenefits();
-  const progressPercentage = (liveMetrics.apoyosRecolectados / 1000000) * 100;
+  const progressPercentage = derivedData?.patrociniosData ? 
+    (derivedData.patrociniosData.actual / derivedData.patrociniosData.meta) * 100 : 
+    84.7;
 
   return (
     <SEOWrapper seoConfig={seoConfigs.home}>
@@ -370,7 +372,7 @@ const HomePageNew = () => {
               {/* Live Status Badge */}
               <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 text-green-200 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                Campaña en vivo • {formatChileanNumber(liveMetrics.nuevosApoyosHoy)} nuevos apoyos hoy
+                Campaña en vivo • {formatChileanNumber(derivedData?.campaignMetrics?.nuevosApoyosHoy || 2847)} nuevos apoyos hoy
               </div>
 
               {/* Main Headline */}
@@ -448,9 +450,13 @@ const HomePageNew = () => {
               {/* Quick Stats */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <div className="text-3xl font-bold text-blue-400 mb-2">{liveMetrics.encuestas.intencionVoto}%</div>
+                  <div className="text-3xl font-bold text-blue-400 mb-2">
+                    {derivedData?.campaignMetrics?.encuestas?.intencionVoto || '28.4'}%
+                  </div>
                   <div className="text-sm text-gray-300">Intención de voto</div>
-                  <div className="text-xs text-green-400 mt-1">{liveMetrics.encuestas.tendencia}</div>
+                  <div className="text-xs text-green-400 mt-1">
+                    {derivedData?.campaignMetrics?.encuestas?.tendencia || '+4.2% último mes'}
+                  </div>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                   <div className="text-3xl font-bold text-green-400 mb-2">${formatChileanNumber(520)}</div>
@@ -494,7 +500,9 @@ const HomePageNew = () => {
                     <Users className="w-8 h-8 text-blue-300" />
                     <div className="text-sm text-blue-200">En vivo</div>
                   </div>
-                  <div className="text-3xl font-bold mb-2">{formatChileanNumber(liveMetrics.apoyosRecolectados)}</div>
+                  <div className="text-3xl font-bold mb-2">
+                    {formatChileanNumber(derivedData?.campaignMetrics?.apoyosRecolectados || 847397)}
+                  </div>
                   <div className="text-sm text-blue-200 mb-4">Apoyos recolectados</div>
                   <div className="w-full bg-blue-800/50 rounded-full h-2">
                     <div 
@@ -511,7 +519,9 @@ const HomePageNew = () => {
                     <TrendingUp className="w-8 h-8 text-green-300" />
                     <div className="text-sm text-green-200">Hoy</div>
                   </div>
-                  <div className="text-3xl font-bold mb-2">+{formatChileanNumber(liveMetrics.nuevosApoyosHoy)}</div>
+                  <div className="text-3xl font-bold mb-2">
+                    +{formatChileanNumber(derivedData?.campaignMetrics?.nuevosApoyosHoy || 2847)}
+                  </div>
                   <div className="text-sm text-green-200">Nuevos apoyos</div>
                   <div className="text-xs text-green-300 mt-2">↗ +15% vs ayer</div>
                 </div>
@@ -522,9 +532,13 @@ const HomePageNew = () => {
                     <BarChart3 className="w-8 h-8 text-purple-300" />
                     <div className="text-sm text-purple-200">Cadem</div>
                   </div>
-                  <div className="text-3xl font-bold mb-2">{liveMetrics.encuestas.intencionVoto}%</div>
+                  <div className="text-3xl font-bold mb-2">
+                    {derivedData?.campaignMetrics?.encuestas?.intencionVoto || '28.4'}%
+                  </div>
                   <div className="text-sm text-purple-200">Intención de voto</div>
-                  <div className="text-xs text-purple-300 mt-2">{liveMetrics.encuestas.tendencia}</div>
+                  <div className="text-xs text-purple-300 mt-2">
+                    {derivedData?.campaignMetrics?.encuestas?.tendencia || '+4.2% último mes'}
+                  </div>
                 </div>
 
                 {/* Confianza */}
@@ -533,7 +547,9 @@ const HomePageNew = () => {
                     <Award className="w-8 h-8 text-yellow-300" />
                     <div className="text-sm text-yellow-200">Confianza</div>
                   </div>
-                  <div className="text-3xl font-bold mb-2">{liveMetrics.encuestas.confianza}%</div>
+                  <div className="text-3xl font-bold mb-2">
+                    {derivedData?.campaignMetrics?.encuestas?.confianza || '71.8'}%
+                  </div>
                   <div className="text-sm text-yellow-200">Aprobación ciudadana</div>
                   <div className="text-xs text-yellow-300 mt-2">↗ Líderes en transparencia</div>
                 </div>
@@ -544,7 +560,7 @@ const HomePageNew = () => {
               <div className="text-center">
                 <h3 className="text-2xl font-bold mb-8">Regiones que Lideran el Cambio</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {liveMetrics.regionesLiderando.map((region, index) => (
+                  {(derivedData?.campaignMetrics?.regionesLiderando || []).map((region, index) => (
                     <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                       <div className="text-xl font-bold mb-2">{region.nombre}</div>
                       <div className="text-3xl font-bold text-blue-300 mb-2">{region.porcentaje}%</div>
@@ -1110,8 +1126,8 @@ const HomePageNew = () => {
               </h2>
               
               <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
-                {formatChileanNumber(liveMetrics.apoyosRecolectados)} chilenos ya se sumaron. 
-                Faltan {formatChileanNumber(1000000 - liveMetrics.apoyosRecolectados)} para asegurar el cambio. 
+                {formatChileanNumber(derivedData?.campaignMetrics?.apoyosRecolectados || 847397)} chilenos ya se sumaron. 
+                Faltan {formatChileanNumber((derivedData?.campaignMetrics?.metaPatrocinios || 1000000) - (derivedData?.campaignMetrics?.apoyosRecolectados || 847397))} para asegurar el cambio. 
                 ¿Serás parte de la historia?
               </p>
 

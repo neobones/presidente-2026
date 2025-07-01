@@ -16,6 +16,7 @@ const Consulta = require('./src/models/Consulta');
 const Usuario = require('./src/models/Usuario');
 const Patrocinio = require('./src/models/Patrocinio');
 const Testimonio = require('./src/models/Testimonio');
+const CampaignMetrics = require('./src/models/CampaignMetrics');
 
 const app = express();
 
@@ -864,6 +865,253 @@ app.put('/api/patrocinios/stats', verifyJWT, verifyAdmin, async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
       error: 'Error actualizando contador de patrocinios' 
+    });
+  }
+});
+
+// RUTAS API DE MÉTRICAS DE CAMPAÑA
+
+// GET - Obtener todas las métricas de campaña (público)
+app.get('/api/campaign/metrics', async (req, res) => {
+  try {
+    const metrics = await CampaignMetrics.getOrCreate();
+    
+    res.json({
+      success: true,
+      data: {
+        // Métricas de patrocinios
+        patrocinios: {
+          actual: metrics.patrocinios.actual,
+          meta: metrics.patrocinios.meta,
+          nuevosHoy: metrics.patrocinios.nuevosHoy,
+          porcentaje: metrics.calcularPorcentajePatrocinios(),
+          fechaLimiteInscripcion: metrics.patrocinios.fechaLimiteInscripcion
+        },
+        
+        // Fechas importantes
+        fechas: {
+          elecciones: metrics.fechas.elecciones,
+          diasParaElecciones: metrics.calcularDiasParaElecciones(),
+          limitePatrocinios: metrics.fechas.limitePatrocinios,
+          inicioInscripcionCandidaturas: metrics.fechas.inicioInscripcionCandidaturas
+        },
+        
+        // Encuestas
+        encuestas: metrics.encuestas,
+        
+        // Regiones liderando
+        regionesLiderando: metrics.regionesLiderando.slice(0, 5), // Top 5
+        
+        // Métricas de interacción
+        interaccion: metrics.interaccion,
+        
+        // Redes sociales
+        redesSociales: metrics.redesSociales,
+        
+        // Metadatos
+        ultimaActualizacion: metrics.sistema.ultimaActualizacion
+      }
+    });
+  } catch (error) {
+    console.error('Error obteniendo métricas de campaña:', error);
+    res.status(500).json({ 
+      error: 'Error obteniendo métricas de campaña',
+      success: false
+    });
+  }
+});
+
+// GET - Obtener solo métricas de patrocinios (público)
+app.get('/api/campaign/patrocinios', async (req, res) => {
+  try {
+    const metrics = await CampaignMetrics.getOrCreate();
+    
+    res.json({
+      success: true,
+      data: {
+        actual: metrics.patrocinios.actual,
+        meta: metrics.patrocinios.meta,
+        nuevosHoy: metrics.patrocinios.nuevosHoy,
+        porcentaje: metrics.calcularPorcentajePatrocinios(),
+        fechaLimite: metrics.patrocinios.fechaLimiteInscripcion,
+        diasRestantes: metrics.calcularDiasParaElecciones(),
+        ultimaActualizacion: metrics.sistema.ultimaActualizacion
+      }
+    });
+  } catch (error) {
+    console.error('Error obteniendo métricas de patrocinios:', error);
+    res.status(500).json({ 
+      error: 'Error obteniendo métricas de patrocinios',
+      success: false
+    });
+  }
+});
+
+// POST - Incrementar patrocinios (público con rate limiting)
+app.post('/api/campaign/patrocinios/incrementar', consultasLimiter, async (req, res) => {
+  try {
+    const { cantidad = 1 } = req.body;
+    
+    if (typeof cantidad !== 'number' || cantidad < 1 || cantidad > 5) {
+      return res.status(400).json({ 
+        error: 'Cantidad debe ser un número entre 1 y 5',
+        success: false
+      });
+    }
+    
+    const metrics = await CampaignMetrics.getOrCreate();
+    await metrics.incrementarPatrocinios(cantidad);
+    
+    res.json({
+      success: true,
+      message: `${cantidad} patrocinio(s) agregado(s)`,
+      data: {
+        actual: metrics.patrocinios.actual,
+        meta: metrics.patrocinios.meta,
+        porcentaje: metrics.calcularPorcentajePatrocinios()
+      }
+    });
+  } catch (error) {
+    console.error('Error incrementando patrocinios:', error);
+    res.status(500).json({ 
+      error: 'Error incrementando patrocinios',
+      success: false
+    });
+  }
+});
+
+// PUT - Actualizar métricas de encuestas (solo admin)
+app.put('/api/campaign/encuestas', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { intencionVoto, aprobacion, confianza, tendencia } = req.body;
+    
+    const metrics = await CampaignMetrics.getOrCreate();
+    
+    const datosActualizacion = {};
+    if (typeof intencionVoto === 'number' && intencionVoto >= 0 && intencionVoto <= 100) {
+      datosActualizacion.intencionVoto = intencionVoto;
+    }
+    if (typeof aprobacion === 'number' && aprobacion >= 0 && aprobacion <= 100) {
+      datosActualizacion.aprobacion = aprobacion;
+    }
+    if (typeof confianza === 'number' && confianza >= 0 && confianza <= 100) {
+      datosActualizacion.confianza = confianza;
+    }
+    if (typeof tendencia === 'string' && tendencia.length > 0) {
+      datosActualizacion.tendencia = tendencia;
+    }
+    
+    await metrics.actualizarEncuesta(datosActualizacion);
+    
+    res.json({
+      success: true,
+      message: 'Métricas de encuestas actualizadas',
+      data: metrics.encuestas
+    });
+  } catch (error) {
+    console.error('Error actualizando encuestas:', error);
+    res.status(500).json({ 
+      error: 'Error actualizando métricas de encuestas',
+      success: false
+    });
+  }
+});
+
+// PUT - Actualizar región específica (solo admin)
+app.put('/api/campaign/regiones/:nombreRegion', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { nombreRegion } = req.params;
+    const { porcentaje, tendencia } = req.body;
+    
+    if (typeof porcentaje !== 'number' || porcentaje < 0 || porcentaje > 100) {
+      return res.status(400).json({ 
+        error: 'Porcentaje debe ser un número entre 0 y 100',
+        success: false
+      });
+    }
+    
+    if (!tendencia || typeof tendencia !== 'string') {
+      return res.status(400).json({ 
+        error: 'Tendencia es requerida',
+        success: false
+      });
+    }
+    
+    const metrics = await CampaignMetrics.getOrCreate();
+    await metrics.actualizarRegion(decodeURIComponent(nombreRegion), porcentaje, tendencia);
+    
+    res.json({
+      success: true,
+      message: `Región ${nombreRegion} actualizada`,
+      data: metrics.regionesLiderando
+    });
+  } catch (error) {
+    console.error('Error actualizando región:', error);
+    res.status(500).json({ 
+      error: 'Error actualizando región',
+      success: false
+    });
+  }
+});
+
+// PUT - Actualizar métricas de interacción web (solo admin)
+app.put('/api/campaign/interaccion', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { visitasHoy, compartidosHoy, suscriptosNewsletter, videoViews } = req.body;
+    
+    const metrics = await CampaignMetrics.getOrCreate();
+    
+    if (typeof visitasHoy === 'number' && visitasHoy >= 0) {
+      metrics.interaccion.visitasHoy = visitasHoy;
+    }
+    if (typeof compartidosHoy === 'number' && compartidosHoy >= 0) {
+      metrics.interaccion.compartidosHoy = compartidosHoy;
+    }
+    if (typeof suscriptosNewsletter === 'number' && suscriptosNewsletter >= 0) {
+      metrics.interaccion.suscriptosNewsletter = suscriptosNewsletter;
+    }
+    if (typeof videoViews === 'number' && videoViews >= 0) {
+      metrics.interaccion.videoViews = videoViews;
+    }
+    
+    await metrics.save();
+    
+    res.json({
+      success: true,
+      message: 'Métricas de interacción actualizadas',
+      data: metrics.interaccion
+    });
+  } catch (error) {
+    console.error('Error actualizando métricas de interacción:', error);
+    res.status(500).json({ 
+      error: 'Error actualizando métricas de interacción',
+      success: false
+    });
+  }
+});
+
+// POST - Simular actualización automática (solo admin en desarrollo)
+app.post('/api/campaign/simulate', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const metrics = await CampaignMetrics.simulateUpdate();
+    
+    res.json({
+      success: true,
+      message: 'Simulación ejecutada',
+      data: {
+        patrocinios: {
+          actual: metrics.patrocinios.actual,
+          nuevosHoy: metrics.patrocinios.nuevosHoy
+        },
+        interaccion: metrics.interaccion,
+        ultimaActualizacion: metrics.sistema.ultimaActualizacion
+      }
+    });
+  } catch (error) {
+    console.error('Error en simulación:', error);
+    res.status(500).json({ 
+      error: 'Error ejecutando simulación',
+      success: false
     });
   }
 });
