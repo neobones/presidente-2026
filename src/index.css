@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom campaign styles */
+/* Custom base styles */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -12,27 +12,6 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold rounded-full hover:shadow-lg transition-all duration-300;
-  }
-  
-  .btn-secondary {
-    @apply px-8 py-4 border-2 border-blue-600 text-blue-600 font-bold rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300;
-  }
-  
-  .card-campaign {
-    @apply bg-white rounded-3xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300;
-  }
-  
-  .gradient-text {
-    @apply bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent;
-  }
-  
-  .campaign-hero {
-    @apply bg-gradient-to-br from-gray-900 via-blue-900 to-cyan-900;
+    background-color: #0a101f; /* Un fondo oscuro base */
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, FileText, Users, Info, MessageCircle, Phone } from 'lucide-react';
+import { Home, FileText, Users, Info, MessageCircle, Phone, Newspaper } from 'lucide-react';
 
 const MobileNavigation = () => {
   const location = useLocation();
@@ -34,19 +34,18 @@ const MobileNavigation = () => {
       isActive: location.pathname === '/'
     },
     {
+      id: 'noticias',
+      icon: Newspaper,
+      label: 'Noticias',
+      path: '/noticias',
+      isActive: location.pathname.startsWith('/noticias')
+    },
+    {
       id: 'reformas',
       icon: FileText,
       label: 'Reformas',
-      path: '/reformas',
+      path: '/reformas/automatizacion-estado-inteligencia-artificial',
       isActive: location.pathname.includes('/reformas'),
-      hasSubmenu: true,
-      submenuItems: [
-        { path: '/reformas/automatizacion-estado-inteligencia-artificial', label: 'IA Estado' },
-        { path: '/reformas/reduccion-costo-vida-impuestos', label: 'Economía' },
-        { path: '/reformas/fronteras-inteligentes-seguridad-nacional', label: 'Seguridad' },
-        { path: '/reformas/justicia-social-equidad-fin-privilegios', label: 'Justicia' },
-        { path: '/reformas/chile-unido-desarrollo-araucania', label: 'Unidad' }
-      ]
     },
     {
       id: 'participacion',
@@ -62,14 +61,6 @@ const MobileNavigation = () => {
       path: '/#historia',
       isActive: false,
       scrollTo: 'historia'
-    },
-    {
-      id: 'contacto',
-      icon: MessageCircle,
-      label: 'Contacto',
-      path: '/#accion',
-      isActive: false,
-      scrollTo: 'accion'
     }
   ];
 

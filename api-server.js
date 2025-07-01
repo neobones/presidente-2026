@@ -742,6 +742,79 @@ app.post('/api/consultas/:id/moderar', verifyJWT, verifyAdmin, async (req, res) 
   }
 });
 
+// Middleware para verificar la API Key de n8n
+const verifyN8nApiKey = (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
+  if (!apiKey || apiKey !== process.env.N8N_API_KEY) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  next();
+};
+
+// POST - Webhook para recibir datos de n8n
+app.post('/api/n8n/webhook', verifyN8nApiKey, async (req, res) => {
+  try {
+    const {
+      nombre,
+      email,
+      region,
+      edad,
+      tema,
+      tipoConsulta,
+      mensaje,
+      userAgent,
+      url,
+      esAnonima = false,
+      categoria = 'general'
+    } = req.body;
+
+    if (!mensaje) {
+      return res.status(400).json({ error: 'El campo mensaje es requerido' });
+    }
+
+    const consultaData = {
+      nombre: esAnonima ? '' : nombre,
+      email: esAnonima ? '' : email,
+      region,
+      edad,
+      tema: tema || 'general',
+      tipoConsulta,
+      mensaje,
+      ip: req.clientIp,
+      userAgent,
+      url,
+      fechaEnvio: new Date(),
+      esAnonima,
+      categoria,
+      origen: 'n8n_webhook'
+    };
+
+    const consulta = new Consulta(consultaData);
+    consulta.categorizarAutomaticamente();
+    consulta.analizarSentimiento();
+    consulta.moderarContenido();
+
+    if (consulta.tipoConsulta === 'critica' || consulta.sentiment === 'negativo') {
+      consulta.prioridad = 'alta';
+    }
+
+    await consulta.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Consulta recibida y procesada exitosamente desde n8n.',
+      id: consulta._id,
+      estadoModeracion: consulta.estadoModeracion
+    });
+
+  } catch (error) {
+    // console.error('Error en webhook de n8n:', error);
+    res.status(500).json({
+      error: 'Error interno del servidor al procesar el webhook de n8n.'
+    });
+  }
+});
+
 // RUTAS API DE PATROCINIOS
 
 // GET - Obtener estadísticas de patrocinios
