@@ -5,6 +5,7 @@ import MobileLayout from './components/MobileLayout';
 
 // Lazy loading de las páginas
 const HomePage = lazy(() => import('./pages/HomePage'));
+const HomePageNew = lazy(() => import('./pages/HomePageNew'));
 const AutomatizacionIA = lazy(() => import('./pages/AutomatizacionIA'));
 const EconomiaDigital = lazy(() => import('./pages/EconomiaDigital'));
 const FronterasInteligentes = lazy(() => import('./pages/FronterasInteligentes'));
@@ -44,7 +45,8 @@ const App = () => {
       <MobileLayout>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePageNew />} />
+            <Route path="/home-original" element={<HomePage />} />
             <Route path="/participacion-ciudadana" element={<ParticipacionCiudadana />} />
             <Route path="/patrocinios" element={<PatrociniosNew />} />
             <Route path="/patrocinios-old" element={<Patrocinios />} />
