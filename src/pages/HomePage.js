@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Cpu, DollarSign, Shield, Users, Heart, ArrowRight, Menu, X, Play, Star, Zap, Globe, TrendingUp } from 'lucide-react';
+import { ChevronDown, Cpu, DollarSign, Shield, Users, Heart, ArrowRight, Menu, X, Play, Star, Zap, Globe, TrendingUp, PiggyBank } from 'lucide-react';
 import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import { seoConfigs } from '../data/seoConfigs';
@@ -135,6 +135,25 @@ const HomePage = () => {
       ejemplo: "Familia mapuche en Temuco abre ruka turística y genera $800,000 mensuales. Niños en Santiago aprenden mapudungun en su escuela.",
       secundarias: ["Medio ambiente: reforestación de 100,000 árboles anuales", "Reconciliación: Consejo Nacional con participación indígena real"],
       link: "/reformas/chile-unido-desarrollo-araucania"
+    },
+    {
+      icon: <PiggyBank className="w-12 h-12" />,
+      title: "Fin de Privilegios",
+      subtitle: "Política Sin Privilegios",
+      description: "Se acabaron los sueldos vitalicios de ex presidentes y parlamentarios. Los partidos se autofinancian sin tus impuestos. Política transparente y justa para todos.",
+      metric: "$3.460M",
+      detail: "ahorro anual para el pueblo",
+      color: "from-red-500 to-pink-600",
+      bgColor: "bg-gradient-to-br from-red-50 to-pink-50",
+      features: [
+        "❌ Fin sueldos vitalicios ex presidentes/parlamentarios", 
+        "💸 Partidos se autofinancian sin fondos públicos", 
+        "🔍 Transparencia total en donaciones políticas",
+        "⚖️ Límite 15 años para remuneraciones estatales"
+      ],
+      ejemplo: "Con lo que recibe un ex presidente al mes ($3.5M), se financian 35 pensiones dignas. Los ahorros van directo a salud y educación.",
+      secundarias: ["Equidad política: mismas reglas para políticos y trabajadores", "Reinversión social: $3.460M anuales para programas ciudadanos"],
+      link: "/reformas/eliminacion-privilegios-politicos-transparencia"
     }
   ];
 

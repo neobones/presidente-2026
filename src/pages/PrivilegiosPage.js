@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import AuthStatus from '../components/AuthStatus';
+import { seoConfigs } from '../data/seoConfigs';
 
 const PrivilegiosPage = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -309,10 +310,12 @@ const PrivilegiosPage = () => {
 
   return (
     <SEOWrapper 
-      title="Eliminación de Privilegios Políticos - Juan Pablo Melinao 2026"
-      description="Propuesta para eliminar sueldos vitalicios y financiamiento estatal a partidos políticos. Ahorro de $2.660-3.660 millones anuales para salud, educación y pensiones dignas."
-      keywords="eliminación privilegios políticos, sueldos vitalicios, financiamiento partidos, reforma política Chile, transparencia, Juan Pablo Melinao"
+      title={seoConfigs.privilegiosPoliticos.title}
+      description={seoConfigs.privilegiosPoliticos.description}
+      keywords={seoConfigs.privilegiosPoliticos.keywords.join(', ')}
       path="/reformas/eliminacion-privilegios-politicos-transparencia"
+      openGraph={seoConfigs.privilegiosPoliticos.openGraph}
+      structuredData={seoConfigs.privilegiosPoliticos.structuredData}
     >
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white overflow-hidden">
         
