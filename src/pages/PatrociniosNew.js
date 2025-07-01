@@ -291,7 +291,7 @@ const PatrociniosNew = () => {
                 {/* CTA Principal */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <a 
-                    href="https://patrocinio.servel.cl"
+                    href="https://patrocinantes.servel.cl/auth/login"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-300 hover:to-orange-300 text-blue-900 px-8 py-4 rounded-xl font-bold text-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-2xl"
@@ -579,7 +579,7 @@ const PatrociniosNew = () => {
               {/* CTA después del proceso */}
               <div className="text-center mt-16">
                 <a 
-                  href="https://patrocinio.servel.cl"
+                  href="https://patrocinantes.servel.cl/auth/login"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 text-white px-8 py-4 rounded-xl font-bold text-xl transition-all transform hover:scale-105 shadow-xl"
@@ -720,7 +720,7 @@ const PatrociniosNew = () => {
             {/* CTA Principal */}
             <div className="mb-12">
               <a 
-                href="https://patrocinio.servel.cl"
+                href="https://patrocinantes.servel.cl/auth/login"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-300 hover:to-orange-300 text-blue-900 px-10 py-5 rounded-xl font-bold text-2xl transition-all transform hover:scale-105 shadow-2xl"
