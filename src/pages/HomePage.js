@@ -293,6 +293,15 @@ const HomePage = () => {
                   </div>
 
                   <div className="flex flex-col gap-3 lg:gap-4">
+                    <Link 
+                      to="/patrocinios"
+                      className="group px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white font-bold text-base lg:text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 touch-manipulation animate-pulse"
+                    >
+                      <Users className="w-5 lg:w-6 h-5 lg:h-6" />
+                      <span>PATROCINAR CANDIDATURA</span>
+                      <ArrowRight className="w-5 lg:w-6 h-5 lg:h-6 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    
                     <button 
                       onClick={() => scrollToSection('reformas')}
                       className="group px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 text-white font-bold text-base lg:text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3 touch-manipulation"

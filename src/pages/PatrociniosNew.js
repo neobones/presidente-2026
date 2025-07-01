@@ -112,7 +112,8 @@ const PatrociniosNew = () => {
       descripcion: "Revoluciona la burocracia: obtén tu carnet, haz declaración de impuestos y tramita documentos desde tu celular en minutos, no semanas.",
       icon: <Cpu className="w-16 h-16" />,
       color: "from-blue-600 to-cyan-600",
-      beneficio: "Ahorro de $500 mil millones anuales"
+      beneficio: "Ahorro de $500 mil millones anuales",
+      link: "/#reformas"
     },
     {
       titulo: "Menos Impuestos",
@@ -120,7 +121,8 @@ const PatrociniosNew = () => {
       descripcion: "Tu familia ahorrará $50.000 mensuales: pan, leche, carne y medicamentos básicos con IVA reducido del 19% al 5%.",
       icon: <DollarSign className="w-16 h-16" />,
       color: "from-green-600 to-emerald-600",
-      beneficio: "10% reducción costo de vida"
+      beneficio: "10% reducción costo de vida",
+      link: "/#reformas"
     },
     {
       titulo: "Sueldo Mínimo $900.000",
@@ -128,7 +130,8 @@ const PatrociniosNew = () => {
       descripcion: "Aumento gradual con subsidio estatal a PYMEs. 1.8 millones de trabajadores ganarán $370.000 más cada mes.",
       icon: <TrendingUp className="w-16 h-16" />,
       color: "from-yellow-600 to-orange-600",
-      beneficio: "+70% ingresos trabajadores"
+      beneficio: "+70% ingresos trabajadores",
+      link: "/#reformas"
     },
     {
       titulo: "Unidad Nacional",
@@ -136,7 +139,8 @@ const PatrociniosNew = () => {
       descripcion: "$300 mil millones de inversión en desarrollo sustentable, educación intercultural y reconciliación mapuche.",
       icon: <Heart className="w-16 h-16" />,
       color: "from-red-600 to-pink-600",
-      beneficio: "5.000 empleos nuevos región"
+      beneficio: "5.000 empleos nuevos región",
+      link: "/#reformas"
     },
     {
       titulo: "Fin a Privilegios",
@@ -144,7 +148,8 @@ const PatrociniosNew = () => {
       descripcion: "Eliminación gradual de privilegios políticos. $1.5 billones anuales ahorrados se destinan a educación y salud.",
       icon: <Shield className="w-16 h-16" />,
       color: "from-purple-600 to-indigo-600",
-      beneficio: "$1.5B para servicios públicos"
+      beneficio: "$1.5B para servicios públicos",
+      link: "/#reformas"
     }
   ];
 
@@ -247,6 +252,17 @@ const PatrociniosNew = () => {
             <div className="absolute top-20 left-20 w-32 h-32 bg-yellow-400 rounded-full blur-xl animate-pulse"></div>
             <div className="absolute bottom-20 right-20 w-48 h-48 bg-green-400 rounded-full blur-xl animate-pulse delay-1000"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-400 rounded-full blur-xl animate-pulse delay-2000"></div>
+          </div>
+          
+          {/* Navigation Header */}
+          <div className="absolute top-4 left-4 z-20">
+            <Link 
+              to="/"
+              className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-full font-medium transition-all hover:scale-105 border border-white/20"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              Volver al Home
+            </Link>
           </div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -487,7 +503,7 @@ const PatrociniosNew = () => {
                               {propuesta.descripcion}
                             </p>
                             
-                            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+                            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 mb-6">
                               <div className="flex items-center gap-2">
                                 <Star className="w-5 h-5 text-yellow-300" />
                                 <span className="font-bold text-yellow-300">
@@ -495,6 +511,16 @@ const PatrociniosNew = () => {
                                 </span>
                               </div>
                             </div>
+                            
+                            {/* Botón para ver más detalles */}
+                            <Link
+                              to={propuesta.link}
+                              className="inline-flex items-center gap-2 bg-white/30 hover:bg-white/40 backdrop-blur-sm text-white px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 border border-white/30"
+                            >
+                              <Eye className="w-5 h-5" />
+                              Ver detalles completos
+                              <ArrowRight className="w-4 h-4" />
+                            </Link>
                           </div>
                           
                           <div className="relative">
