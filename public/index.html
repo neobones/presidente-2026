@@ -7,9 +7,10 @@
     
     <!-- CSP para permitir Google Analytics y otros recursos necesarios -->
     <meta http-equiv="Content-Security-Policy" content="
-        script-src 'self' 'unsafe-inline' cdn.tailwindcss.com *.googletagmanager.com *.google-analytics.com;
-        connect-src 'self' *.google-analytics.com *.analytics.google.com *.googletagmanager.com;
-        img-src 'self' data: *.google-analytics.com *.googletagmanager.com;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.tailwindcss.com *.googletagmanager.com *.google-analytics.com www.googletagmanager.com;
+        script-src-elem 'self' 'unsafe-inline' cdn.tailwindcss.com *.googletagmanager.com *.google-analytics.com www.googletagmanager.com;
+        connect-src 'self' *.google-analytics.com *.analytics.google.com *.googletagmanager.com www.google-analytics.com;
+        img-src 'self' data: *.google-analytics.com *.googletagmanager.com www.google-analytics.com;
         default-src 'self' 'unsafe-inline';">
     
     <!-- Cache Control para dispositivos móviles -->
