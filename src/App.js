@@ -15,15 +15,33 @@ const ParticipacionCiudadana = lazy(() => import('./pages/ParticipacionCiudadana
 const Patrocinios = lazy(() => import('./pages/Patrocinios'));
 const PatrociniosNew = lazy(() => import('./pages/PatrociniosNew'));
 const PrivilegiosPage = lazy(() => import('./pages/PrivilegiosPage'));
+const ReformasIndex = lazy(() => import('./pages/ReformasIndex'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
 const RegionalPage = lazy(() => import('./pages/RegionalPage'));
 const NoticiasPage = lazy(() => import('./pages/NoticiasPage'));
 const ArticuloPage = lazy(() => import('./pages/ArticuloPage'));
 
-// Componente de fallback para Suspense
+// Componente de fallback para Suspense optimizado para mobile
 const LoadingFallback = () => (
-  <div className="flex justify-center items-center min-h-screen bg-gray-900 text-white">
-    <div className="text-xl">Cargando página...</div>
+  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex items-center justify-center px-4">
+    <div className="text-center">
+      {/* Logo/Spinner */}
+      <div className="relative mb-6">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-transparent mx-auto"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+        </div>
+      </div>
+      
+      {/* Texto de carga */}
+      <div className="text-white text-xl font-semibold mb-2">Cargando...</div>
+      <div className="text-blue-200 text-sm">Melinao 2026</div>
+      
+      {/* Indicador de progreso */}
+      <div className="mt-4 w-48 bg-blue-900/50 rounded-full h-1 mx-auto overflow-hidden">
+        <div className="h-full bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
+      </div>
+    </div>
   </div>
 );
 
@@ -63,6 +81,7 @@ const App = () => {
             <Route path="/reformas/justicia-social-equidad-fin-privilegios" element={<JusticiaSocial />} />
             <Route path="/reformas/chile-unido-desarrollo-araucania" element={<ChileUnido />} />
             <Route path="/reformas/eliminacion-privilegios-politicos-transparencia" element={<PrivilegiosPage />} />
+            <Route path="/reformas" element={<ReformasIndex />} />
             
             {/* Rutas regionales con componente dinámico */}
             <Route path="/regiones/:region" element={<RegionalPage />} />

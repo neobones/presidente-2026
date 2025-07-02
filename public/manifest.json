@@ -1,0 +1,25 @@
+{
+  "short_name": "Melinao 2026",
+  "name": "Juan Pablo Melinao González - Presidente 2026",
+  "description": "Candidato Presidencial Chile 2026. Ingeniero Mapuche Independiente. Tecnología para Todos, Unidad para Chile.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1e40af",
+  "background_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "categories": ["politics", "government", "news"],
+  "lang": "es",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay", "minimal-ui"],
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
+}

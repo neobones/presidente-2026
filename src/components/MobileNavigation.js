@@ -44,7 +44,7 @@ const MobileNavigation = () => {
       id: 'reformas',
       icon: FileText,
       label: 'Reformas',
-      path: '/reformas/automatizacion-estado-inteligencia-artificial',
+      path: '/reformas',
       isActive: location.pathname.includes('/reformas'),
     },
     {
