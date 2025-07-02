@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { MessageSquare, Send, Lightbulb, ArrowRight, CheckCircle, X, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { MessageSquare, Send, Lightbulb, ArrowRight, CheckCircle, X } from 'lucide-react';
 import AlertService from '../utils/AlertService';
+import FloatingActions from './FloatingActions';
 
 const ConsultasCiudadanas = ({ 
   tema = "general", 
@@ -196,36 +196,28 @@ const ConsultasCiudadanas = ({
 
   return (
     <div className="relative">
-      {/* Trigger Button */}
+      {/* Floating Actions Component */}
+      <FloatingActions 
+        stats={stats}
+        showStats={showStats && !isOpen}
+        showScrollTop={true}
+      />
+
+      {/* Trigger Button - Ahora integrado en FloatingActions */}
       <button
         onClick={handleOpen}
-        className="group fixed bottom-6 right-6 z-40 bg-gradient-to-r from-blue-600 to-green-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
+        className="fixed bottom-6 right-6 z-[60] lg:hidden bg-gradient-to-r from-blue-600 to-green-600 text-white p-3 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
+        aria-label="Abrir consulta ciudadana"
       >
-        <MessageSquare className="w-6 h-6 group-hover:animate-pulse" />
-        <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-bounce">
+        <MessageSquare className="w-5 h-5" />
+        <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
           !
         </div>
       </button>
 
-      {/* Stats Mini Display */}
-      {showStats && !isOpen && (
-        <div className="fixed bottom-20 right-6 z-40 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-200">
-          <div className="text-xs text-gray-600 font-semibold">Participación Ciudadana</div>
-          <div className="text-sm font-bold text-green-600">{stats.totalConsultas} consultas</div>
-          <div className="text-xs text-blue-600">{stats.implementadas} implementadas</div>
-          <Link 
-            to="/participacion-ciudadana"
-            className="text-xs text-purple-600 hover:text-purple-700 flex items-center space-x-1 mt-1"
-          >
-            <Users className="w-3 h-3" />
-            <span>Ver todas</span>
-          </Link>
-        </div>
-      )}
-
       {/* Modal */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-[70]">
           <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             
             {!isSubmitted ? (
