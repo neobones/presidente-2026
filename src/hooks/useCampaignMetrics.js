@@ -41,9 +41,7 @@ export const useCampaignMetrics = (options = {}) => {
       setLoading(false);
       
       // Fallback data si la API falla
-      if (!metrics) {
-        setMetrics(getFallbackMetrics());
-      }
+      setMetrics(getFallbackMetrics());
     }
   }, [endpoint]);
 
