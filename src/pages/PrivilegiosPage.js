@@ -16,6 +16,7 @@ const PrivilegiosPage = () => {
   const [activeImpacto, setActiveImpacto] = useState(0);
   const [showCalculator, setShowCalculator] = useState(false);
 
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
@@ -235,8 +236,9 @@ const PrivilegiosPage = () => {
             setShowCalculator(false);
           }
         }}
+        style={{ zIndex: 99999 }} // Force z-index
       >
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full relative">
+        <div className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-2xl">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-bold text-gray-800">Calculadora de Privilegios</h3>
             <button
@@ -904,12 +906,12 @@ const PrivilegiosPage = () => {
           </div>
         </section>
 
-        {/* Consultas Ciudadanas */}
-        <ConsultasCiudadanas />
-
-        {/* Modals */}
+        {/* Modals - Renderizar antes que ConsultasCiudadanas para evitar conflictos */}
         {showVideo && <VideoPlayer />}
         {showCalculator && <Calculator />}
+
+        {/* Consultas Ciudadanas - Solo mostrar si no hay modales activos */}
+        {!showCalculator && !showVideo && <ConsultasCiudadanas />}
 
         {/* Auth Status */}
         <AuthStatus />
