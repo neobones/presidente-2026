@@ -165,7 +165,7 @@ const MobileNavigation = () => {
           <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-gray-200">
             <h4 className="text-sm font-bold text-gray-900 mb-3 text-center">Reformas</h4>
             <div className="grid grid-cols-2 gap-2">
-              {navigationItems.find(item => item.id === 'reformas')?.submenuItems.map((reform, index) => (
+              {navigationItems.find(item => item.id === 'reformas')?.submenuItems?.map((reform, index) => (
                 <Link
                   key={index}
                   to={reform.path}
