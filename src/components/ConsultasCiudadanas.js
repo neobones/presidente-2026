@@ -201,19 +201,9 @@ const ConsultasCiudadanas = ({
         stats={stats}
         showStats={showStats && !isOpen}
         showScrollTop={true}
+        onParticipationClick={handleOpen}
+        showParticipationModal={true}
       />
-
-      {/* Trigger Button - Ahora integrado en FloatingActions */}
-      <button
-        onClick={handleOpen}
-        className="fixed bottom-6 right-6 z-[60] lg:hidden bg-gradient-to-r from-blue-600 to-green-600 text-white p-3 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
-        aria-label="Abrir consulta ciudadana"
-      >
-        <MessageSquare className="w-5 h-5" />
-        <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
-          !
-        </div>
-      </button>
 
       {/* Modal */}
       {isOpen && (

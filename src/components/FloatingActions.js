@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ArrowUp, MessageSquare, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const FloatingActions = ({ stats, showStats = true, showScrollTop = true }) => {
+const FloatingActions = ({ 
+  stats, 
+  showStats = true, 
+  showScrollTop = true, 
+  onParticipationClick = null,
+  showParticipationModal = false 
+}) => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -93,13 +99,26 @@ const FloatingActions = ({ stats, showStats = true, showScrollTop = true }) => {
         )}
 
         {/* Participation Button - Siempre visible */}
-        <Link
-          to="/participacion-ciudadana"
-          className="group bg-gradient-to-r from-blue-600 to-green-600 text-white p-3 lg:p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
-          aria-label="Participación Ciudadana"
-        >
-          <MessageSquare className="w-5 h-5 lg:w-6 lg:h-6 group-hover:rotate-12 transition-transform" />
-        </Link>
+        {showParticipationModal && onParticipationClick ? (
+          <button
+            onClick={onParticipationClick}
+            className="group bg-gradient-to-r from-blue-600 to-green-600 text-white p-3 lg:p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
+            aria-label="Abrir consulta ciudadana"
+          >
+            <MessageSquare className="w-5 h-5 lg:w-6 lg:h-6 group-hover:rotate-12 transition-transform" />
+            <div className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
+              !
+            </div>
+          </button>
+        ) : (
+          <Link
+            to="/participacion-ciudadana"
+            className="group bg-gradient-to-r from-blue-600 to-green-600 text-white p-3 lg:p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
+            aria-label="Participación Ciudadana"
+          >
+            <MessageSquare className="w-5 h-5 lg:w-6 lg:h-6 group-hover:rotate-12 transition-transform" />
+          </Link>
+        )}
       </div>
 
       {/* Compact Stats Badge for Mobile - Solo cuando navegación está oculta */}
