@@ -46,6 +46,32 @@ const MobileNavigation = () => {
       label: 'Reformas',
       path: '/reformas',
       isActive: location.pathname.includes('/reformas'),
+      submenuItems: [
+        {
+          label: 'IA Estado',
+          path: '/reformas/automatizacion-estado-inteligencia-artificial'
+        },
+        {
+          label: 'Economía',
+          path: '/reformas/reduccion-costo-vida-impuestos'
+        },
+        {
+          label: 'Fronteras',
+          path: '/reformas/fronteras-inteligentes-seguridad-nacional'
+        },
+        {
+          label: 'Justicia',
+          path: '/reformas/justicia-social-equidad-fin-privilegios'
+        },
+        {
+          label: 'Araucanía',
+          path: '/reformas/chile-unido-desarrollo-araucania'
+        },
+        {
+          label: 'Privilegios',
+          path: '/reformas/eliminacion-privilegios-politicos-transparencia'
+        }
+      ]
     },
     {
       id: 'participacion',
