@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { formatChileanNumber } from '../utils/numberFormat';
-import { ArrowRight, ChevronLeft, ChevronRight, CheckCircle, Users, Target, Heart, Clock, Star, Award, MapPin, Quote, Play, Calculator, X, Timer, CheckSquare, FileText, Building, TreePine, Handshake, School, Baby, Briefcase, Shield, Globe, TrendingUp, DollarSign, Eye, Camera, Send, MessageSquare, Zap, Cpu, Wrench, Lightbulb, Key, Lock, Check, ChevronDown, Calendar, Share, ThumbsUp, Medal, ExternalLink, AlertTriangle, Scale, Gavel, PiggyBank, TrendingDown, Trash2, Minus, Plus, BarChart3, RefreshCw, Ban } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Users, Heart, Play, Calculator, X, Check, ChevronDown, Award, AlertTriangle, Scale, Gavel, PiggyBank, Ban, School, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
@@ -19,9 +19,16 @@ const PrivilegiosPage = () => {
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (showCalculator) setShowCalculator(false);
+        if (showVideo) setShowVideo(false);
+      }
+    };
 
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('keydown', handleKeyDown);
     
     // Auto-advance carrusel de reformas
     const interval = setInterval(() => {
@@ -31,9 +38,10 @@ const PrivilegiosPage = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('keydown', handleKeyDown);
       clearInterval(interval);
     };
-  }, []);
+  }, [showCalculator, showVideo]);
 
   const reformasClave = [
     {
@@ -220,8 +228,15 @@ const PrivilegiosPage = () => {
     const consultas = Math.floor(total / 15000);
     
     return (
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full">
+      <div 
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            setShowCalculator(false);
+          }
+        }}
+      >
+        <div className="bg-white rounded-2xl p-8 max-w-md w-full relative">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-bold text-gray-800">Calculadora de Privilegios</h3>
             <button
@@ -286,7 +301,14 @@ const PrivilegiosPage = () => {
   };
 
   const VideoPlayer = () => (
-    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div 
+      className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          setShowVideo(false);
+        }
+      }}
+    >
       <div className="relative max-w-4xl w-full">
         <button
           onClick={() => setShowVideo(false)}
@@ -771,6 +793,56 @@ const PrivilegiosPage = () => {
                     )}
                   </div>
                 ))}
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonios Section */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                  <span className="text-white">Apoyo</span>
+                  <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent"> Ciudadano</span>
+                </h2>
+                <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                  La ciudadanía respalda masivamente el fin de los privilegios políticos
+                </p>
+              </div>
+
+              {/* Estadísticas de Apoyo */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
+                  <div className="text-4xl font-bold text-red-400 mb-2">78%</div>
+                  <div className="text-sm text-gray-300">Quiere eliminar sueldos vitalicios</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
+                  <div className="text-4xl font-bold text-blue-400 mb-2">65%</div>
+                  <div className="text-sm text-gray-300">Apoya autofinanciamiento partidos</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
+                  <div className="text-4xl font-bold text-green-400 mb-2">82%</div>
+                  <div className="text-sm text-gray-300">Exige transparencia total</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
+                  <div className="text-4xl font-bold text-purple-400 mb-2">71%</div>
+                  <div className="text-sm text-gray-300">Considera excesivos los beneficios</div>
+                </div>
+              </div>
+
+              {/* Quote destacada */}
+              <div className="bg-gradient-to-r from-red-500/20 to-blue-500/20 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  "Los recursos públicos deben ir a salud, educación y pensiones dignas, 
+                  no a privilegios de quienes ya tuvieron la oportunidad de servir"
+                </div>
+                <div className="text-lg text-blue-400 font-medium">
+                  - Juan Pablo Melinao González
+                </div>
               </div>
 
             </div>
