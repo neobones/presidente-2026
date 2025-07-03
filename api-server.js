@@ -1256,6 +1256,39 @@ app.put('/api/testimonios/:id/estado', verifyJWT, verifyAdmin, async (req, res) 
 });
 
 // ================================
+// ENDPOINTS DE PATROCINIOS
+// ================================
+
+// Endpoint para estadísticas de patrocinios
+app.get('/api/patrocinios/stats', async (req, res) => {
+  try {
+    // Calcular días restantes hasta 16 noviembre 2025
+    const fechaLimitePatrocinios = new Date('2025-11-16T23:59:59');
+    const ahora = new Date();
+    const diasRestantes = Math.max(0, Math.ceil((fechaLimitePatrocinios.getTime() - ahora.getTime()) / (1000 * 60 * 60 * 24)));
+    
+    // Aquí podrías consultar la base de datos para obtener datos reales
+    // Por ahora devolvemos datos de ejemplo con cálculo correcto
+    const stats = {
+      actual: 847397,
+      meta: 1000000,
+      porcentaje: 84.7,
+      nuevosHoy: 2847,
+      diasRestantes: diasRestantes,
+      fechaLimite: '2025-11-16T23:59:59.000Z',
+      ultimaActualizacion: new Date().toISOString()
+    };
+    
+    res.json(stats);
+  } catch (error) {
+    console.error('Error obteniendo estadísticas de patrocinios:', error);
+    res.status(500).json({ 
+      error: 'Error obteniendo estadísticas de patrocinios' 
+    });
+  }
+});
+
+// ================================
 // ENDPOINTS MULTI-DOMINIO SEO
 // ================================
 

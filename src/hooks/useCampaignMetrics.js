@@ -118,7 +118,7 @@ export const useCampaignMetrics = (options = {}) => {
       meta: metrics.patrocinios.meta,
       porcentaje: metrics.patrocinios.porcentaje,
       nuevosHoy: metrics.patrocinios.nuevosHoy,
-      diasRestantes: metrics.fechas.diasParaElecciones
+      diasRestantes: metrics.fechas.diasParaPatrocinios || metrics.fechas.diasParaElecciones
     },
     
     // Countdown data
@@ -171,18 +171,26 @@ export const usePatrociniosMetrics = () => {
  * Datos de fallback si la API no está disponible
  */
 function getFallbackMetrics() {
+  // Calcular días restantes hasta 16 noviembre 2025 dinámicamente
+  const fechaLimitePatrocinios = new Date('2025-11-16T23:59:59');
+  const fechaElecciones = new Date('2026-11-15T00:00:00.000Z');
+  const ahora = new Date();
+  const diasParaPatrocinios = Math.max(0, Math.ceil((fechaLimitePatrocinios.getTime() - ahora.getTime()) / (1000 * 60 * 60 * 24)));
+  const diasParaElecciones = Math.max(0, Math.ceil((fechaElecciones.getTime() - ahora.getTime()) / (1000 * 60 * 60 * 24)));
+  
   return {
     patrocinios: {
       actual: 847397,
       meta: 1000000,
       nuevosHoy: 2847,
       porcentaje: 85,
-      fechaLimiteInscripcion: "2026-01-15T00:00:00.000Z"
+      fechaLimiteInscripcion: "2025-11-16T23:59:59.000Z"
     },
     fechas: {
       elecciones: "2026-11-15T00:00:00.000Z",
-      diasParaElecciones: 502,
-      limitePatrocinios: "2026-01-15T00:00:00.000Z"
+      diasParaElecciones: diasParaElecciones,
+      limitePatrocinios: "2025-11-16T23:59:59.000Z",
+      diasParaPatrocinios: diasParaPatrocinios
     },
     encuestas: {
       intencionVoto: 28.4,
