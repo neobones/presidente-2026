@@ -1,6 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import ReactGA from 'react-ga4';
 import MobileLayout from './components/MobileLayout';
 
 // Lazy loading de las páginas
@@ -45,12 +44,19 @@ const LoadingFallback = () => (
   </div>
 );
 
-// Este componente rastrea las vistas de página
+// Este componente rastrea las vistas de página usando gtag directamente
 const RouteTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+    // Usar gtag directamente que ya está cargado en el HTML
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('config', 'G-PL1WGH1V40', {
+        page_path: location.pathname + location.search,
+        page_title: document.title,
+        page_location: window.location.href
+      });
+    }
   }, [location]);
 
   return null;
