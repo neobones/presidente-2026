@@ -303,8 +303,8 @@ const HomePageNew = () => {
           </div>
         </nav>
 
-        {/* Mobile Header - Simplified */}
-        <header className="lg:hidden bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 sticky top-0 z-40">
+        {/* Mobile Header - Simplified - OCULTO: Solo navegación inferior activa */}
+        <header className="hidden bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 sticky top-0 z-40">
           <div className="px-4 py-3">
             <div className="flex justify-between items-center">
               <Link to="/" className="flex items-center space-x-3">
