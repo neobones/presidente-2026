@@ -251,7 +251,7 @@ const ParticipacionCiudadana = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
         
         {/* Header */}
-        <header className="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-40">
+        <header className="hidden lg:block bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center py-4">
               <Link to="/" className="flex items-center space-x-3">

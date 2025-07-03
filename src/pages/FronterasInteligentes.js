@@ -360,7 +360,7 @@ const FronterasInteligentes = () => {
     <SEOWrapper seoConfig={seoConfigs.fronterasInteligentes}>
       <div className="min-h-screen bg-gray-50">
         {/* Header Navigation - Mobile Optimized */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
+        <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 lg:h-16">
               <Link 
