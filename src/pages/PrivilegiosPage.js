@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { formatChileanNumber } from '../utils/numberFormat';
 import { ArrowRight, ChevronLeft, ChevronRight, Users, Heart, Play, Calculator, X, Check, ChevronDown, Award, AlertTriangle, Scale, Gavel, PiggyBank, Ban, School, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -16,6 +17,30 @@ const PrivilegiosPage = () => {
   const [activeImpacto, setActiveImpacto] = useState(0);
   const [showCalculator, setShowCalculator] = useState(false);
 
+  // Asegurar que modales estén cerrados al montar/desmontar componente
+  useEffect(() => {
+    setShowCalculator(false);
+    setShowVideo(false);
+    
+    return () => {
+      setShowCalculator(false);
+      setShowVideo(false);
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Bloquear scroll del body cuando hay modales abiertos
+  useEffect(() => {
+    if (showCalculator || showVideo) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showCalculator, showVideo]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -230,17 +255,23 @@ const PrivilegiosPage = () => {
     
     return (
       <div 
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overscroll-contain"
         onClick={(e) => {
           if (e.target === e.currentTarget) {
             setShowCalculator(false);
           }
         }}
-        style={{ zIndex: 99999 }} // Force z-index
+        style={{ zIndex: 99999 }}
+        aria-modal="true"
+        role="dialog"
+        aria-labelledby="calculator-title"
       >
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-2xl">
+        <div 
+          className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold text-gray-800">Calculadora de Privilegios</h3>
+            <h3 id="calculator-title" className="text-2xl font-bold text-gray-800">Calculadora de Privilegios</h3>
             <button
               onClick={() => setShowCalculator(false)}
               className="text-gray-500 hover:text-gray-700"
@@ -906,12 +937,12 @@ const PrivilegiosPage = () => {
           </div>
         </section>
 
-        {/* Modals - Renderizar antes que ConsultasCiudadanas para evitar conflictos */}
-        {showVideo && <VideoPlayer />}
-        {showCalculator && <Calculator />}
-
         {/* Consultas Ciudadanas - Solo mostrar si no hay modales activos */}
         {!showCalculator && !showVideo && <ConsultasCiudadanas />}
+        
+        {/* Modals renderizados via Portal para mejor control de z-index */}
+        {showVideo && createPortal(<VideoPlayer />, document.body)}
+        {showCalculator && createPortal(<Calculator />, document.body)}
 
         {/* Auth Status */}
         <AuthStatus />
