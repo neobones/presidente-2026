@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { formatChileanNumber } from '../utils/numberFormat';
-import { ArrowRight, ChevronLeft, ChevronRight, Users, Heart, Play, Calculator, X, Check, ChevronDown, Award, AlertTriangle, Scale, Gavel, PiggyBank, Ban, School, Eye } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Users, Heart, Play, X, Check, ChevronDown, Award, AlertTriangle, Scale, Gavel, PiggyBank, Ban, School, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
@@ -15,15 +15,12 @@ const PrivilegiosPage = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
   const [activeImpacto, setActiveImpacto] = useState(0);
-  const [showCalculator, setShowCalculator] = useState(false);
 
   // Asegurar que modales estén cerrados al montar/desmontar componente
   useEffect(() => {
-    setShowCalculator(false);
     setShowVideo(false);
     
     return () => {
-      setShowCalculator(false);
       setShowVideo(false);
       document.body.style.overflow = 'unset';
     };
@@ -31,7 +28,7 @@ const PrivilegiosPage = () => {
 
   // Bloquear scroll del body cuando hay modales abiertos
   useEffect(() => {
-    if (showCalculator || showVideo) {
+    if (showVideo) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -40,14 +37,13 @@ const PrivilegiosPage = () => {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [showCalculator, showVideo]);
+  }, [showVideo]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        if (showCalculator) setShowCalculator(false);
         if (showVideo) setShowVideo(false);
       }
     };
@@ -67,7 +63,7 @@ const PrivilegiosPage = () => {
       window.removeEventListener('keydown', handleKeyDown);
       clearInterval(interval);
     };
-  }, [showCalculator, showVideo]);
+  }, [showVideo]);
 
   const reformasClave = [
     {
@@ -238,100 +234,6 @@ const PrivilegiosPage = () => {
     }
   ];
 
-  const Calculator = () => {
-    const [selectedPrivilegio, setSelectedPrivilegio] = useState('expresidente');
-    const [meses, setMeses] = useState(12);
-    
-    const privilegios = {
-      expresidente: { nombre: "Ex Presidente", monto: 3500000 },
-      exparlamentario: { nombre: "Ex Parlamentario", monto: 6000000 },
-      exministro: { nombre: "Ex Ministro", monto: 2800000 }
-    };
-    
-    const total = privilegios[selectedPrivilegio].monto * meses;
-    const pensiones = Math.floor(total / 100000);
-    const becas = Math.floor(total / 180000);
-    const consultas = Math.floor(total / 15000);
-    
-    return (
-      <div 
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overscroll-contain"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            setShowCalculator(false);
-          }
-        }}
-        style={{ zIndex: 99999 }}
-        aria-modal="true"
-        role="dialog"
-        aria-labelledby="calculator-title"
-      >
-        <div 
-          className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-2xl"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex justify-between items-center mb-6">
-            <h3 id="calculator-title" className="text-2xl font-bold text-gray-800">Calculadora de Privilegios</h3>
-            <button
-              onClick={() => setShowCalculator(false)}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Tipo de Privilegio
-              </label>
-              <select
-                value={selectedPrivilegio}
-                onChange={(e) => setSelectedPrivilegio(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              >
-                {Object.entries(privilegios).map(([key, value]) => (
-                  <option key={key} value={key}>{value.nombre}</option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Período (meses): {meses}
-              </label>
-              <input
-                type="range"
-                min="1"
-                max="60"
-                value={meses}
-                onChange={(e) => setMeses(parseInt(e.target.value))}
-                className="w-full"
-              />
-            </div>
-            
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-bold text-lg mb-2">Con ${formatChileanNumber(total)} se puede financiar:</h4>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Pensiones dignas ($100k):</span>
-                  <span className="font-bold">{formatChileanNumber(pensiones)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Becas estudiantiles ($180k):</span>
-                  <span className="font-bold">{formatChileanNumber(becas)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Consultas médicas ($15k):</span>
-                  <span className="font-bold">{formatChileanNumber(consultas)}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   const VideoPlayer = () => (
     <div 
@@ -478,19 +380,19 @@ const PrivilegiosPage = () => {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <button
-                  onClick={() => setShowCalculator(true)}
+                  onClick={() => setShowVideo(true)}
                   className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 hover:shadow-2xl group flex items-center gap-2"
                 >
-                  <Calculator className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                  Calculadora de Privilegios
-                </button>
-                <button
-                  onClick={() => setShowVideo(true)}
-                  className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 border border-white/30 flex items-center gap-2"
-                >
-                  <Play className="w-6 h-6" />
+                  <Play className="w-6 h-6 group-hover:scale-110 transition-transform" />
                   Ver Video Explicativo
                 </button>
+                <Link
+                  to="/patrocinios"
+                  className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 border border-white/30 flex items-center gap-2"
+                >
+                  <Award className="w-6 h-6" />
+                  Apoyar Candidatura
+                </Link>
               </div>
 
             </div>
@@ -925,11 +827,11 @@ const PrivilegiosPage = () => {
                 </Link>
                 
                 <button
-                  onClick={() => setShowCalculator(true)}
+                  onClick={() => setShowVideo(true)}
                   className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 border border-white/30 inline-flex items-center justify-center gap-2"
                 >
-                  <Calculator className="w-6 h-6" />
-                  Calcular Impacto
+                  <Play className="w-6 h-6" />
+                  Ver Video Explicativo
                 </button>
               </div>
 
@@ -938,11 +840,10 @@ const PrivilegiosPage = () => {
         </section>
 
         {/* Consultas Ciudadanas - Solo mostrar si no hay modales activos */}
-        {!showCalculator && !showVideo && <ConsultasCiudadanas />}
+        {!showVideo && <ConsultasCiudadanas />}
         
         {/* Modals renderizados via Portal para mejor control de z-index */}
         {showVideo && createPortal(<VideoPlayer />, document.body)}
-        {showCalculator && createPortal(<Calculator />, document.body)}
 
         {/* Auth Status */}
         <AuthStatus />
