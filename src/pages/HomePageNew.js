@@ -56,28 +56,8 @@ const HomePageNew = () => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    // Countdown timer
-    const updateCountdown = () => {
-      if (!derivedData?.countdownData?.electionDate) return;
-      
-      const electionDate = new Date(derivedData.countdownData.electionDate);
-      const now = new Date();
-      const diff = electionDate - now;
-      
-      if (diff > 0) {
-        setCountdown({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-        });
-      }
-    };
-
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
-    
-    updateCountdown();
-    const countdownInterval = setInterval(updateCountdown, 60000); // Update every minute
     
     // Auto-advance testimonios
     const testimonioInterval = setInterval(() => {
@@ -92,11 +72,37 @@ const HomePageNew = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
-      clearInterval(countdownInterval);
       clearInterval(testimonioInterval);
       clearInterval(reformaInterval);
     };
   }, []);
+
+  // Efecto separado para countdown que se ejecuta cuando cambian los datos
+  useEffect(() => {
+    if (!derivedData?.countdownData?.electionDate) return;
+    
+    const updateCountdown = () => {
+      const electionDate = new Date(derivedData.countdownData.electionDate);
+      const now = new Date();
+      const diff = electionDate - now;
+      
+      if (diff > 0) {
+        setCountdown({
+          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+        });
+      }
+    };
+    
+    // Ejecutar inmediatamente
+    updateCountdown();
+    
+    // Actualizar cada minuto
+    const countdownInterval = setInterval(updateCountdown, 60000);
+    
+    return () => clearInterval(countdownInterval);
+  }, [derivedData?.countdownData?.electionDate]);
 
   const reformas = [
     {
