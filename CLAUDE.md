@@ -278,6 +278,41 @@ cd /root/application
 - **Security**: Rate limiting, CORS, input validation
 - **Features**: Auto-categorization, sentiment analysis, regional analytics
 
+### Multi-Domain SEO Configuration
+
+#### **Robots.txt y Sitemap.xml Dinámicos**
+El proyecto implementa un sistema dinámico para robots.txt y sitemap.xml que se adapta automáticamente al dominio:
+
+**Características**:
+- **Robots.txt dinámico**: Se genera basado en el hostname (`req.get('host')`)
+- **Sitemap.xml dinámico**: URLs se construyen dinámicamente con el dominio actual
+- **Soporte multi-dominio**: Funciona para `chiledigno.cl` y `melinao2026.cl`
+- **Fecha automática**: Sitemap se actualiza con fecha actual en cada request
+
+**Endpoints disponibles**:
+```bash
+# Robots.txt dinámico
+GET /robots.txt
+
+# Sitemap.xml dinámico  
+GET /sitemap.xml
+```
+
+**Ejemplo de funcionamiento**:
+- En `chiledigno.cl/robots.txt` → Sitemap: https://chiledigno.cl/sitemap.xml
+- En `melinao2026.cl/robots.txt` → Sitemap: https://melinao2026.cl/sitemap.xml
+
+#### **Configuración CORS Multi-Dominio**
+```javascript
+origin: [
+  'http://localhost:3000', 
+  'https://chiledigno.cl', 
+  'http://chiledigno.cl',
+  'https://melinao2026.cl',
+  'http://melinao2026.cl'
+]
+```
+
 ### OAuth Authentication System
 The project implements a robust OAuth authentication system using Google OAuth 2.0 and JWT tokens:
 

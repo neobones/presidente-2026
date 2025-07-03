@@ -32,9 +32,15 @@ app.use(helmet({
   },
 }));
 
-// CORS configurado para el dominio de producción
+// CORS configurado para ambos dominios de producción
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://chiledigno.cl', 'http://chiledigno.cl'],
+  origin: [
+    'http://localhost:3000', 
+    'https://chiledigno.cl', 
+    'http://chiledigno.cl',
+    'https://melinao2026.cl',
+    'http://melinao2026.cl'
+  ],
   credentials: true
 }));
 
@@ -1247,6 +1253,213 @@ app.put('/api/testimonios/:id/estado', verifyJWT, verifyAdmin, async (req, res) 
       error: 'Error actualizando estado del testimonio' 
     });
   }
+});
+
+// ================================
+// ENDPOINTS MULTI-DOMINIO SEO
+// ================================
+
+// Robots.txt dinámico basado en hostname
+app.get('/robots.txt', (req, res) => {
+  const hostname = req.get('host');
+  
+  // Configuración base para ambos dominios
+  const baseRobots = `# Robots.txt para Campaña Presidencial Melinao 2026
+# ${hostname}
+
+User-agent: *
+Allow: /
+
+# Permitir acceso completo a buscadores principales
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Bloquear crawlers problemáticos
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Configuraciones específicas
+Crawl-delay: 1
+
+# Sitemap dinámico
+Sitemap: https://${hostname}/sitemap.xml
+
+# Información adicional
+# Sitio web oficial de Juan Pablo Melinao González
+# Candidato Presidencial Chile 2026 - Independiente
+# Contacto: contacto@${hostname}`;
+
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.send(baseRobots);
+});
+
+// Sitemap.xml dinámico basado en hostname
+app.get('/sitemap.xml', (req, res) => {
+  const hostname = req.get('host');
+  const baseUrl = `https://${hostname}`;
+  const currentDate = new Date().toISOString().split('T')[0];
+  
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <!-- Página Principal -->
+  <url>
+    <loc>${baseUrl}/</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es-cl" href="${baseUrl}/" />
+  </url>
+
+  <!-- Landing Pages de Reformas -->
+  <url>
+    <loc>${baseUrl}/reformas/automatizacion-estado-inteligencia-artificial</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/reformas/reduccion-costo-vida-impuestos</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/reformas/fronteras-inteligentes-seguridad-nacional</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/reformas/justicia-social-equidad-fin-privilegios</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/reformas/chile-unido-desarrollo-araucania</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/reformas/eliminacion-privilegios-politicos-transparencia</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Índice de Reformas -->
+  <url>
+    <loc>${baseUrl}/reformas</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Patrocinios -->
+  <url>
+    <loc>${baseUrl}/patrocinios</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Participación Ciudadana -->
+  <url>
+    <loc>${baseUrl}/participacion-ciudadana</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Noticias -->
+  <url>
+    <loc>${baseUrl}/noticias</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Páginas Regionales SEO -->
+  <url>
+    <loc>${baseUrl}/regiones/santiago</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/regiones/araucania</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/regiones/antofagasta</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/regiones/valparaiso</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>${baseUrl}/regiones/concepcion</loc>
+    <lastmod>${currentDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>`;
+
+  res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+  res.send(sitemap);
 });
 
 // Ruta para servir archivos estáticos de React
