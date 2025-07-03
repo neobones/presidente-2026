@@ -237,8 +237,35 @@ const PatrociniosNew = () => {
     >
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
         
+        {/* Desktop Header Navigation */}
+        <header className="hidden lg:block fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200" style={{ marginTop: '48px' }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <Link 
+                to="/" 
+                className="flex items-center gap-3 text-gray-900 hover:text-blue-600 transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                <span className="font-semibold">Volver al Home</span>
+              </Link>
+              
+              <div className="flex items-center gap-6">
+                <Link to="/reformas" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+                  Reformas
+                </Link>
+                <Link to="/noticias" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+                  Noticias
+                </Link>
+                <Link to="/#historia" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+                  Juan Pablo
+                </Link>
+              </div>
+            </div>
+          </div>
+        </header>
+        
         {/* HERO SECTION */}
-        <section className="relative min-h-screen lg:min-h-screen flex items-center justify-center overflow-hidden py-20 lg:py-0">
+        <section className="relative min-h-screen lg:min-h-screen flex items-center justify-center overflow-hidden py-20 lg:py-0 lg:pt-32">
           {/* Background con parallax */}
           <div 
             className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-blue-800"
@@ -255,7 +282,7 @@ const PatrociniosNew = () => {
           </div>
           
           {/* Navigation Header */}
-          <div className="absolute top-4 left-4 z-20">
+          <div className="absolute top-4 left-4 z-20 lg:hidden">
             <Link 
               to="/"
               className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-4 py-2 rounded-full font-medium transition-all hover:scale-105 border border-white/20"
@@ -368,7 +395,7 @@ const PatrociniosNew = () => {
         </section>
 
         {/* Banner de urgencia flotante */}
-        <div className={`fixed top-0 left-0 right-0 z-50 px-4 py-2 text-center text-sm font-medium text-white ${
+        <div className={`fixed top-0 left-0 right-0 z-50 px-4 py-2 lg:py-3 text-center text-sm lg:text-base font-medium text-white ${
           patrociniosData.diasRestantes === 0 
             ? 'bg-gray-800' 
             : patrociniosData.diasRestantes <= 7 
@@ -392,7 +419,7 @@ const PatrociniosNew = () => {
         </div>
 
         {/* SECCIÓN DE CREDENCIALES */}
-        <section className="py-20 bg-white relative" style={{ marginTop: '48px' }}>
+        <section className="py-20 bg-white relative mt-12 lg:mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-6">
