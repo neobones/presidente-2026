@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { formatChileanNumber } from '../utils/numberFormat';
-import { ArrowRight, ChevronLeft, ChevronRight, CheckCircle, Users, Target, Heart, Clock, Star, Award, MapPin, Quote, Play, Calculator, X, Timer, CheckSquare, FileText, Building, TreePine, Handshake, School, Baby, Briefcase, Shield, Globe, TrendingUp, DollarSign, Eye, Camera, Send, MessageSquare, Zap, Cpu, Wrench, Lightbulb, Key, Lock, Check, ChevronDown, Calendar, Share, ThumbsUp, Medal, ExternalLink } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, CheckCircle, Users, Target, Heart, Clock, Star, Award, MapPin, Quote, Play, Calculator, X, Timer, CheckSquare, FileText, Building, TreePine, Handshake, School, Baby, Briefcase, Shield, Globe, TrendingUp, DollarSign, Eye, Camera, Send, MessageSquare, Zap, Cpu, Wrench, Lightbulb, Key, Lock, Check, ChevronDown, Calendar, Share, ThumbsUp, Medal, ExternalLink, UserPlus, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
@@ -156,24 +156,31 @@ const PatrociniosNew = () => {
   const procesoPatrocinio = [
     {
       numero: 1,
-      titulo: "Ingresa con tu Clave Única",
-      descripcion: "Usa tu Clave Única del Registro Civil",
-      detalle: "¿No tienes Clave Única? Obtén la tuya aquí",
+      titulo: "Ingresa con ClaveÚnica",
+      descripcion: "Accede al sistema con tu ClaveÚnica del Registro Civil",
+      detalle: "¿No tienes ClaveÚnica? Obtén la tuya gratis aquí",
       icon: <Key className="w-12 h-12" />,
       link: "https://clave.gob.cl"
     },
     {
       numero: 2,
-      titulo: "Completa el formulario",
-      descripcion: "Selecciona 'Presidente' y confirma tus datos",
-      detalle: "Proceso 100% seguro y confidencial",
-      icon: <FileText className="w-12 h-12" />
+      titulo: "Selecciona 'Patrocinar'",
+      descripcion: "En el menú principal, haz clic en la opción 'Patrocinar'",
+      detalle: "Es la primera opción que verás en pantalla",
+      icon: <UserPlus className="w-12 h-12" />
     },
     {
       numero: 3,
-      titulo: "Confirma tu patrocinio",
-      descripcion: "Recibirás un código por email para validar",
-      detalle: "¡Listo! Ya eres parte del cambio",
+      titulo: "Elige 'Presidente'",
+      descripcion: "Selecciona la categoría 'Presidente de la República'",
+      detalle: "Entre las opciones disponibles de cargos a patrocinar",
+      icon: <Crown className="w-12 h-12" />
+    },
+    {
+      numero: 4,
+      titulo: "Busca 'Melinao' y patrocina",
+      descripcion: "En el buscador escribe 'Melinao' y presiona 'Patrocinar' en Juan Pablo Melinao González",
+      detalle: "¡Listo! Ya confirmas tu apoyo al cambio",
       icon: <Check className="w-12 h-12" />
     }
   ];
@@ -607,7 +614,7 @@ const PatrociniosNew = () => {
                 </span>
               </h2>
               <p className="text-xl text-gray-600">
-                Solo 3 pasos para ser parte del cambio que Chile necesita
+                Solo 4 pasos simples para ser parte del cambio que Chile necesita
               </p>
             </div>
 
