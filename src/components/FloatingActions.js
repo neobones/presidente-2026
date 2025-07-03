@@ -75,7 +75,7 @@ const FloatingActions = ({
             </div>
           </div>
           <Link 
-            to="/participacion-ciudadana"
+            to="/patrocinios"
             className="text-xs text-purple-600 hover:text-purple-700 flex items-center justify-center space-x-1 mt-3 bg-purple-50 rounded-lg py-2 transition-colors"
           >
             <Users className="w-3 h-3" />
@@ -112,7 +112,7 @@ const FloatingActions = ({
           </button>
         ) : (
           <Link
-            to="/participacion-ciudadana"
+            to="/patrocinios"
             className="group bg-gradient-to-r from-blue-600 to-green-600 text-white p-3 lg:p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300"
             aria-label="Participación Ciudadana"
           >

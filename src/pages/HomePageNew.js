@@ -293,7 +293,7 @@ const HomePageNew = () => {
                   Fin Privilegios
                 </Link>
                 <Link 
-                  to="/participacion-ciudadana"
+                  to="/patrocinios"
                   className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
                   Únete Ya
@@ -326,7 +326,7 @@ const HomePageNew = () => {
                   Calcula
                 </button>
                 <Link 
-                  to="/participacion-ciudadana"
+                  to="/patrocinios"
                   className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg"
                 >
                   Únete
@@ -430,7 +430,7 @@ const HomePageNew = () => {
                 </button>
                 
                 <Link
-                  to="/participacion-ciudadana"
+                  to="/patrocinios"
                   className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-4 rounded-xl font-bold transition-all hover:scale-105 hover:shadow-2xl group flex flex-col items-center gap-2"
                 >
                   <Users className="w-8 h-8 group-hover:scale-110 transition-transform" />
@@ -697,7 +697,7 @@ const HomePageNew = () => {
                     Te invito a conversar. Chile se construye en el diálogo, no en el monólogo.
                   </p>
                   <Link 
-                    to="/participacion-ciudadana"
+                    to="/patrocinios"
                     className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition-colors"
                   >
                     <Heart className="w-5 h-5" />
@@ -868,7 +868,7 @@ const HomePageNew = () => {
                 {/* CTA */}
                 <div className="flex gap-4">
                   <Link
-                    to="/participacion-ciudadana"
+                    to="/patrocinios"
                     className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-bold text-center hover:shadow-lg transition-all"
                     onClick={() => setShowCalculator(false)}
                   >
@@ -1282,7 +1282,7 @@ const HomePageNew = () => {
               {/* Multi-CTA */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
                 <Link
-                  to="/participacion-ciudadana"
+                  to="/patrocinios"
                   className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-6 py-4 rounded-xl font-bold transition-all hover:scale-105 flex flex-col items-center gap-2"
                 >
                   <Users className="w-8 h-8" />

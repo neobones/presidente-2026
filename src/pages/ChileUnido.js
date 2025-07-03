@@ -341,7 +341,7 @@ const ChileUnido = () => {
                     Simular Desarrollo Regional
                   </button>
                   <Link
-                    to="/participacion-ciudadana"
+                    to="/patrocinios"
                     className="bg-white text-green-600 px-8 py-4 rounded-full font-semibold border-2 border-green-600 hover:bg-green-50 transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     <Heart className="w-5 h-5" />
@@ -1099,7 +1099,7 @@ const ChileUnido = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/participacion-ciudadana"
+                  to="/patrocinios"
                   className="bg-white text-green-600 px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <Heart className="w-5 h-5" />

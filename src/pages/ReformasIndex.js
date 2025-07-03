@@ -242,7 +242,7 @@ const ReformasIndex = () => {
               
               <div className="mt-8">
                 <Link
-                  to="/participacion-ciudadana"
+                  to="/patrocinios"
                   className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:bg-blue-50 transition-colors"
                 >
                   <Users className="w-6 h-6" />

@@ -95,8 +95,8 @@ const MobileNavigation = () => {
       id: 'participacion',
       icon: Users,
       label: 'Participa',
-      path: '/participacion-ciudadana',
-      isActive: location.pathname === '/participacion-ciudadana'
+      path: '/patrocinios',
+      isActive: location.pathname === '/patrocinios'
     },
     {
       id: 'juan-pablo',

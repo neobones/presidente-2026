@@ -49,6 +49,9 @@ const RouteTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Scroll to top cuando cambia la ruta
+    window.scrollTo(0, 0);
+    
     // Usar gtag directamente que ya está cargado en el HTML
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('config', 'G-PL1WGH1V40', {

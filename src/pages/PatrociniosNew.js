@@ -238,7 +238,7 @@ const PatrociniosNew = () => {
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
         
         {/* HERO SECTION */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-screen lg:min-h-screen flex items-center justify-center overflow-hidden py-20 lg:py-0">
           {/* Background con parallax */}
           <div 
             className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-blue-800"
@@ -265,12 +265,12 @@ const PatrociniosNew = () => {
             </Link>
           </div>
           
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               
               {/* Contenido textual */}
               <div className="text-center lg:text-left text-white">
-                <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
                   <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
                     Patrocina el Cambio:
                   </span>
@@ -284,17 +284,17 @@ const PatrociniosNew = () => {
                   </span>
                 </h1>
                 
-                <p className="text-xl lg:text-2xl mb-4 text-blue-100">
+                <p className="text-lg sm:text-xl lg:text-2xl mb-4 text-blue-100">
                   <strong>Juan Pablo Melinao González</strong>
                 </p>
-                <p className="text-lg mb-8 text-blue-200">
+                <p className="text-base sm:text-lg mb-8 text-blue-200">
                   Candidato Independiente a Presidente 2026
                 </p>
                 
                 {/* Contador en tiempo real */}
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 mb-8">
                   <div className="text-center">
-                    <div className="text-3xl lg:text-4xl font-bold text-yellow-300 mb-2">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-300 mb-2">
                       Ya somos {formatChileanNumber(patrociniosData.actual)} patrocinantes
                     </div>
                     <div className="text-lg text-blue-100 mb-4">
@@ -325,14 +325,14 @@ const PatrociniosNew = () => {
                     href="https://patrocinantes.servel.cl/auth/login"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-300 hover:to-orange-300 text-blue-900 px-8 py-4 rounded-xl font-bold text-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-2xl"
+                    className="group bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-300 hover:to-orange-300 text-blue-900 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-lg sm:text-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-2xl"
                   >
                     <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     PATROCINAR AHORA
                   </a>
                   <button 
                     onClick={() => setShowVideo(true)}
-                    className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-xl transition-all flex items-center justify-center gap-2"
+                    className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-lg sm:text-xl transition-all flex items-center justify-center gap-2"
                   >
                     <Play className="w-6 h-6" />
                     Ver Tutorial

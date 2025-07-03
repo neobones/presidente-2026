@@ -219,7 +219,7 @@ const HomePage = () => {
                   Fin Privilegios
                 </Link>
                 <Link 
-                  to="/participacion-ciudadana"
+                  to="/patrocinios"
                   className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
                   Únete Ya
