@@ -5,19 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     
-    <!-- CSP compatible con React-GA4 y Google Analytics según mejores prácticas 2025 -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.tailwindcss.com https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com;
-        script-src-elem 'self' 'unsafe-inline' cdn.tailwindcss.com https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com;
-        connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://*.googletagmanager.com;
-        img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://*.googletagmanager.com;
-        style-src 'self' 'unsafe-inline' cdn.tailwindcss.com https://fonts.googleapis.com;
-        font-src 'self' data: https://fonts.gstatic.com;
-        object-src 'none';
-        base-uri 'self';
-        frame-ancestors 'none';"
-    >
+    <!-- CSP configurado en nginx headers para evitar conflictos -->
     
     <!-- Cache Control para dispositivos móviles -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
