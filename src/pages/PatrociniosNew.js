@@ -187,7 +187,15 @@ const PatrociniosNew = () => {
 
   const faqData = [
     {
-      pregunta: "¿Qué es un patrocinio?",
+      pregunta: "¿Cuál es la diferencia entre patrocinio y donación?",
+      respuesta: "Un patrocinio es tu firma digital GRATUITA que valida el apoyo a una candidatura independiente. Una donación es dinero que se entrega a partidos políticos para financiar campañas. Juan Pablo necesita patrocinios (no dinero) para poder participar en las elecciones."
+    },
+    {
+      pregunta: "¿El patrocinio me cuesta dinero?",
+      respuesta: "NO. El patrocinio es completamente gratuito. Solo necesitas tu ClaveÚnica y 2-5 minutos de tu tiempo. Si alguien te pide dinero por un 'patrocinio', es una estafa - reporta inmediatamente."
+    },
+    {
+      pregunta: "¿Qué es un patrocinio exactamente?",
       respuesta: "Es tu firma digital que valida que apoyas la candidatura. Es completamente gratuito y te toma menos de 5 minutos. Es requisito legal para que cualquier candidato independiente pueda participar en las elecciones presidenciales."
     },
     {
@@ -209,6 +217,10 @@ const PatrociniosNew = () => {
     {
       pregunta: "¿Patrocinar me compromete a votar por Juan Pablo?",
       respuesta: "No. El patrocinio solo permite que Juan Pablo participe en la elección. El día de la votación, tu voto es completamente libre y secreto. Puedes votar por quien quieras."
+    },
+    {
+      pregunta: "¿Juan Pablo solicita donaciones actualmente?",
+      respuesta: "NO. En esta etapa solo necesitamos patrocinios para validar la candidatura. No solicitamos ni recolectamos dinero. Cualquier solicitud de dinero en nombre de Juan Pablo debe ser reportada como posible estafa."
     }
   ];
 
@@ -425,8 +437,191 @@ const PatrociniosNew = () => {
           )}
         </div>
 
+        {/* SECCIÓN EDUCATIVA: DIFERENCIA ENTRE DONACIÓN Y PATROCINIO */}
+        <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 relative mt-12 lg:mt-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-6">
+                ¿Qué es un
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  {' '}Patrocinio?
+                </span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+                Muchas personas confunden patrocinio con donación. Te explicamos la diferencia de manera clara y simple.
+              </p>
+            </div>
+
+            {/* Comparación Visual */}
+            <div className="grid lg:grid-cols-2 gap-8 mb-16">
+              {/* Patrocinio */}
+              <div className="bg-white rounded-3xl p-8 shadow-lg border-2 border-green-200">
+                <div className="text-center mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Patrocinio</h3>
+                  <p className="text-green-600 font-semibold">✅ Es lo que necesitamos</p>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Es tu firma digital</p>
+                      <p className="text-gray-600 text-sm">Apoyo ciudadano para validar candidatura independiente</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Completamente gratuito</p>
+                      <p className="text-gray-600 text-sm">No cuesta dinero, solo tu apoyo ciudadano</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Requisito legal obligatorio</p>
+                      <p className="text-gray-600 text-sm">Sin patrocinios, ningún candidato independiente puede participar</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Regulado por SERVEL</p>
+                      <p className="text-gray-600 text-sm">Sistema oficial del Estado con máxima seguridad</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">No compromete tu voto</p>
+                      <p className="text-gray-600 text-sm">El día de la elección votas por quien quieras</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-6 p-4 bg-green-50 rounded-xl">
+                  <p className="text-green-800 font-medium text-center">
+                    <Timer className="w-5 h-5 inline mr-2" />
+                    Proceso: 2-5 minutos máximo
+                  </p>
+                </div>
+              </div>
+
+              {/* Donación */}
+              <div className="bg-white rounded-3xl p-8 shadow-lg border-2 border-orange-200">
+                <div className="text-center mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <DollarSign className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Donación</h3>
+                  <p className="text-orange-600 font-semibold">ℹ️ Es diferente</p>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <DollarSign className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Aporte económico</p>
+                      <p className="text-gray-600 text-sm">Dinero para financiar campañas y partidos políticos</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <DollarSign className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Tiene costo monetario</p>
+                      <p className="text-gray-600 text-sm">Implica transferir tu dinero</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Building className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Para sostener partidos</p>
+                      <p className="text-gray-600 text-sm">Financia actividades de organizaciones políticas</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <FileText className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Límites legales</p>
+                      <p className="text-gray-600 text-sm">Máximo 300-500 UF anuales según la ley</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <Eye className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <p className="font-semibold text-gray-900">Reportes obligatorios</p>
+                      <p className="text-gray-600 text-sm">Debe informarse al SERVEL y SII</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-6 p-4 bg-orange-50 rounded-xl">
+                  <p className="text-orange-800 font-medium text-center">
+                    <Calculator className="w-5 h-5 inline mr-2" />
+                    Actualmente NO solicitamos donaciones
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Resumen clave */}
+            <div className="bg-white rounded-3xl p-8 shadow-xl border-2 border-blue-200">
+              <div className="text-center mb-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  📝 Resumen: ¿Qué necesita Juan Pablo ahora?
+                </h3>
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="text-center p-4 bg-blue-50 rounded-xl">
+                  <UserPlus className="w-12 h-12 text-blue-600 mx-auto mb-3" />
+                  <h4 className="font-bold text-gray-900 mb-2">PATROCINIOS</h4>
+                  <p className="text-gray-600 text-sm">Tu firma digital para que pueda participar en las elecciones</p>
+                </div>
+                
+                <div className="text-center p-4 bg-gray-50 rounded-xl">
+                  <X className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                  <h4 className="font-bold text-gray-900 mb-2">NO DONACIONES</h4>
+                  <p className="text-gray-600 text-sm">Actualmente no solicitamos ni recolectamos dinero</p>
+                </div>
+                
+                <div className="text-center p-4 bg-green-50 rounded-xl">
+                  <Clock className="w-12 h-12 text-green-600 mx-auto mb-3" />
+                  <h4 className="font-bold text-gray-900 mb-2">PLAZO LÍMITE</h4>
+                  <p className="text-gray-600 text-sm">16 noviembre 2025 - Quedan {patrociniosData.diasRestantes} días</p>
+                </div>
+              </div>
+              
+              <div className="mt-8 p-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-center text-white">
+                <h4 className="text-xl font-bold mb-2">¿Ya entendiste la diferencia?</h4>
+                <p className="mb-4 opacity-90">Tu patrocinio es la llave para que Juan Pablo pueda competir por la presidencia</p>
+                <a 
+                  href="https://patrocinantes.servel.cl/auth/login"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-all"
+                >
+                  <ArrowRight className="w-5 h-5" />
+                  PATROCINAR AHORA
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* SECCIÓN DE CREDENCIALES */}
-        <section className="py-20 bg-white relative mt-12 lg:mt-16">
+        <section className="py-20 bg-white relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-6">
