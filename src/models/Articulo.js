@@ -40,6 +40,18 @@ const articuloSchema = new mongoose.Schema({
     type: String,
     enum: ['published', 'draft'],
     default: 'published',
+  },
+  reformaRelacionada: {
+    type: String,
+    enum: [
+      'automatizacion-estado-inteligencia-artificial',
+      'reduccion-costo-vida-impuestos', 
+      'fronteras-inteligentes-seguridad-nacional',
+      'justicia-social-equidad-fin-privilegios',
+      'chile-unido-desarrollo-araucania',
+      'eliminacion-privilegios-politicos-transparencia'
+    ],
+    default: null
   }
 }, {
   timestamps: true // Automatically adds createdAt and updatedAt

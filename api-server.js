@@ -835,7 +835,8 @@ app.post('/api/n8n/articles', verifyN8nApiKey, async (req, res) => {
       author = 'Equipo de Campaña',
       tags = [],
       status = 'published',
-      date
+      date,
+      reformaRelacionada
     } = req.body;
 
     // Validaciones requeridas
@@ -862,7 +863,8 @@ app.post('/api/n8n/articles', verifyN8nApiKey, async (req, res) => {
       author: author.trim(),
       tags: Array.isArray(tags) ? tags.map(tag => tag.trim()) : [],
       status: ['published', 'draft'].includes(status) ? status : 'published',
-      date: date ? new Date(date) : new Date()
+      date: date ? new Date(date) : new Date(),
+      reformaRelacionada: reformaRelacionada || null
     };
 
     const articulo = new Articulo(articuloData);
@@ -1094,7 +1096,8 @@ app.post('/api/articulos', verifyJWT, verifyAdmin, async (req, res) => {
       author = 'Equipo de Campaña',
       tags = [],
       status = 'draft',
-      date
+      date,
+      reformaRelacionada
     } = req.body;
 
     // Validaciones requeridas
@@ -1121,7 +1124,8 @@ app.post('/api/articulos', verifyJWT, verifyAdmin, async (req, res) => {
       author: author.trim(),
       tags: Array.isArray(tags) ? tags.map(tag => tag.trim()) : [],
       status: ['published', 'draft'].includes(status) ? status : 'draft',
-      date: date ? new Date(date) : new Date()
+      date: date ? new Date(date) : new Date(),
+      reformaRelacionada: reformaRelacionada || null
     };
 
     const articulo = new Articulo(articuloData);
@@ -1186,7 +1190,8 @@ app.put('/api/articulos/:id', verifyJWT, verifyAdmin, async (req, res) => {
       author,
       tags,
       status,
-      date
+      date,
+      reformaRelacionada
     } = req.body;
 
     // Verificar que el artículo existe
@@ -1218,6 +1223,7 @@ app.put('/api/articulos/:id', verifyJWT, verifyAdmin, async (req, res) => {
     if (tags) updateData.tags = Array.isArray(tags) ? tags.map(tag => tag.trim()) : [];
     if (status && ['published', 'draft'].includes(status)) updateData.status = status;
     if (date) updateData.date = new Date(date);
+    if (reformaRelacionada !== undefined) updateData.reformaRelacionada = reformaRelacionada || null;
 
     const articuloActualizado = await Articulo.findByIdAndUpdate(
       id,

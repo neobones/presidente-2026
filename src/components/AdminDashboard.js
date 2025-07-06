@@ -39,8 +39,10 @@ const AdminDashboard = () => {
     content: '',
     author: 'Equipo de Campaña',
     tags: [],
+    tagsString: '',
     status: 'draft',
-    date: new Date().toISOString().split('T')[0]
+    date: new Date().toISOString().split('T')[0],
+    reformaRelacionada: ''
   });
   const [consultas, setConsultas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -268,8 +270,10 @@ const AdminDashboard = () => {
       content: '',
       author: 'Equipo de Campaña',
       tags: [],
+      tagsString: '',
       status: 'draft',
-      date: new Date().toISOString().split('T')[0]
+      date: new Date().toISOString().split('T')[0],
+      reformaRelacionada: ''
     });
     setEditingArticle(null);
   };
@@ -287,8 +291,10 @@ const AdminDashboard = () => {
       content: articulo.content,
       author: articulo.author,
       tags: articulo.tags,
+      tagsString: articulo.tags ? articulo.tags.join(', ') : '',
       status: articulo.status,
-      date: articulo.date ? new Date(articulo.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+      date: articulo.date ? new Date(articulo.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      reformaRelacionada: articulo.reformaRelacionada || ''
     });
     setEditingArticle(articulo);
     setShowArticleModal(true);
@@ -324,10 +330,11 @@ const AdminDashboard = () => {
   };
 
   const handleTagsChange = (tagsString) => {
-    const tags = tagsString.split(',').map(tag => tag.trim()).filter(tag => tag);
+    // Mantener el string tal como está para permitir escritura de comas
     setArticleForm(prev => ({
       ...prev,
-      tags
+      tagsString: tagsString,
+      tags: tagsString.split(',').map(tag => tag.trim()).filter(tag => tag)
     }));
   };
 
@@ -1006,7 +1013,7 @@ const AdminDashboard = () => {
                       </label>
                       <input
                         type="text"
-                        value={articleForm.tags.join(', ')}
+                        value={articleForm.tagsString}
                         onChange={(e) => handleTagsChange(e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="tecnología, política, campaña (separados por comas)"
@@ -1028,6 +1035,29 @@ const AdminDashboard = () => {
                       </select>
                     </div>
                   </div>
+                </div>
+
+                {/* Reforma Relacionada */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Reforma Relacionada (Opcional)
+                  </label>
+                  <select
+                    value={articleForm.reformaRelacionada}
+                    onChange={(e) => handleArticleFormChange('reformaRelacionada', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Ninguna reforma específica</option>
+                    <option value="automatizacion-estado-inteligencia-artificial">🤖 Automatización del Estado con IA</option>
+                    <option value="reduccion-costo-vida-impuestos">💰 Reducción del Costo de Vida e Impuestos</option>
+                    <option value="fronteras-inteligentes-seguridad-nacional">🛡️ Fronteras Inteligentes y Seguridad Nacional</option>
+                    <option value="justicia-social-equidad-fin-privilegios">⚖️ Justicia Social y Fin de Privilegios</option>
+                    <option value="chile-unido-desarrollo-araucania">🤝 Chile Unido y Desarrollo de la Araucanía</option>
+                    <option value="eliminacion-privilegios-politicos-transparencia">🔍 Eliminación de Privilegios Políticos</option>
+                  </select>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Si esta noticia está relacionada con una reforma específica, selecciónala aquí
+                  </p>
                 </div>
 
                 <div className="flex justify-end space-x-3 mt-6 pt-4 border-t border-gray-200">
