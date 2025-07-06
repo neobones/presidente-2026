@@ -361,7 +361,7 @@ const AdminDashboard = () => {
   };
 
   const deleteArticle = async (id) => {
-    if (!confirm('¿Estás seguro de que deseas eliminar este artículo?')) return;
+    if (!window.confirm('¿Estás seguro de que deseas eliminar este artículo?')) return;
     
     try {
       const token = localStorage.getItem('authToken');

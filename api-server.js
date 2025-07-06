@@ -938,24 +938,6 @@ app.get('/api/articulos', async (req, res) => {
   }
 });
 
-// GET - Obtener artículo por slug (público)
-app.get('/api/articulos/:slug', async (req, res) => {
-  try {
-    const articulo = await Articulo.findOne({ 
-      slug: req.params.slug, 
-      status: 'published' 
-    });
-    
-    if (!articulo) {
-      return res.status(404).json({ error: 'Artículo no encontrado' });
-    }
-    
-    res.json(articulo);
-  } catch (error) {
-    res.status(500).json({ error: 'Error obteniendo artículo' });
-  }
-});
-
 // GET - Obtener todos los artículos para admin (incluye borradores)
 app.get('/api/articulos/admin', verifyJWT, verifyAdmin, async (req, res) => {
   try {
@@ -1011,6 +993,24 @@ app.get('/api/articulos/admin', verifyJWT, verifyAdmin, async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: 'Error obteniendo artículos para admin' });
+  }
+});
+
+// GET - Obtener artículo por slug (público)
+app.get('/api/articulos/:slug', async (req, res) => {
+  try {
+    const articulo = await Articulo.findOne({ 
+      slug: req.params.slug, 
+      status: 'published' 
+    });
+    
+    if (!articulo) {
+      return res.status(404).json({ error: 'Artículo no encontrado' });
+    }
+    
+    res.json(articulo);
+  } catch (error) {
+    res.status(500).json({ error: 'Error obteniendo artículo' });
   }
 });
 
