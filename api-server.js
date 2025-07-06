@@ -17,6 +17,7 @@ const Usuario = require('./src/models/Usuario');
 const Patrocinio = require('./src/models/Patrocinio');
 const Testimonio = require('./src/models/Testimonio');
 const CampaignMetrics = require('./src/models/CampaignMetrics');
+const Articulo = require('./src/models/Articulo');
 
 const app = express();
 
@@ -39,7 +40,8 @@ app.use(cors({
     'https://chiledigno.cl', 
     'http://chiledigno.cl',
     'https://melinao2026.cl',
-    'http://melinao2026.cl'
+    'http://melinao2026.cl',
+    'https://n8n.melisoft.cloud'
   ],
   credentials: true
 }));
@@ -758,7 +760,7 @@ const verifyN8nApiKey = (req, res, next) => {
   next();
 };
 
-// POST - Webhook para recibir datos de n8n
+// POST - Webhook para recibir datos de n8n (consultas)
 app.post('/api/n8n/webhook', verifyN8nApiKey, async (req, res) => {
   try {
     const {
@@ -818,6 +820,378 @@ app.post('/api/n8n/webhook', verifyN8nApiKey, async (req, res) => {
     // console.error('Error en webhook de n8n:', error);
     res.status(500).json({
       error: 'Error interno del servidor al procesar el webhook de n8n.'
+    });
+  }
+});
+
+// POST - Webhook para recibir artículos/noticias desde n8n
+app.post('/api/n8n/articles', verifyN8nApiKey, async (req, res) => {
+  try {
+    const {
+      title,
+      slug,
+      summary,
+      content,
+      author = 'Equipo de Campaña',
+      tags = [],
+      status = 'published',
+      date
+    } = req.body;
+
+    // Validaciones requeridas
+    if (!title || !slug || !summary || !content) {
+      return res.status(400).json({ 
+        error: 'Faltan campos requeridos: title, slug, summary, content' 
+      });
+    }
+
+    // Verificar que el slug sea único
+    const existingArticle = await Articulo.findOne({ slug });
+    if (existingArticle) {
+      return res.status(409).json({ 
+        error: 'Ya existe un artículo con este slug. Use un slug único.' 
+      });
+    }
+
+    // Crear nuevo artículo
+    const articuloData = {
+      title: title.trim(),
+      slug: slug.trim().toLowerCase(),
+      summary: summary.trim(),
+      content: content.trim(),
+      author: author.trim(),
+      tags: Array.isArray(tags) ? tags.map(tag => tag.trim()) : [],
+      status: ['published', 'draft'].includes(status) ? status : 'published',
+      date: date ? new Date(date) : new Date()
+    };
+
+    const articulo = new Articulo(articuloData);
+    await articulo.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Artículo creado exitosamente desde n8n.',
+      data: {
+        id: articulo._id,
+        title: articulo.title,
+        slug: articulo.slug,
+        summary: articulo.summary,
+        author: articulo.author,
+        status: articulo.status,
+        date: articulo.date,
+        tags: articulo.tags,
+        createdAt: articulo.createdAt
+      }
+    });
+
+  } catch (error) {
+    // console.error('Error creando artículo desde n8n:', error);
+    res.status(500).json({
+      error: 'Error interno del servidor al crear el artículo.',
+      details: error.message
+    });
+  }
+});
+
+// RUTAS API DE ARTÍCULOS/NOTICIAS
+
+// GET - Obtener todos los artículos publicados (público)
+app.get('/api/articulos', async (req, res) => {
+  try {
+    const { page = 1, limit = 10, tag, search } = req.query;
+    const skip = (page - 1) * limit;
+    
+    // Construir filtros
+    let query = { status: 'published' };
+    
+    if (tag) {
+      query.tags = { $in: [tag] };
+    }
+    
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { summary: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    const articulos = await Articulo.find(query)
+      .sort({ date: -1 })
+      .skip(skip)
+      .limit(parseInt(limit))
+      .select('title slug summary author date tags status createdAt');
+    
+    const total = await Articulo.countDocuments(query);
+    
+    res.json({
+      articulos,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages: Math.ceil(total / limit),
+        totalItems: total,
+        itemsPerPage: parseInt(limit)
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error obteniendo artículos' });
+  }
+});
+
+// GET - Obtener artículo por slug (público)
+app.get('/api/articulos/:slug', async (req, res) => {
+  try {
+    const articulo = await Articulo.findOne({ 
+      slug: req.params.slug, 
+      status: 'published' 
+    });
+    
+    if (!articulo) {
+      return res.status(404).json({ error: 'Artículo no encontrado' });
+    }
+    
+    res.json(articulo);
+  } catch (error) {
+    res.status(500).json({ error: 'Error obteniendo artículo' });
+  }
+});
+
+// GET - Obtener todos los artículos para admin (incluye borradores)
+app.get('/api/articulos/admin', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { page = 1, limit = 20, status, search } = req.query;
+    const skip = (page - 1) * limit;
+    
+    let query = {};
+    
+    if (status && ['published', 'draft'].includes(status)) {
+      query.status = status;
+    }
+    
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { summary: { $regex: search, $options: 'i' } },
+        { author: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    const articulos = await Articulo.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+    
+    const total = await Articulo.countDocuments(query);
+    
+    // Estadísticas adicionales
+    const stats = await Articulo.aggregate([
+      {
+        $group: {
+          _id: '$status',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+    
+    const estadisticas = {
+      total: await Articulo.countDocuments(),
+      published: stats.find(s => s._id === 'published')?.count || 0,
+      draft: stats.find(s => s._id === 'draft')?.count || 0
+    };
+    
+    res.json({
+      articulos,
+      estadisticas,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages: Math.ceil(total / limit),
+        totalItems: total,
+        itemsPerPage: parseInt(limit)
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error obteniendo artículos para admin' });
+  }
+});
+
+// POST - Crear nuevo artículo (admin)
+app.post('/api/articulos', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const {
+      title,
+      slug,
+      summary,
+      content,
+      author = 'Equipo de Campaña',
+      tags = [],
+      status = 'draft',
+      date
+    } = req.body;
+
+    // Validaciones requeridas
+    if (!title || !slug || !summary || !content) {
+      return res.status(400).json({ 
+        error: 'Faltan campos requeridos: title, slug, summary, content' 
+      });
+    }
+
+    // Verificar que el slug sea único
+    const existingArticle = await Articulo.findOne({ slug: slug.trim().toLowerCase() });
+    if (existingArticle) {
+      return res.status(409).json({ 
+        error: 'Ya existe un artículo con este slug. Use un slug único.' 
+      });
+    }
+
+    // Crear nuevo artículo
+    const articuloData = {
+      title: title.trim(),
+      slug: slug.trim().toLowerCase(),
+      summary: summary.trim(),
+      content: content.trim(),
+      author: author.trim(),
+      tags: Array.isArray(tags) ? tags.map(tag => tag.trim()) : [],
+      status: ['published', 'draft'].includes(status) ? status : 'draft',
+      date: date ? new Date(date) : new Date()
+    };
+
+    const articulo = new Articulo(articuloData);
+    await articulo.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Artículo creado exitosamente',
+      data: articulo
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      error: 'Error interno del servidor al crear el artículo',
+      details: error.message
+    });
+  }
+});
+
+// PUT - Actualizar artículo (admin)
+app.put('/api/articulos/:id', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      slug,
+      summary,
+      content,
+      author,
+      tags,
+      status,
+      date
+    } = req.body;
+
+    // Verificar que el artículo existe
+    const articulo = await Articulo.findById(id);
+    if (!articulo) {
+      return res.status(404).json({ error: 'Artículo no encontrado' });
+    }
+
+    // Si se actualiza el slug, verificar que sea único
+    if (slug && slug.trim().toLowerCase() !== articulo.slug) {
+      const existingArticle = await Articulo.findOne({ 
+        slug: slug.trim().toLowerCase(),
+        _id: { $ne: id }
+      });
+      if (existingArticle) {
+        return res.status(409).json({ 
+          error: 'Ya existe un artículo con este slug. Use un slug único.' 
+        });
+      }
+    }
+
+    // Actualizar campos
+    const updateData = {};
+    if (title) updateData.title = title.trim();
+    if (slug) updateData.slug = slug.trim().toLowerCase();
+    if (summary) updateData.summary = summary.trim();
+    if (content) updateData.content = content.trim();
+    if (author) updateData.author = author.trim();
+    if (tags) updateData.tags = Array.isArray(tags) ? tags.map(tag => tag.trim()) : [];
+    if (status && ['published', 'draft'].includes(status)) updateData.status = status;
+    if (date) updateData.date = new Date(date);
+
+    const articuloActualizado = await Articulo.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    res.json({
+      success: true,
+      message: 'Artículo actualizado exitosamente',
+      data: articuloActualizado
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      error: 'Error interno del servidor al actualizar el artículo',
+      details: error.message
+    });
+  }
+});
+
+// DELETE - Eliminar artículo (admin)
+app.delete('/api/articulos/:id', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const articulo = await Articulo.findById(id);
+    if (!articulo) {
+      return res.status(404).json({ error: 'Artículo no encontrado' });
+    }
+
+    await Articulo.findByIdAndDelete(id);
+
+    res.json({
+      success: true,
+      message: 'Artículo eliminado exitosamente'
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      error: 'Error interno del servidor al eliminar el artículo',
+      details: error.message
+    });
+  }
+});
+
+// PUT - Cambiar estado de artículo (admin)
+app.put('/api/articulos/:id/status', verifyJWT, verifyAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!['published', 'draft'].includes(status)) {
+      return res.status(400).json({ 
+        error: 'Estado inválido. Debe ser "published" o "draft"' 
+      });
+    }
+
+    const articulo = await Articulo.findById(id);
+    if (!articulo) {
+      return res.status(404).json({ error: 'Artículo no encontrado' });
+    }
+
+    articulo.status = status;
+    await articulo.save();
+
+    res.json({
+      success: true,
+      message: `Artículo ${status === 'published' ? 'publicado' : 'marcado como borrador'} exitosamente`,
+      data: articulo
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      error: 'Error interno del servidor al cambiar el estado del artículo',
+      details: error.message
     });
   }
 });
