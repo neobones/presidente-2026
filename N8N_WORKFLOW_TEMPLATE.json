@@ -1,0 +1,258 @@
+{
+  "name": "Publicar Noticias Melinao 2026",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "start-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "title",
+              "value": "{{ $json.title }}"
+            },
+            {
+              "name": "slug",
+              "value": "{{ $json.title.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9\\s-]/g, '').replace(/\\s+/g, '-').replace(/-+/g, '-').trim() }}"
+            },
+            {
+              "name": "summary",
+              "value": "{{ $json.summary }}"
+            },
+            {
+              "name": "content",
+              "value": "{{ $json.content }}"
+            },
+            {
+              "name": "author",
+              "value": "{{ $json.author || 'Equipo de Campaña' }}"
+            },
+            {
+              "name": "status",
+              "value": "{{ $json.status || 'published' }}"
+            },
+            {
+              "name": "date",
+              "value": "{{ $json.date || new Date().toISOString() }}"
+            }
+          ],
+          "array": [
+            {
+              "name": "tags",
+              "value": "{{ $json.tags || [] }}"
+            }
+          ]
+        }
+      },
+      "id": "process-data",
+      "name": "Process Article Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://melinao2026.cl/api/n8n/articles",
+        "authentication": "none",
+        "requestMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-Key",
+              "value": "{{ $env.N8N_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyContentType": "json",
+        "jsonBody": "{{ JSON.stringify($json) }}"
+      },
+      "id": "send-to-api",
+      "name": "Send to API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        600,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "result",
+              "value": "={{ $json.success ? 'SUCCESS' : 'ERROR' }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.message || $json.error }}"
+            },
+            {
+              "name": "article_id",
+              "value": "={{ $json.data?.id }}"
+            },
+            {
+              "name": "article_url",
+              "value": "={{ $json.data?.slug ? 'https://melinao2026.cl/noticias/' + $json.data.slug : '' }}"
+            }
+          ]
+        }
+      },
+      "id": "format-response",
+      "name": "Format Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        800,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.result }}",
+              "operation": "equal",
+              "value2": "SUCCESS"
+            }
+          ]
+        }
+      },
+      "id": "check-success",
+      "name": "Check Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "message": "Artículo publicado exitosamente: {{ $json.article_url }}"
+      },
+      "id": "success-notification",
+      "name": "Success Notification",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "message": "Error al publicar artículo: {{ $json.message }}"
+      },
+      "id": "error-notification",
+      "name": "Error Notification",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Process Article Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Article Data": {
+      "main": [
+        [
+          {
+            "node": "Send to API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to API": {
+      "main": [
+        [
+          {
+            "node": "Format Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Response": {
+      "main": [
+        [
+          {
+            "node": "Check Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Success": {
+      "main": [
+        [
+          {
+            "node": "Success Notification",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-15T10:30:00.000Z",
+      "updatedAt": "2024-01-15T10:30:00.000Z",
+      "id": "campaign-automation",
+      "name": "Campaign Automation"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-01-15T10:30:00.000Z",
+  "versionId": "1"
+}

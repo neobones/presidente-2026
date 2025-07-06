@@ -868,19 +868,88 @@ app.post('/api/n8n/articles', verifyN8nApiKey, async (req, res) => {
     const articulo = new Articulo(articuloData);
     await articulo.save();
 
+    // Datos para automatización de redes sociales
+    const baseUrl = req.get('host').includes('localhost') ? 'http://localhost:3000' : `https://${req.get('host')}`;
+    const url_publicada = `${baseUrl}/noticias/${articulo.slug}`;
+    const hashtags = articulo.tags.length > 0 ? articulo.tags.map(tag => `#${tag}`).join(' ') : '#Melinao2026 #ChileDigno';
+    
+    // Formatear contenido para redes sociales
+    const titulo = articulo.title;
+    const resumen = articulo.summary;
+    const contenido = articulo.content.replace(/<[^>]*>/g, ''); // Remover HTML para redes sociales
+    
+    // Twitter/X - máximo 280 caracteres
+    const twitterText = `${titulo}\n\n${resumen.substring(0, 150)}...\n\n🔗 ${url_publicada}\n\n${hashtags}`.substring(0, 280);
+    
+    // Instagram - necesita formato diferente
+    const instagramCaption = `${titulo}\n\n${resumen}\n\n${hashtags}\n\n📖 Lee más en el link de la bio`;
+    
+    // Facebook - puede ser más largo
+    const facebookPost = `${titulo}\n\n${resumen}\n\n${contenido.substring(0, 500)}...\n\nLee la noticia completa: ${url_publicada}\n\n${hashtags}`;
+
     res.status(201).json({
       success: true,
       message: 'Artículo creado exitosamente desde n8n.',
+      
+      // Datos originales del artículo
       data: {
         id: articulo._id,
         title: articulo.title,
         slug: articulo.slug,
         summary: articulo.summary,
+        content: articulo.content,
         author: articulo.author,
         status: articulo.status,
         date: articulo.date,
         tags: articulo.tags,
         createdAt: articulo.createdAt
+      },
+      
+      // Datos formateados para tu script de automatización
+      titulo,
+      resumen,
+      hashtags,
+      url_publicada,
+      
+      // Contenido pre-formateado para redes sociales
+      redes_sociales: {
+        twitter: {
+          text: twitterText,
+          url: url_publicada,
+          hashtags: hashtags
+        },
+        instagram: {
+          caption: instagramCaption,
+          image_alt: `${titulo} - Campaña Melinao 2026`,
+          hashtags: hashtags
+        },
+        facebook: {
+          message: facebookPost,
+          link: url_publicada,
+          hashtags: hashtags
+        },
+        linkedin: {
+          text: `${titulo}\n\n${resumen}\n\nLee más: ${url_publicada}`,
+          url: url_publicada
+        },
+        whatsapp: {
+          text: `*${titulo}*\n\n${resumen}\n\n${url_publicada}`,
+          url: url_publicada
+        }
+      },
+      
+      // Metadatos adicionales útiles
+      metadatos: {
+        fecha_publicacion: articulo.date,
+        fecha_creacion: articulo.createdAt,
+        autor: articulo.author,
+        slug: articulo.slug,
+        estado: articulo.status,
+        longitud_titulo: titulo.length,
+        longitud_resumen: resumen.length,
+        numero_hashtags: articulo.tags.length,
+        url_editar: `${baseUrl}/admin`, // Para acceso directo al editor
+        api_endpoint: `/api/articulos/${articulo._id}`
       }
     });
 
@@ -1058,10 +1127,43 @@ app.post('/api/articulos', verifyJWT, verifyAdmin, async (req, res) => {
     const articulo = new Articulo(articuloData);
     await articulo.save();
 
+    // Solo generar datos de redes sociales si el artículo se publica
+    let redes_sociales = null;
+    let metadatos_extra = null;
+    
+    if (articulo.status === 'published') {
+      const baseUrl = req.get('host').includes('localhost') ? 'http://localhost:3000' : `https://${req.get('host')}`;
+      const url_publicada = `${baseUrl}/noticias/${articulo.slug}`;
+      const hashtags = articulo.tags.length > 0 ? articulo.tags.map(tag => `#${tag}`).join(' ') : '#Melinao2026 #ChileDigno';
+      const contenido_limpio = articulo.content.replace(/<[^>]*>/g, '');
+      
+      const twitterText = `${articulo.title}\n\n${articulo.summary.substring(0, 150)}...\n\n🔗 ${url_publicada}\n\n${hashtags}`.substring(0, 280);
+      const instagramCaption = `${articulo.title}\n\n${articulo.summary}\n\n${hashtags}\n\n📖 Lee más en el link de la bio`;
+      const facebookPost = `${articulo.title}\n\n${articulo.summary}\n\n${contenido_limpio.substring(0, 500)}...\n\nLee la noticia completa: ${url_publicada}\n\n${hashtags}`;
+
+      redes_sociales = {
+        twitter: { text: twitterText, url: url_publicada, hashtags },
+        instagram: { caption: instagramCaption, image_alt: `${articulo.title} - Campaña Melinao 2026`, hashtags },
+        facebook: { message: facebookPost, link: url_publicada, hashtags },
+        linkedin: { text: `${articulo.title}\n\n${articulo.summary}\n\nLee más: ${url_publicada}`, url: url_publicada },
+        whatsapp: { text: `*${articulo.title}*\n\n${articulo.summary}\n\n${url_publicada}`, url: url_publicada }
+      };
+      
+      metadatos_extra = {
+        titulo: articulo.title,
+        resumen: articulo.summary,
+        hashtags,
+        url_publicada,
+        url_editar: `${baseUrl}/admin`
+      };
+    }
+
     res.status(201).json({
       success: true,
       message: 'Artículo creado exitosamente',
-      data: articulo
+      data: articulo,
+      ...(redes_sociales && { redes_sociales }),
+      ...(metadatos_extra && metadatos_extra)
     });
 
   } catch (error) {
