@@ -38,32 +38,32 @@ const ChileUnido = () => {
   // Datos basados en el contenido de la reforma
   const keyStats = [
     {
-      icon: <Trees className="w-8 h-8" />,
-      title: "5,000",
-      subtitle: "empleos turismo",
-      description: "Desarrollo sostenible Araucanía",
+      icon: <Heart className="w-8 h-8" />,
+      title: "100%",
+      subtitle: "mujeres cubiertas",
+      description: "Acceso universal salud reproductiva",
+      color: "from-pink-500 to-rose-500"
+    },
+    {
+      icon: <Leaf className="w-8 h-8" />,
+      title: "$1T",
+      subtitle: "ingresos anuales",
+      description: "Cannabis regulado y seguro",
       color: "from-green-500 to-emerald-500"
     },
     {
-      icon: <School className="w-8 h-8" />,
-      title: "50,000",
-      subtitle: "estudiantes",
-      description: "Educación intercultural",
+      icon: <Users className="w-8 h-8" />,
+      title: "500",
+      subtitle: "escuelas inclusivas",
+      description: "Lenguaje de señas y braille",
       color: "from-blue-500 to-cyan-500"
     },
     {
-      icon: <DollarSign className="w-8 h-8" />,
-      title: "$470B",
-      subtitle: "inversión total",
-      description: "Desarrollo integral región",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "80%",
-      subtitle: "busca estabilidad",
-      description: "Cadem 2025 - Unidad nacional",
-      color: "from-orange-500 to-red-500"
+      icon: <Shield className="w-8 h-8" />,
+      title: "70%",
+      subtitle: "apoyan regulación",
+      description: "Trabajo sexual protegido",
+      color: "from-purple-500 to-indigo-500"
     }
   ];
 
@@ -131,6 +131,74 @@ const ChileUnido = () => {
         'Certificación turismo sustentable'
       ],
       ejemplo: 'Turistas internacionales visitarán rukas auténticas y aprenderán textilería mapuche'
+    },
+    {
+      id: 'derechos-reproductivos',
+      name: 'Derechos Reproductivos',
+      icon: <Heart className="w-12 h-12" />,
+      inversion: '$400B',
+      beneficio: 'Acceso universal salud reproductiva',
+      cobertura: 'Todas las mujeres de Chile',
+      descripcion: 'Fortalecimiento marco legal y acceso a salud reproductiva',
+      detalles: [
+        'Fortalecimiento tres causales de aborto legal',
+        'Capacitación obligatoria profesionales salud',
+        'Anticonceptivos gratuitos en todas las regiones',
+        'Educación sexual integral en escuelas',
+        'Sistema referencia para acceso garantizado'
+      ],
+      ejemplo: 'Una mujer de La Pintana tendrá acceso inmediato a anticonceptivos y atención reproductiva de calidad'
+    },
+    {
+      id: 'marihuana-regulada',
+      name: 'Cannabis Regulado',
+      icon: <Leaf className="w-12 h-12" />,
+      inversion: '$100B',
+      beneficio: '$500B-1T ingresos anuales',
+      cobertura: 'Centros especializados nacionales',
+      descripcion: 'Legalización regulada para seguridad y ingresos',
+      detalles: [
+        'Centros especializados con primeros auxilios',
+        'Una planta por hogar con autorización',
+        'Cultivos comerciales con IVA 20%',
+        'Campañas educación uso responsable',
+        'Reducción mercado negro y delitos'
+      ],
+      ejemplo: 'Un emprendedor de Valparaíso podrá operar un centro legal con todas las medidas de seguridad'
+    },
+    {
+      id: 'trabajo-sexual-regulado',
+      name: 'Trabajo Sexual Regulado',
+      icon: <Shield className="w-12 h-12" />,
+      inversion: '$50B',
+      beneficio: 'Protección derechos trabajadoras',
+      cobertura: 'Marco legal nacional',
+      descripcion: 'Regulación para protección y salud',
+      detalles: [
+        'Legalización con emisión facturas',
+        'Cobertura médica obligatoria',
+        'Restricciones en zonas residenciales',
+        'Centros salud especializados',
+        'Modelo basado en Alemania y Países Bajos'
+      ],
+      ejemplo: 'Trabajadoras sexuales tendrán protección legal, salud garantizada y derechos laborales'
+    },
+    {
+      id: 'lenguaje-inclusivo',
+      name: 'Lenguaje Inclusivo Universal',
+      icon: <Users className="w-12 h-12" />,
+      inversion: '$50B',
+      beneficio: 'Inclusión personas con discapacidad',
+      cobertura: 'Sistema educativo nacional',
+      descripcion: 'Enseñanza de lenguaje de señas y braille',
+      detalles: [
+        'Lenguaje de señas en currículo escolar',
+        'Braille en todas las escuelas',
+        'Capacitación docente especializada',
+        'Educación en equidad de género',
+        'Accesibilidad universal garantizada'
+      ],
+      ejemplo: 'Niños y niñas aprenderán lenguaje de señas, construyendo una sociedad verdaderamente inclusiva'
     }
   ];
 

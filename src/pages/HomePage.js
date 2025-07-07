@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Cpu, DollarSign, Shield, Users, Heart, ArrowRight, Menu, X, Play, Star, Zap, Globe, TrendingUp, PiggyBank } from 'lucide-react';
+import { ChevronDown, Cpu, DollarSign, Shield, Users, Heart, ArrowRight, Menu, X, Play, Star, Zap, Globe, TrendingUp, PiggyBank, Leaf, ShieldCheck } from 'lucide-react';
 import SEOWrapper from '../components/SEOWrapper';
 import ConsultasCiudadanas from '../components/ConsultasCiudadanas';
 import { seoConfigs } from '../data/seoConfigs';
@@ -119,21 +119,59 @@ const HomePage = () => {
     },
     {
       icon: <Users className="w-12 h-12" />,
-      title: "Chile Unido",
-      subtitle: "Araucanía Próspera, Chile Fuerte",
-      description: "Bosques protegidos generan turismo mapuche. Escuelas enseñan cultura ancestral. 5,000 empleos en turismo sustentable. Desarrollo que respeta el medio ambiente.",
-      metric: "5,000",
-      detail: "empleos turismo sostenible",
+      title: "Chile Unido e Inclusivo",
+      subtitle: "Derechos, Inclusión y Modernidad",
+      description: "Salud reproductiva universal para todas las mujeres. Cannabis regulado genera $1 trillón anual. Escuelas enseñan lenguaje de señas. Trabajo sexual protegido legalmente.",
+      metric: "100%",
+      detail: "acceso salud reproductiva",
       color: "from-indigo-500 to-violet-600",
       bgColor: "bg-gradient-to-br from-indigo-50 to-violet-50",
       features: [
-        "🌲 Protección bosques nativos: 50,000 hectáreas seguras", 
-        "🏫 Educación intercultural en 500 escuelas públicas", 
-        "🚌 20 centros turísticos culturales mapuche",
-        "🌍 Reducción 15% contaminación ambiental regional"
+        "💗 Acceso universal anticonceptivos y salud reproductiva", 
+        "🌿 Cannabis regulado: centros seguros e ingresos fiscales", 
+        "🤟 Lenguaje de señas y braille en 500 escuelas",
+        "🛡️ Trabajo sexual regulado: protección y derechos"
       ],
-      ejemplo: "Familia mapuche en Temuco abre ruka turística y genera $800,000 mensuales. Niños en Santiago aprenden mapudungun en su escuela.",
-      secundarias: ["Medio ambiente: reforestación de 100,000 árboles anuales", "Reconciliación: Consejo Nacional con participación indígena real"],
+      ejemplo: "María en La Pintana accede a anticonceptivos gratuitos. Emprendedor en Valparaíso opera centro de cannabis legal. Niños aprenden lenguaje de señas.",
+      secundarias: ["Inclusión total: educación sexual integral en escuelas", "Modernidad: regulaciones basadas en evidencia internacional"],
+      link: "/reformas/chile-unido-desarrollo-araucania"
+    },
+    {
+      icon: <Heart className="w-12 h-12" />,
+      title: "Derechos Reproductivos",
+      subtitle: "Salud y Libertad para Todas",
+      description: "Fortalecimiento de las tres causales de aborto legal. Anticonceptivos gratuitos en todas las regiones. Educación sexual integral. Apoyo a madres y familias vulnerables.",
+      metric: "$400 mil millones",
+      detail: "inversión en salud reproductiva",
+      color: "from-pink-500 to-rose-600",
+      bgColor: "bg-gradient-to-br from-pink-50 to-rose-50",
+      features: [
+        "⚕️ Fortalecimiento acceso aborto legal en tres causales", 
+        "💊 Anticonceptivos gratuitos en zonas rurales y urbanas", 
+        "📚 Educación sexual integral obligatoria en escuelas",
+        "👶 Subsidios para madres solteras y familias vulnerables"
+      ],
+      ejemplo: "Ana en Iquique accede a anticonceptivos sin costo. Claudia en Valdivia recibe atención reproductiva digna. Familias vulnerables reciben apoyo real.",
+      secundarias: ["Capacitación médica: profesionales sin objeción indebida", "Diálogo inclusivo: mesas con grupos feministas y sociedad civil"],
+      link: "/reformas/chile-unido-desarrollo-araucania"
+    },
+    {
+      icon: <Leaf className="w-12 h-12" />,
+      title: "Cannabis Regulado",
+      subtitle: "Legalización Inteligente y Segura",
+      description: "Centros especializados con primeros auxilios. Una planta por hogar autorizada. Cultivos comerciales con IVA 20%. Reducción del mercado negro y generación de empleos.",
+      metric: "$1 trillón",
+      detail: "ingresos fiscales anuales",
+      color: "from-green-500 to-emerald-600",
+      bgColor: "bg-gradient-to-br from-green-50 to-emerald-50",
+      features: [
+        "🏥 Centros especializados con infraestructura médica", 
+        "🌱 Una planta por hogar con autorización sanitaria", 
+        "🏭 Cultivos comerciales supervisados por Agricultura",
+        "📚 Campañas educativas sobre uso responsable"
+      ],
+      ejemplo: "Emprendedor en Valparaíso abre centro legal con seguridad total. Familia en Santiago cultiva planta medicinal autorizada. Se reduce el narcotráfico.",
+      secundarias: ["Seguridad pública: reducción delitos asociados", "Economía: 10,000 empleos directos e indirectos"],
       link: "/reformas/chile-unido-desarrollo-araucania"
     },
     {
