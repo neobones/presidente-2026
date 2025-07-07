@@ -167,6 +167,10 @@ const AdminDashboard = () => {
         return;
       }
 
+      // Debug: verificar token
+      console.log('Token encontrado:', token ? 'Sí' : 'No');
+      console.log('Longitud del token:', token?.length);
+
       const response = await fetch(`/api/consultas/admin?${params}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -176,24 +180,44 @@ const AdminDashboard = () => {
 
       if (response.status === 401) {
         localStorage.removeItem('authToken');
-        setAuthError('Sesión expirada. Por favor, inicia sesión nuevamente.');
+        console.log('Token expirado o inválido - removido del localStorage');
+        setAuthError('Sesión expirada. Por favor, ve a "Participación Ciudadana" e inicia sesión con Google nuevamente.');
         setConsultas([]);
         return;
       }
 
       if (response.status === 403) {
+        console.log('Acceso denegado - usuario no es administrador');
         setAuthError('Acceso denegado. Solo administradores autorizados pueden acceder a esta sección.');
+        setConsultas([]);
+        return;
+      }
+
+      if (!response.ok) {
+        console.log('Error en la respuesta:', response.status, response.statusText);
+        const errorData = await response.text();
+        console.log('Datos del error:', errorData);
+        setAuthError(`Error del servidor: ${response.status}`);
         setConsultas([]);
         return;
       }
 
       const data = await response.json();
       setConsultas(data.consultas || []);
+      setAuthError(null); // Limpiar errores si todo salió bien
+      console.log('Consultas cargadas exitosamente:', data.consultas?.length || 0);
     } catch (error) {
-      // Error silencioso en producción
+      console.error('Error en loadConsultas:', error);
+      setAuthError('Error de conexión. Verifica tu conexión a internet e intenta nuevamente.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const refreshSession = () => {
+    localStorage.removeItem('authToken');
+    setAuthError(null);
+    window.location.href = '/participacion-ciudadana';
   };
 
   const updateEstado = async (id, nuevoEstado, descripcion = '') => {
@@ -421,15 +445,40 @@ const AdminDashboard = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <div className="text-red-600 text-lg font-medium mb-4">
+              🔒 Error de Autenticación
+            </div>
+            <div className="text-gray-700 mb-6">
               {authError}
             </div>
-            <a
-              href="/participacion-ciudadana"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Ir a Participación Ciudadana
-            </a>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={refreshSession}
+                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Iniciar Sesión Nuevamente
+              </button>
+              
+              <button
+                onClick={() => {
+                  setAuthError(null);
+                  loadConsultas();
+                }}
+                className="inline-flex items-center px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
+              >
+                🔄 Reintentar
+              </button>
+            </div>
+            
+            <div className="mt-6 text-sm text-gray-600">
+              <p><strong>Instrucciones:</strong></p>
+              <ol className="text-left max-w-md mx-auto mt-2 space-y-1">
+                <li>1. Haz clic en "Iniciar Sesión Nuevamente"</li>
+                <li>2. Inicia sesión con tu cuenta de Google (neobones@gmail.com)</li>
+                <li>3. Regresa a /admin para acceder al panel</li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
